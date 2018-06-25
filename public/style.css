@@ -19,3 +19,9 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.priorities-grade-container {
+  width: 100px;
+  height: 100px;
+  background: yellow;
+}

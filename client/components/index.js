@@ -5,4 +5,7 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
+export {default as CharCreate} from './char-create.js'
+export {default as CharPriorities} from './char-priorities'
+
 export {Login, Signup} from './auth-form'
