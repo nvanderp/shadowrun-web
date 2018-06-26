@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {
-  CharMetatype
+  CharMetatype,
+  CharAttributes
 } from './index.js'
 import { 
   getAttributesStats, attPointsReset,
@@ -205,16 +206,17 @@ class CharPriorities extends Component {
               <h4 className="priority-title">Metatype</h4>
               {this.metatypeGradeContainer()}
             </div>
-            <CharMetatype 
-              // updateMetatype={this.props.updateMetatype}
-              // updateAttributes={this.props.updateAttributes}
-              // updateAttPoints={this.props.updateAttPoints}
-            />
+            <CharMetatype />
           </div>
         </div>
-        <div className="priority-header">
-          <h4 className="priority-title">Attributes</h4>
-          {this.attributesGradeContainer()}
+        <div id="attributes-container" className="priority-container">
+          <div>
+            <div className="priority-header">
+              <h4 className="priority-title">Attributes</h4>
+              {this.attributesGradeContainer()}
+            </div>
+            <CharAttributes />
+          </div>
         </div>
       </div>
     )

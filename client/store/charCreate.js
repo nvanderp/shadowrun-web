@@ -64,16 +64,16 @@ export const getAttributesStats = (metatype) => {
   let stats
   if (metatype === 'human') {
     stats = {
-      bod: { min: 1, max: 6, cur: 1 },
-      agi: { min: 1, max: 6, cur: 1 },
-      rea: { min: 1, max: 6, cur: 1 },
-      str: { min: 1, max: 6, cur: 1 },
-      wil: { min: 1, max: 6, cur: 1 },
-      log: { min: 1, max: 6, cur: 1 },
-      int: { min: 1, max: 6, cur: 1 },
-      cha: { min: 1, max: 6, cur: 1 },
-      edg: { min: 2, max: 7, cur: 2 },
-      ess: { min: 1, max: 6, cur: 6 }
+      bod: {name: 'Body', min: 1, max: 6, cur: 1 },
+      agi: {name: 'Agility', min: 1, max: 6, cur: 1 },
+      rea: {name: 'Reaction', min: 1, max: 6, cur: 1 },
+      str: {name: 'Strength', min: 1, max: 6, cur: 1 },
+      wil: {name: 'Willpower', min: 1, max: 6, cur: 1 },
+      log: {name: 'Logic', min: 1, max: 6, cur: 1 },
+      int: {name: 'Intelligence', min: 1, max: 6, cur: 1 },
+      cha: {name: 'Charisma', min: 1, max: 6, cur: 1 },
+      edg: {name: 'Edge',  min: 2, max: 7, cur: 2 },
+      ess: {name: 'Essence', min: 1, max: 6, cur: 6 }
     }
   }
   else if (metatype === 'elf') {
