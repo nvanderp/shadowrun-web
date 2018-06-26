@@ -69,14 +69,11 @@ const mapDispatch = (dispatch) => {
     },
     clickAdd(attObj, curAttributes) {
       let newCur = attObj.cur + 1
-      let newAtt
+      let key = attObj.name.toLowerCase().slice(0, 3)
       if (newCur > attObj.max) return null
       else {
-        attObj.cur = newCur
-        console.log('attObj', attObj)
-        newAtt = Object.assign({}, curAttributes, {attObj})
-        console.log('newAtt', newAtt)
-        // dispatch(changeAttributes(newAtt))
+        curAttributes[key].cur = newCur
+        dispatch(changeAttributes(curAttributes))
       }
     }
   }
