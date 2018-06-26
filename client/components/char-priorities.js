@@ -4,7 +4,7 @@ import {
   CharMetatype
 } from './index.js'
 import { 
-  attributesReset, attPointsReset,
+  getAttributesStats, attPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints
 } from '../store'
 
@@ -102,24 +102,29 @@ class CharPriorities extends Component {
     event.preventDefault()
     const data = event.dataTransfer.getData('priority') // 'priority-A'
     this.moveGradeDiv(event, data)
-    this.evaluatePriorities()
+    this.evaluatePriorities(event)
   }
 
-  evaluatePriorities = () => {
+  evaluatePriorities = (event) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
-    let id, metaPoints, attPoints
+    let id, metaPoints, attPoints, curMetatype
     if (metatypePriority) {
       id = metatypePriority.id.split('-')[1]
-      metaPoints = this.priorities[id].metatype['human'].points // replace 'human' with var
       this.props.updatePriorities('metatype', this.priorities[id].metatype)
-      this.props.updateMetatype(this.priorities[id].metatype['human'])
+      if (event.target.id === 'metatype-grade-container') {
+        this.props.updateMetatype(this.priorities[id].metatype['human'])
+        metaPoints = this.priorities[id].metatype['human'].points // replace 'human' with var
+      } else {
+        curMetatype = this.props.currentChar.metatype.class.split('-')[0]
+        metaPoints = this.priorities[id].metatype[curMetatype].points
+      }
     }
     if (attributesPriority) {
       id = attributesPriority.id.split('-')[1]
       attPoints = this.priorities[id].attributes
       this.props.updatePriorities('attributes', this.priorities[id].attributes)
-      let stats = attributesReset(this.props.currentChar.metatype.class)
+      let stats = getAttributesStats(this.props.currentChar.metatype.class)
       this.props.updateAttributes(stats)
     }
     let total = attPointsReset(metaPoints, attPoints)
@@ -200,7 +205,11 @@ class CharPriorities extends Component {
               <h4 className="priority-title">Metatype</h4>
               {this.metatypeGradeContainer()}
             </div>
-            <CharMetatype updateMetatype={this.props.updateMetatype}/>
+            <CharMetatype 
+              // updateMetatype={this.props.updateMetatype}
+              // updateAttributes={this.props.updateAttributes}
+              // updateAttPoints={this.props.updateAttPoints}
+            />
           </div>
         </div>
         <div className="priority-header">
