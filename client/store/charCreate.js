@@ -59,7 +59,8 @@ export const changeAttPoints = (attPoints) =>
     dispatch(updateAttPoints(attPoints))
 
 export const attributesReset = (metatype) => {
-  metatype = metatype.split('-')[0]
+  if (metatype) metatype = metatype.split('-')[0]
+  else metatype = 'human'
   let stats
   if (metatype === 'human') {
     stats = {

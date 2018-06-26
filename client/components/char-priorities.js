@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import {
+  CharMetatype
+} from './index.js'
 import { 
   attributesReset, attPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints
@@ -111,7 +114,6 @@ class CharPriorities extends Component {
       metaPoints = this.priorities[id].metatype['human'].points // replace 'human' with var
       this.props.updatePriorities('metatype', this.priorities[id].metatype)
       this.props.updateMetatype(this.priorities[id].metatype['human'])
-      // this.props.resetAttPoints('meta', 'att')
     }
     if (attributesPriority) {
       id = attributesPriority.id.split('-')[1]
@@ -193,14 +195,17 @@ class CharPriorities extends Component {
       <div>
         {this.prioritiesGradesView()}
         <div id="metatype-container" className="priority-container">
+          <div>
             <div className="priority-header">
               <h4 className="priority-title">Metatype</h4>
               {this.metatypeGradeContainer()}
             </div>
-            <div className="priority-header">
-              <h4 className="priority-title">attributes</h4>
-              {this.attributesGradeContainer()}
-            </div>
+            <CharMetatype updateMetatype={this.props.updateMetatype}/>
+          </div>
+        </div>
+        <div className="priority-header">
+          <h4 className="priority-title">Attributes</h4>
+          {this.attributesGradeContainer()}
         </div>
       </div>
     )
