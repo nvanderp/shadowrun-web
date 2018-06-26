@@ -11,7 +11,7 @@ export const CharMetatype = (props) => {
     <div>
       {
         Object.keys(curMetaPriority).length !== 0 ? 
-          Object.keys(curMetaPriority).map(function(key) {
+          Object.keys(curMetaPriority).map((key) => {
             if (curMetaPriority[key].title) {
               return (
                 <div key={key}>
