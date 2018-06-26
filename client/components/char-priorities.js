@@ -5,7 +5,7 @@ import {
   CharAttributes
 } from './index.js'
 import { 
-  getAttributesStats, attPointsReset,
+  priorities, baseMetatypeAttributes, attPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints
 } from '../store'
 
@@ -26,70 +26,7 @@ class CharPriorities extends Component {
     this.attributesGradeContainer = this.attributesGradeContainer.bind(this)
   }
 
-  priorities = {
-    'A': {
-      metatype: {
-        defaultChoice: 'human-9',
-        'human': {
-          class: 'human-9',
-          title: 'Human',
-          points: 9
-        },
-        'elf': {
-          class: 'elf-8',
-          title: 'Elf',
-          points: 8
-        },
-        'dwarf': {
-          class: 'dwarf-7',
-          title: 'Dwarf',
-          points: 7
-        },
-        'ork': {
-          class: 'ork-7',
-          title: 'Ork',
-          points: 7
-        },
-        'troll': {
-          class: 'troll-5',
-          title: 'Troll',
-          points: 5
-        }
-      },
-      attributes: 24
-    },
-    'B': {
-      metatype: {
-        defaultChoice: 'human-7',
-        'human': {
-          class: 'human-7',
-          title: 'Human',
-          points: 7
-        },
-        'elf': {
-          class: 'elf-6',
-          title: 'Elf',
-          points: 6
-        },
-        'dwarf': {
-          class: 'dwarf-4',
-          title: 'Dwarf',
-          points: 4
-        },
-        'ork': {
-          class: 'ork-4',
-          title: 'Ork',
-          points: 4
-        },
-        'troll': {
-          class: 'troll-0',
-          title: 'Troll',
-          points: 0
-        }
-      },
-      attributes: 20
-    }
-  }
+  
 
   allowDrop = (event) => {
     event.preventDefault()
@@ -112,20 +49,20 @@ class CharPriorities extends Component {
     let id, metaPoints, attPoints, curMetatype
     if (metatypePriority) {
       id = metatypePriority.id.split('-')[1]
-      this.props.updatePriorities('metatype', this.priorities[id].metatype)
+      this.props.updatePriorities('metatype', priorities[id].metatype)
       if (event.target.id === 'metatype-grade-container') {
-        this.props.updateMetatype(this.priorities[id].metatype['human'])
-        metaPoints = this.priorities[id].metatype['human'].points // replace 'human' with var
+        this.props.updateMetatype(priorities[id].metatype['human'])
+        metaPoints = priorities[id].metatype['human'].points // replace 'human' with var
       } else {
         curMetatype = this.props.currentChar.metatype.class.split('-')[0]
-        metaPoints = this.priorities[id].metatype[curMetatype].points
+        metaPoints = priorities[id].metatype[curMetatype].points
       }
     }
     if (attributesPriority) {
       id = attributesPriority.id.split('-')[1]
-      attPoints = this.priorities[id].attributes
-      this.props.updatePriorities('attributes', this.priorities[id].attributes)
-      let stats = getAttributesStats(this.props.currentChar.metatype.class)
+      attPoints = priorities[id].attributes
+      this.props.updatePriorities('attributes', priorities[id].attributes)
+      let stats = baseMetatypeAttributes[this.props.currentChar.metatype.class.split('-')[0]]
       this.props.updateAttributes(stats)
     }
     let total = attPointsReset(metaPoints, attPoints)

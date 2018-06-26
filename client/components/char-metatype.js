@@ -2,7 +2,7 @@ import React from 'react'
 import RadioButton from '@material-ui/core/Radio'
 import {connect} from 'react-redux'
 import { 
-  getAttributesStats, changeMetatype, changeAttributes, attPointsReset, changeAttPoints
+  baseMetatypeAttributes, changeMetatype, changeAttributes, attPointsReset, changeAttPoints
 } from '../store'
 
 export const CharMetatype = (props) => {
@@ -44,7 +44,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleClick(newMetatype, curAttPriority) {
-      let stats = getAttributesStats(newMetatype.class)
+      let stats = baseMetatypeAttributes[newMetatype.class.split('-')[0]]
       dispatch(changeMetatype(newMetatype))
       dispatch(changeAttributes(stats))
       let attPoints = attPointsReset(newMetatype.points, curAttPriority)
