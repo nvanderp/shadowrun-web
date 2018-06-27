@@ -116,7 +116,8 @@ form div {
   display: flex;
   flex-direction: column;
   background-color: grey;
-  border-style: inset;
+  border-right-style: inset;
+  border-bottom-style: inset;
 }
 
 .priority-form-label {
@@ -132,8 +133,44 @@ form div {
   flex-wrap: wrap;
   background-color: grey;
   justify-content: space-around;
-  border-style: inset;
+  border-right-style: inset;
+  border-bottom-style: inset;
   padding-top: .5em;
+}
+#att-points-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#attPoints-title {
+  font-size: 24px;
+  color: white;
+  background-color: grey;
+  padding-top: 0px;
+  margin-top: 0px;
+  border-bottom: 38px solid grey;
+  border-left: 0px solid #232122;
+  border-right: 35px solid #232122;
+  height: 0;
+  width: 65px;
+}
+
+#attPoints-container-total {
+  display: flex;
+}
+
+#attPoints-container {
+  width: 65px;
+  height: 0;
+  margin-left: -35px;
+  border-top: 38px solid #E2AA38;
+  border-left: 35px solid transparent;
+}
+
+#attPoints-total {
+  margin-left: -65px;
+  font-size: 24px;
+  color: white;
 }
 
 .att-header-text {

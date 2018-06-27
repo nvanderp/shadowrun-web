@@ -1,12 +1,30 @@
 import React from 'react'
 import RadioButton from '@material-ui/core/Radio'
-import {connect} from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
 import { 
   baseMetatypeAttributes, changeMetatype, changeAttributes, attPointsReset, changeAttPoints
 } from '../store'
 
+const styles = {
+  root: {
+    color: '#FFFFFF',
+    '&$checked': {
+      color: '#E2AA38',
+    },
+  },
+  checked: {},
+  size: {
+    width: 40,
+    height: 40,
+  },
+  sizeIcon: {
+    fontSize: 20,
+  },
+}
+
 export const CharMetatype = (props) => {
-  const { curMetatype, curMetaPriority, curAttPriority, handleClick } = props
+  const { curMetatype, curMetaPriority, curAttPriority, handleClick, classes } = props
   return (
     <div className="priority-form">
       {
@@ -18,6 +36,10 @@ export const CharMetatype = (props) => {
                   <RadioButton
                     checked={curMetatype.class === curMetaPriority[key].class}
                     onClick={() => {handleClick(curMetaPriority[key], curAttPriority)}}
+                    classes={{
+                      root: classes.root,
+                      checked: classes.checked
+                    }}
                   />
                   {curMetaPriority[key].title} ({curMetaPriority[key].points})
                 </div>
@@ -53,4 +75,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapState, mapDispatch)(CharMetatype)
+export default withStyles(styles)(connect(mapState, mapDispatch)(CharMetatype))

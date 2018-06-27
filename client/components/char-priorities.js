@@ -8,6 +8,7 @@ import {
   priorities, baseMetatypeAttributes, attPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints
 } from '../store'
+import Collapse from '@material-ui/core/Collapse'
 
 /**
  * COMPONENT
@@ -39,22 +40,29 @@ class CharPriorities extends Component {
   drop = (event) => {
     event.preventDefault()
     const data = event.dataTransfer.getData('priority') // 'priority-A'
+    let trueParent
+    if (event.target.id.split('-')[0] === 'priority') {
+      trueParent = document.getElementById(event.target.id).parentNode.id
+    }
     this.moveGradeDiv(event, data)
-    this.evaluatePriorities(event)
+    this.evaluatePriorities(event, trueParent)
   }
 
-  evaluatePriorities = (event) => {
+  evaluatePriorities = (event, trueParent) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
     let id, metaPoints, attPoints, curMetatype, stats
     if (metatypePriority) {
       id = metatypePriority.id.split('-')[1]
       this.props.updatePriorities('metatype', priorities[id].metatype)
-      if (event.target.id === 'metatype-grade-container') {
+      if (event.target.id === 'metatype-grade-container' 
+        || trueParent !== undefined
+        )
+      {
         this.props.updateMetatype(priorities[id].metatype['human'])
-        metaPoints = priorities[id].metatype['human'].points // replace 'human' with var
+        metaPoints = priorities[id].metatype['human'].points
       } else {
-        curMetatype = this.props.currentChar.metatype.class.split('-')[0]
+        curMetatype = this.props.curCharacter.metatype.class.split('-')[0]
         metaPoints = priorities[id].metatype[curMetatype].points
       }
     }
@@ -62,8 +70,8 @@ class CharPriorities extends Component {
       id = attributesPriority.id.split('-')[1]
       attPoints = priorities[id].attributes
       this.props.updatePriorities('attributes', priorities[id].attributes)
-      if (this.props.currentChar.metatype.class) {
-        stats = baseMetatypeAttributes[this.props.currentChar.metatype.class.split('-')[0]]
+      if (this.props.curCharacter.metatype.class) {
+        stats = baseMetatypeAttributes[this.props.curCharacter.metatype.class.split('-')[0]]
       }
       else {
         stats = baseMetatypeAttributes['human']
@@ -138,7 +146,7 @@ class CharPriorities extends Component {
   }
 
   render () {
-    // const { currentChar } = this.props
+    const { curMetatype, curPriorities } = this.props
     return (
       <div>
         <div>
@@ -152,7 +160,9 @@ class CharPriorities extends Component {
                 <h4 className="priority-title">Metatype</h4>
                 {this.metatypeGradeContainer()}
               </div>
-              <CharMetatype />
+              <Collapse in={curPriorities.metatype.defaultChoice !== undefined}>
+                <CharMetatype />
+              </Collapse>
             </div>
           </div>
           <div id="attributes-container" className="priority-container">
@@ -161,7 +171,9 @@ class CharPriorities extends Component {
                 <h4 className="priority-title">Attributes</h4>
                 {this.attributesGradeContainer()}
               </div>
-              <CharAttributes />
+              <Collapse in={curPriorities.attributes !== 0}>
+                <CharAttributes />
+              </Collapse>
             </div>
           </div>
         </div>
@@ -176,7 +188,8 @@ class CharPriorities extends Component {
 
 const mapState = (state) => {
   return {
-    currentChar: state.charCreate
+    curCharacter: state.charCreate,
+    curPriorities: state.charCreate.priorities
   }
 }
 
