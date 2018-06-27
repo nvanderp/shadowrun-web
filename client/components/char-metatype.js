@@ -8,13 +8,13 @@ import {
 export const CharMetatype = (props) => {
   const { curMetatype, curMetaPriority, curAttPriority, handleClick } = props
   return (
-    <div>
+    <div className="priority-form">
       {
         Object.keys(curMetaPriority).length !== 0 ? 
           Object.keys(curMetaPriority).map((key) => {
             if (curMetaPriority[key].title) {
               return (
-                <div key={key}>
+                <div className="priority-form-label" key={key}>
                   <RadioButton
                     checked={curMetatype.class === curMetaPriority[key].class}
                     onClick={() => {handleClick(curMetaPriority[key], curAttPriority)}}
@@ -44,7 +44,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleClick(newMetatype, curAttPriority) {
-      let stats = baseMetatypeAttributes[newMetatype.class.split('-')[0]]
+      let stats = Object.assign({}, baseMetatypeAttributes[newMetatype.class.split('-')[0]])
       dispatch(changeMetatype(newMetatype))
       dispatch(changeAttributes(stats))
       let attPoints = attPointsReset(newMetatype.points, curAttPriority)

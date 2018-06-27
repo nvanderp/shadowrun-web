@@ -112,66 +112,46 @@ export const baseMetatypeAttributes = {
 
 export const priorities = {
   'A': {
-    metatype: {
-      defaultChoice: 'human-9',
-      'human': {
-        class: 'human-9',
-        title: 'Human',
-        points: 9
-      },
-      'elf': {
-        class: 'elf-8',
-        title: 'Elf',
-        points: 8
-      },
-      'dwarf': {
-        class: 'dwarf-7',
-        title: 'Dwarf',
-        points: 7
-      },
-      'ork': {
-        class: 'ork-7',
-        title: 'Ork',
-        points: 7
-      },
-      'troll': {
-        class: 'troll-5',
-        title: 'Troll',
-        points: 5
-      }
+    metatype: {defaultChoice: 'human-9',
+      'human': {class: 'human-9', title: 'Human', points: 9},
+      'elf': {class: 'elf-8', title: 'Elf', points: 8},
+      'dwarf': {class: 'dwarf-7', title: 'Dwarf', points: 7},
+      'ork': {class: 'ork-7', title: 'Ork', points: 7},
+      'troll': {class: 'troll-5', title: 'Troll', points: 5}
     },
     attributes: 24
   },
   'B': {
-    metatype: {
-      defaultChoice: 'human-7',
-      'human': {
-        class: 'human-7',
-        title: 'Human',
-        points: 7
-      },
-      'elf': {
-        class: 'elf-6',
-        title: 'Elf',
-        points: 6
-      },
-      'dwarf': {
-        class: 'dwarf-4',
-        title: 'Dwarf',
-        points: 4
-      },
-      'ork': {
-        class: 'ork-4',
-        title: 'Ork',
-        points: 4
-      },
-      'troll': {
-        class: 'troll-0',
-        title: 'Troll',
-        points: 0
-      }
+    metatype: {defaultChoice: 'human-7',
+      'human': {class: 'human-7', title: 'Human', points: 7},
+      'elf': {class: 'elf-6', title: 'Elf', points: 6},
+      'dwarf': {class: 'dwarf-4', title: 'Dwarf', points: 4},
+      'ork': {class: 'ork-4', title: 'Ork', points: 4},
+      'troll': {class: 'troll-0', title: 'Troll', points: 0}
     },
     attributes: 20
+  },
+  'C': {
+    metatype: {defaultChoice: 'human-5',
+      'human': {class: 'human-5', title: 'Human', points: 5},
+      'elf': {class: 'elf-3', title: 'Elf', points: 3},
+      'dwarf': {class: 'dwarf-1', title: 'Dwarf', points: 1},
+      'ork': {class: 'ork-0', title: 'Ork', points: 0}
+    },
+    attributes: 16
+  },
+  'D': {
+    metatype: {defaultChoice: 'human-3',
+      'human': {class: 'human-3', title: 'Human', points: 3},
+      'elf': {class: 'elf-0', title: 'Elf', points: 0}
+    },
+    attributes: 14
+  },
+  'E': {
+    metatype: {defaultChoice: 'human-1',
+      'human': {class: 'human-1', title: 'Human', points: 1}
+    },
+    attributes: 12
   }
 }
 

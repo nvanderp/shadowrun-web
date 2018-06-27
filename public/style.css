@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Cardo', serif;
 }
 
 a {
@@ -20,8 +20,145 @@ form div {
   display: inline-block;
 }
 
+.character-creation-container {
+  padding: 0px 10px 0px 10px;
+}
+
+.character-creation-title {
+  text-align: center;
+  font-size: 2em;
+  color: #E2AA38;
+  border-bottom: 38px solid #232122;
+  border-left: 0px solid transparent;
+  border-right: 35px solid transparent;
+  height: 0;
+  width: 125px;
+  margin: 0px 0px 0px 0px;
+}
+
+#priorities-grades-view {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0px 0px 0px 0px;
+  list-style-type: none;
+  background-color: #232122;
+  padding-left: 0px;
+  padding-top: 1em;
+  border-right-style: outset;
+}
+
+.grade {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  border-style: inset;
+  color: white;
+  background-color: grey;
+  cursor: pointer;
+}
+
+.priority-container {
+  padding: 5px 10px 10px 10px;
+  flex-grow: 1;
+  background-color: #232122;
+}
+
+.priority-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.priority-title {
+  display: flex;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  padding-left: 15px;
+  padding-right: 5px;
+  margin-right: -13px;
+  font-size: 20px;
+  color: #E2AA38;
+  border-bottom-color: white;
+}
+
 .priorities-grade-container {
-  width: 100px;
-  height: 100px;
-  background: yellow;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: dimgrey;
+  height: 55px;
+  width: 55px;
+  list-style-type: none;
+  border-radius: 50%;
+  margin-left: 10px;
+  border-style: ridge;
+}
+
+.priorities-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 0px 0px 0px 0px;
+  border-bottom-style: outset;
+  border-right-style: outset;
+}
+
+.priority-form {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  border-style: inset;
+}
+
+.priority-form-label {
+  color: white;
+}
+
+#attributes-container {
+  flex-grow: 2;
+}
+
+#attributes-stat-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: grey;
+  justify-content: space-around;
+  border-style: inset;
+  padding-top: .5em;
+}
+
+.att-header-text {
+  flex-grow: 1;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  height: fit-content;
+  color: navajowhite;
+  padding-right: 2em;
+}
+
+.att-stat-list {
+  padding-left: 0px;
+  margin-top: 5px;
+  list-style: none;
+  color: white;
+}
+
+.att-list-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.att-stat-controls {
+  display: flex;
+  justify-content: space-around;
 }

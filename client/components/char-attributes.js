@@ -6,12 +6,12 @@ import {
 import Icon from '@material-ui/core/Icon'
 
 export const CharAttributes = (props) => {
-  const { curAttPoints, curAttributes, clickAdd, clickSubtract } = props
+  const { curAttributes, curAttPoints, clickAdd, clickSubtract } = props
   let attArray = Object.entries(curAttributes)
   let attClass
   return (
     <div id="attributes-stat-container">
-      <div>Points: {curAttPoints.cur}/{curAttPoints.max}</div>
+      <div id="att-points-container">Points: {curAttPoints.cur}/{curAttPoints.max}</div>
       {
         attArray.map((att) => {
           if (att[1].name === 'Body') attClass = 'Physical'
@@ -27,13 +27,13 @@ export const CharAttributes = (props) => {
                   <div className="att-stat-controls">
                     <Icon 
                       className="material-icons md-18"
-                      onClick={() => clickSubtract(att[1], curAttributes)}
+                      onClick={() => clickSubtract(att[1], curAttributes, curAttPoints)}
                     >remove_circle
                     </Icon>
                     {att[1].cur}/{att[1].max}
                     <Icon
                       className="material-icons md-18"
-                      onClick={() => clickAdd(att[1], curAttributes)}
+                      onClick={() => clickAdd(att[1], curAttributes, curAttPoints)}
                     >add_circle
                     </Icon>
                   </div>
@@ -52,6 +52,7 @@ export const CharAttributes = (props) => {
 */
 const mapState = (state) => {
   return {
+    curMetatype: state.charCreate.metatype,
     curAttPoints: state.charCreate.attPoints,
     curAttributes: state.charCreate.attributes
   }
@@ -59,21 +60,28 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    clickSubtract(attObj, curAttributes) {
-      let newCur = attObj.cur - 1
-      if (newCur < attObj.min) return null
+    clickSubtract(attObj, curAttributes, curAttPoints) {
+      let key = attObj.name.toLowerCase().slice(0, 3)
+      let newStat = curAttributes[key].cur - 1
+      let newPoints = curAttPoints.cur + 1
+      if (newStat < curAttributes[key].min || newPoints > curAttPoints.max) return null
       else {
-        attObj.cur = newCur
-        dispatch(changeAttributes(attObj))
+        let newAttsObj = Object.assign({}, curAttributes, {[key]: {...curAttributes[key], cur: newStat}} )
+        let newPointsObj = Object.assign({}, curAttPoints, {cur: newPoints})
+        dispatch(changeAttributes(newAttsObj))
+        dispatch(changeAttPoints(newPointsObj))
       }
     },
-    clickAdd(attObj, curAttributes) {
-      let newCur = attObj.cur + 1
+    clickAdd(attObj, curAttributes, curAttPoints) {
       let key = attObj.name.toLowerCase().slice(0, 3)
-      if (newCur > attObj.max) return null
+      let newStat = curAttributes[key].cur + 1
+      let newPoints = curAttPoints.cur - 1
+      if (newStat > curAttributes[key].max || newPoints < curAttPoints.min) return null
       else {
-        curAttributes[key].cur = newCur
-        dispatch(changeAttributes(curAttributes))
+        let newAttsObj = Object.assign({}, curAttributes, {[key]: {...curAttributes[key], cur: newStat}} )
+        let newPointsObj = Object.assign({}, curAttPoints, {cur: newPoints})
+        dispatch(changeAttributes(newAttsObj))
+        dispatch(changeAttPoints(newPointsObj))
       }
     }
   }

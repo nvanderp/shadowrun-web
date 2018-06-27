@@ -46,7 +46,7 @@ class CharPriorities extends Component {
   evaluatePriorities = (event) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
-    let id, metaPoints, attPoints, curMetatype
+    let id, metaPoints, attPoints, curMetatype, stats
     if (metatypePriority) {
       id = metatypePriority.id.split('-')[1]
       this.props.updatePriorities('metatype', priorities[id].metatype)
@@ -62,7 +62,12 @@ class CharPriorities extends Component {
       id = attributesPriority.id.split('-')[1]
       attPoints = priorities[id].attributes
       this.props.updatePriorities('attributes', priorities[id].attributes)
-      let stats = baseMetatypeAttributes[this.props.currentChar.metatype.class.split('-')[0]]
+      if (this.props.currentChar.metatype.class) {
+        stats = baseMetatypeAttributes[this.props.currentChar.metatype.class.split('-')[0]]
+      }
+      else {
+        stats = baseMetatypeAttributes['human']
+      }
       this.props.updateAttributes(stats)
     }
     let total = attPointsReset(metaPoints, attPoints)
@@ -136,23 +141,28 @@ class CharPriorities extends Component {
     // const { currentChar } = this.props
     return (
       <div>
-        {this.prioritiesGradesView()}
-        <div id="metatype-container" className="priority-container">
-          <div>
-            <div className="priority-header">
-              <h4 className="priority-title">Metatype</h4>
-              {this.metatypeGradeContainer()}
-            </div>
-            <CharMetatype />
-          </div>
+        <div>
+          <h3 className="character-creation-title">Priorities</h3>
+          {this.prioritiesGradesView()}
         </div>
-        <div id="attributes-container" className="priority-container">
-          <div>
-            <div className="priority-header">
-              <h4 className="priority-title">Attributes</h4>
-              {this.attributesGradeContainer()}
+        <div className="priorities-container">
+          <div id="metatype-container" className="priority-container">
+            <div>
+              <div className="priority-header">
+                <h4 className="priority-title">Metatype</h4>
+                {this.metatypeGradeContainer()}
+              </div>
+              <CharMetatype />
             </div>
-            <CharAttributes />
+          </div>
+          <div id="attributes-container" className="priority-container">
+            <div>
+              <div className="priority-header">
+                <h4 className="priority-title">Attributes</h4>
+                {this.attributesGradeContainer()}
+              </div>
+              <CharAttributes />
+            </div>
           </div>
         </div>
       </div>
