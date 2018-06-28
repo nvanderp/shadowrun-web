@@ -136,6 +136,7 @@ form div {
   border-right-style: inset;
   border-bottom-style: inset;
   padding-top: .5em;
+  padding-bottom: .5em;
 }
 #att-points-container {
   display: flex;

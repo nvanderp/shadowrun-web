@@ -12,6 +12,9 @@ const styles = {
     '&$checked': {
       color: '#E2AA38',
     },
+    '&:hover': {
+      color: '#E2AA38'
+    }
   },
   checked: {},
   size: {

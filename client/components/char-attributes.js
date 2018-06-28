@@ -4,9 +4,28 @@ import {
   changeAttributes, changeAttPoints
 } from '../store'
 import Icon from '@material-ui/core/Icon'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = {
+  root: {
+    color: '#FFFFFF'
+  },
+  iconHover: {
+    '&:hover': {
+      color: '#E2AA38'
+    }
+  }
+  // size: {
+  //   width: 40,
+  //   height: 40,
+  // },
+  // sizeIcon: {
+  //   fontSize: 20,
+  // },
+}
 
 export const CharAttributes = (props) => {
-  const { curAttributes, curAttPoints, clickAdd, clickSubtract } = props
+  const { curAttributes, curAttPoints, clickAdd, clickSubtract, classes } = props
   let attClassArray = Object.entries(curAttributes)
   return (
     <div>
@@ -34,12 +53,18 @@ export const CharAttributes = (props) => {
                           <Icon 
                             className="material-icons md-18"
                             onClick={() => clickSubtract(att[1], curAttributes, curAttPoints, attClass[0])}
+                            classes={{
+                              root: classes.iconHover
+                            }}
                           >remove_circle
                           </Icon>
                           {att[1].cur}/{att[1].max}
                           <Icon
                             className="material-icons md-18"
                             onClick={() => clickAdd(att[1], curAttributes, curAttPoints, attClass[0])}
+                            classes={{
+                              root: classes.iconHover
+                            }}
                           >add_circle
                           </Icon>
                           </div>
@@ -97,4 +122,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapState, mapDispatch)(CharAttributes)
+export default withStyles(styles)(connect(mapState, mapDispatch)(CharAttributes))
