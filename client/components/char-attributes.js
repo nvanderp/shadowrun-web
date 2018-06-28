@@ -15,13 +15,6 @@ const styles = {
       color: '#E2AA38'
     }
   }
-  // size: {
-  //   width: 40,
-  //   height: 40,
-  // },
-  // sizeIcon: {
-  //   fontSize: 20,
-  // },
 }
 
 export const CharAttributes = (props) => {
@@ -30,10 +23,10 @@ export const CharAttributes = (props) => {
   return (
     <div>
       <div id="att-points-container">
-        <div id="attPoints-title">Points</div>
+        <div id="attPoints-title">Attribute Points</div>
         <div id="attPoints-container-total">
           <div id="attPoints-container" />
-          <div id="attPoints-total">{curAttPoints.cur}/{curAttPoints.max}</div>
+          <div id="attPoints-total">{curAttPoints.cur}/</div><div className="attpts-num-max">{curAttPoints.max}</div>
         </div>
       </div>
       <div id="attributes-stat-container">
@@ -58,7 +51,7 @@ export const CharAttributes = (props) => {
                             }}
                           >remove_circle
                           </Icon>
-                          {att[1].cur}/{att[1].max}
+                          {att[1].cur}/<div className="att-num-max">{att[1].max}</div>
                           <Icon
                             className="material-icons md-18"
                             onClick={() => clickAdd(att[1], curAttributes, curAttPoints, attClass[0])}

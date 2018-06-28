@@ -44,7 +44,8 @@ export const CharMetatype = (props) => {
                       checked: classes.checked
                     }}
                   />
-                  {curMetaPriority[key].title} ({curMetaPriority[key].points})
+                  <div>{curMetaPriority[key].title}</div>
+                  <div className="metatype-points">({curMetaPriority[key].points})</div>
                 </div>
               )
             }
