@@ -9,5 +9,6 @@ export {default as CharCreate} from './char-create.js'
 export {default as CharPriorities} from './char-priorities'
 export {default as CharMetatype} from './char-metatype'
 export {default as CharAttributes} from './char-attributes'
+export {default as CharMagTechno} from './char-mag-techno'
 
 export {Login, Signup} from './auth-form'

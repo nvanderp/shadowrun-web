@@ -5,6 +5,7 @@ const UPDATE_PRIORITIES = 'UPDATE_PRIORITIES'
 const UPDATE_METATYPE = 'UPDATE_METATYPE'
 const UPDATE_ATTRIBUTES = 'UPDATE_ATTRIBUTES'
 const UPDATE_ATTPOINTS = 'UPDATE_ATTPOINTS'
+const UPDATE_MAGRES = 'UPDATE_MAGRES'
 
 /**
  * INITIAL STATE
@@ -12,7 +13,8 @@ const UPDATE_ATTPOINTS = 'UPDATE_ATTPOINTS'
 const defaultCharacter = {
   priorities: {       // grades
     'metatype': {},
-    'attributes': 0
+    'attributes': 0,
+    'magicRes': {}
   },
   metatype: {},
   attributes: {},
@@ -20,7 +22,8 @@ const defaultCharacter = {
     max: 0,
     cur: 0,
     min: 0
-  }
+  },
+  magOrResStat: {}
 }
 
 /**
@@ -30,6 +33,7 @@ const updatePriorities = (view, grade) => ({type: UPDATE_PRIORITIES, view, grade
 const updateMetatype = metatype => ({type: UPDATE_METATYPE, metatype})
 const updateAttributes = attributes => ({type: UPDATE_ATTRIBUTES, attributes})
 const updateAttPoints = attPoints => ({type: UPDATE_ATTPOINTS, attPoints})
+const updateMagRes = magOrResStats => ({type: UPDATE_MAGRES, magOrResStats})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -46,6 +50,10 @@ export const changeAttributes = (attributes) =>
 export const changeAttPoints = (attPoints) =>
   dispatch =>
     dispatch(updateAttPoints(attPoints))
+
+export const changeMagRes = (magOrResStats) =>
+  dispatch =>
+    dispatch(updateMagRes(magOrResStats))
 
 export const baseMetatypeAttributes = {
   'human': {
@@ -149,7 +157,23 @@ export const priorities = {
       'ork': {class: 'ork-7', title: 'Ork', points: 7},
       'troll': {class: 'troll-5', title: 'Troll', points: 5}
     },
-    attributes: 24
+    attributes: 24,
+    magTech: {
+      magic: {
+        stat: { 'magic': {name: 'Magic', min: 6, max: 6, cur: 6} },
+        skills: {points: 2, rating: 5},
+        spells: 10,
+        title: 'Magician or Mystic Adept',
+        text: 'Magic 6, two Rating 5 Magical skills, 10 spells'
+      },
+      techno: {
+        stat: { 'resonance': {name: 'Resonance', min: 6, max: 6, cur: 6} },
+        skills: {points: 2, rating: 5},
+        compForms: 5,
+        title: 'Technomancer',
+        text: 'Resonance 6, two Rating 5 Resonance skills, 5 complex forms'
+      }
+    }
   },
   'B': {
     metatype: {defaultChoice: 'human-7',
@@ -205,6 +229,8 @@ export default function (state = defaultCharacter, action) {
       return Object.assign({}, state, {attributes: action.attributes})
     case UPDATE_ATTPOINTS:
       return Object.assign({}, state, {attPoints: action.attPoints})
+    case UPDATE_MAGRES:
+      return Object.assign({}, state, {magOrResStat: action.magOrResStat})
     default:
       return state
   }

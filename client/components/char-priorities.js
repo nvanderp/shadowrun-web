@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {
   CharMetatype,
-  CharAttributes
+  CharAttributes,
+  CharMagTechno
 } from './index.js'
 import { 
   priorities, baseMetatypeAttributes, attPointsReset,
-  changePriorities, changeMetatype, changeAttributes, changeAttPoints
+  changePriorities, changeMetatype, changeAttributes, changeAttPoints, changeMagRes
 } from '../store'
 import Collapse from '@material-ui/core/Collapse'
 
@@ -25,9 +26,8 @@ class CharPriorities extends Component {
     this.prioritiesGradesView = this.prioritiesGradesView.bind(this)
     this.metatypeGradeContainer = this.metatypeGradeContainer.bind(this)
     this.attributesGradeContainer = this.attributesGradeContainer.bind(this)
+    this.magResGradeContainer = this.magResGradeContainer.bind(this)
   }
-
-  
 
   allowDrop = (event) => {
     event.preventDefault()
@@ -51,7 +51,8 @@ class CharPriorities extends Component {
   evaluatePriorities = (event, trueParent) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
-    let id, metaPoints, attPoints, curMetatype, stats
+    const magResPriority = document.getElementById('magres-grade-container').children[0]
+    let id, metaPoints, attPoints, curMetatype, stats, magTechDisplay
     if (metatypePriority) {
       id = metatypePriority.id.split('-')[1]
       this.props.updatePriorities('metatype', priorities[id].metatype)
@@ -77,6 +78,11 @@ class CharPriorities extends Component {
         stats = baseMetatypeAttributes['human']
       }
       this.props.updateAttributes(stats)
+    }
+    if (magResPriority) {
+      id = magResPriority.id.split('-')[1]
+      magTechDisplay = priorities[id].magTech
+      this.props.updatePriorities('magicRes', magTechDisplay)
     }
     let total = attPointsReset(metaPoints, attPoints)
     this.props.updateAttPoints(total)
@@ -145,8 +151,19 @@ class CharPriorities extends Component {
     )
   }
 
+  magResGradeContainer = () => {
+    return (
+      <div
+        id="magres-grade-container"
+        className="priorities-grade-container"
+        onDrop={(event) => {this.drop(event)}}
+        onDragOver={(event) => {this.allowDrop(event)}}
+      />
+    )
+  }
+
   render () {
-    const { curMetatype, curPriorities } = this.props
+    const { curPriorities } = this.props
     return (
       <div>
         <div>
@@ -173,6 +190,19 @@ class CharPriorities extends Component {
               </div>
               <Collapse in={curPriorities.attributes !== 0}>
                 <CharAttributes />
+              </Collapse>
+            </div>
+          </div>
+          <div id="magres-container" className="priority-container">
+            <div>
+              <div className="priority-header">
+                <h4 className="priority-title">Magic or Resonance</h4>
+                {this.magResGradeContainer()}
+              </div>
+              <Collapse 
+                in={curPriorities.magicRes.magic !== undefined || curPriorities.magicRes.techno !== undefined}
+              >
+                <CharMagTechno />
               </Collapse>
             </div>
           </div>
@@ -207,6 +237,9 @@ const mapDispatch = (dispatch) => {
     },
     updateAttPoints(attPoints) {
       dispatch(changeAttPoints(attPoints))
+    },
+    updateMagOrRes(magOrResStats) {
+      dispatch(changeMagRes(magOrResStats))
     }
   }
 }

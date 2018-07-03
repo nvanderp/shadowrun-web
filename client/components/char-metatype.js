@@ -23,7 +23,7 @@ const styles = {
   },
   sizeIcon: {
     fontSize: 20,
-  },
+  }
 }
 
 export const CharMetatype = (props) => {
