@@ -3,7 +3,7 @@ import RadioButton from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  changeMagRes
+  changeMagRes, changeAttributes
 } from '../store'
 
 const styles = {
@@ -27,9 +27,8 @@ const styles = {
 }
 
 export const CharMagTechno = (props) => {
-  const { curOptions, curMagRes, handleClick, classes } = props
+  const { curOptions, curMagRes, curAttributes, handleClick, classes } = props
   let magResArray = Object.entries(curOptions)
-  console.log('magResArray', curOptions)
   return (
     <div>
       <div className="priority-form">
@@ -39,7 +38,7 @@ export const CharMagTechno = (props) => {
               <div key={key[1].title}>
                 <RadioButton
                   checked={curMagRes.text === key[1].text}
-                  onClick={() => {handleClick(key[1])}}
+                  onClick={() => {handleClick(key[1], curAttributes)}}
                   classes={{
                     root: classes.root,
                     checked: classes.checked
@@ -62,14 +61,20 @@ export const CharMagTechno = (props) => {
 const mapState = (state) => {
   return {
     curOptions: state.charCreate.priorities.magicRes,
-    curMagRes: state.charCreate.magOrResStat
+    curMagRes: state.charCreate.magOrResStat,
+    curAttributes: state.charCreate.attributes
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick(newMagResStat) {
-      console.log('newMagResStat', newMagResStat)
+    handleClick(newMagResStat, curAttributes) {
+      let newAttsObj = JSON.parse(JSON.stringify(curAttributes))
+      let statToAdd = newMagResStat.stat
+      let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)
+      let newAttStats = Object.assign({}, newAttsObj, {special: newSpecialStats})
+      console.log("newAttStst", newAttStats)
+      dispatch(changeAttributes(newAttStats))
       dispatch(changeMagRes(newMagResStat))
     }
   }
