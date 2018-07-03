@@ -27,7 +27,7 @@ const styles = {
 }
 
 export const CharMagTechno = (props) => {
-  const { curOptions, curMagRes, handleClick } = props
+  const { curOptions, curMagRes, handleClick, classes } = props
   let magResArray = Object.entries(curOptions)
   console.log('magResArray', curOptions)
   return (
@@ -40,6 +40,10 @@ export const CharMagTechno = (props) => {
                 <RadioButton
                   checked={curMagRes.text === key[1].text}
                   onClick={() => {handleClick(key[1])}}
+                  classes={{
+                    root: classes.root,
+                    checked: classes.checked
+                  }}
                 />
                 <div className="magRes-header-text">{key[1].title}</div>
                 <div className="magRes-body-text">{key[1].text}</div>
