@@ -33,7 +33,7 @@ const updatePriorities = (view, grade) => ({type: UPDATE_PRIORITIES, view, grade
 const updateMetatype = metatype => ({type: UPDATE_METATYPE, metatype})
 const updateAttributes = attributes => ({type: UPDATE_ATTRIBUTES, attributes})
 const updateAttPoints = attPoints => ({type: UPDATE_ATTPOINTS, attPoints})
-const updateMagRes = magOrResStats => ({type: UPDATE_MAGRES, magOrResStats})
+const updateMagRes = magOrResStat => ({type: UPDATE_MAGRES, magOrResStat})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -51,9 +51,9 @@ export const changeAttPoints = (attPoints) =>
   dispatch =>
     dispatch(updateAttPoints(attPoints))
 
-export const changeMagRes = (magOrResStats) =>
+export const changeMagRes = (magOrResStat) =>
   dispatch =>
-    dispatch(updateMagRes(magOrResStats))
+    dispatch(updateMagRes(magOrResStat))
 
 export const baseMetatypeAttributes = {
   'human': {

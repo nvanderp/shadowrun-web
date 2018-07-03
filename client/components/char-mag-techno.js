@@ -3,7 +3,7 @@ import RadioButton from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  priorities
+  changeMagRes
 } from '../store'
 
 const styles = {
@@ -27,9 +27,9 @@ const styles = {
 }
 
 export const CharMagTechno = (props) => {
-  const { curOptions, handleClick } = props
+  const { curOptions, curMagRes, handleClick } = props
   let magResArray = Object.entries(curOptions)
-  console.log('magResArray', magResArray)
+  console.log('magResArray', curOptions)
   return (
     <div>
       <div className="priority-form">
@@ -38,7 +38,8 @@ export const CharMagTechno = (props) => {
             return (
               <div key={key[1].title}>
                 <RadioButton
-                  onClick={() => {handleClick(key)}}
+                  checked={curMagRes.text === key[1].text}
+                  onClick={() => {handleClick(key[1])}}
                 />
                 <div className="magRes-header-text">{key[1].title}</div>
                 <div className="magRes-body-text">{key[1].text}</div>
@@ -65,6 +66,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick(newMagResStat) {
       console.log('newMagResStat', newMagResStat)
+      dispatch(changeMagRes(newMagResStat))
     }
   }
 }
