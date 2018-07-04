@@ -3,7 +3,7 @@ import RadioButton from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  changeMagRes, changeAttributes
+  changeMagRes, changeAttributes, baseMetatypeAttributes
 } from '../store'
 
 const styles = {
@@ -27,7 +27,7 @@ const styles = {
 }
 
 export const CharMagTechno = (props) => {
-  const { curOptions, curMagRes, curAttributes, handleClick, classes } = props
+  const { curOptions, curMagRes, curMetatype, handleClick, classes } = props
   let magResArray = Object.entries(curOptions)
   return (
     <div>
@@ -38,7 +38,7 @@ export const CharMagTechno = (props) => {
               <div key={key[1].title}>
                 <RadioButton
                   checked={curMagRes.text === key[1].text}
-                  onClick={() => {handleClick(key[1], curAttributes)}}
+                  onClick={() => {handleClick(key[1], curMetatype)}}
                   classes={{
                     root: classes.root,
                     checked: classes.checked
@@ -62,14 +62,16 @@ const mapState = (state) => {
   return {
     curOptions: state.charCreate.priorities.magicRes,
     curMagRes: state.charCreate.magOrResStat,
-    curAttributes: state.charCreate.attributes
+    curAttributes: state.charCreate.attributes,
+    curMetatype: state.charCreate.metatype.class
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick(newMagResStat, curAttributes) {
-      let newAttsObj = JSON.parse(JSON.stringify(curAttributes))
+    handleClick(newMagResStat, curMetatype) {
+      curMetatype = curMetatype.split('-')[0]
+      let newAttsObj = JSON.parse(JSON.stringify(baseMetatypeAttributes[curMetatype]))
       let statToAdd = newMagResStat.stat
       let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)
       let newAttStats = Object.assign({}, newAttsObj, {special: newSpecialStats})

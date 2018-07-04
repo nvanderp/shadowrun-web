@@ -73,15 +73,10 @@ const mapDispatch = (dispatch) => {
     handleClick(newMetatype, curAttPriority, curMagRes) {
       let stats = Object.assign({}, baseMetatypeAttributes[newMetatype.class.split('-')[0]])
       dispatch(changeMetatype(newMetatype))
-      // need checker and changer for special stats if magTech is present
-      console.log('curMagRes in charMetatype', curMagRes)
-      // I have access to curMagRes.stat for the stat to add to the specials... prolly copy from the other cloning places
       if (curMagRes.stat) {
-        // here is where i will add the new special to 'stats' and then just pass stats as i was already
         let newSpecialStats = Object.assign({}, stats.special, curMagRes.stat)
         stats = Object.assign({}, stats, {special: newSpecialStats})
       }
-      //
       dispatch(changeAttributes(stats))
       let attPoints = attPointsReset(newMetatype.points, curAttPriority)
       dispatch(changeAttPoints(attPoints))
