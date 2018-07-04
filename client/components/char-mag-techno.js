@@ -73,7 +73,6 @@ const mapDispatch = (dispatch) => {
       let statToAdd = newMagResStat.stat
       let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)
       let newAttStats = Object.assign({}, newAttsObj, {special: newSpecialStats})
-      console.log("newAttStst", newAttStats)
       dispatch(changeAttributes(newAttStats))
       dispatch(changeMagRes(newMagResStat))
     }

@@ -77,12 +77,20 @@ class CharPriorities extends Component {
       else {
         stats = baseMetatypeAttributes['human']
       }
+      if (this.props.curCharacter.magOrResStat.stat) {
+        let newSpecialStats = Object.assign({}, stats.special, this.props.curCharacter.magOrResStat.stat)
+        stats = Object.assign({}, stats, {special: newSpecialStats})
+      }
       this.props.updateAttributes(stats)
     }
     if (magResPriority) {
       id = magResPriority.id.split('-')[1]
       magTechDisplay = priorities[id].magTech
       this.props.updatePriorities('magicRes', magTechDisplay)
+      let newSpecialStats = Object.assign({}, stats.special, magTechDisplay.magic.stat)
+      stats = Object.assign({}, stats, {special: newSpecialStats})
+      this.props.updateMagOrRes(magTechDisplay.magic)
+      this.props.updateAttributes(stats)
     }
     let total = attPointsReset(metaPoints, attPoints)
     this.props.updateAttPoints(total)
@@ -238,8 +246,8 @@ const mapDispatch = (dispatch) => {
     updateAttPoints(attPoints) {
       dispatch(changeAttPoints(attPoints))
     },
-    updateMagOrRes(magOrResStats) {
-      dispatch(changeMagRes(magOrResStats))
+    updateMagOrRes(magOrResStat) {
+      dispatch(changeMagRes(magOrResStat))
     }
   }
 }
