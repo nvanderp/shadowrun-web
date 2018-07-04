@@ -51,7 +51,6 @@ class CharPriorities extends Component {
     this.evaluatePriorities(event, trueParent)
   }
 
-  // add all of these to constructor (bind)
   metatypePriorityEval = (metatypePriority, trueParent, event) => {
     let id, metaPoints, curMetatype
     id = metatypePriority.id.split('-')[1]
@@ -89,7 +88,7 @@ class CharPriorities extends Component {
   }
 
   magicResPriorityEval = (magResPriority) => {
-    let magTechDisplay, stats
+    let magTechDisplay, stats, displayStat
     let curStats = this.props.curCharacter.attributes
     if (curStats.special === undefined) {
       curStats = baseMetatypeAttributes['human']
@@ -97,9 +96,14 @@ class CharPriorities extends Component {
     let id = magResPriority.id.split('-')[1]
     magTechDisplay = priorities[id].magTech
     this.props.updatePriorities('magicRes', magTechDisplay)
-    let newSpecialStats = Object.assign({}, curStats.special, magTechDisplay.magic.stat)
+    if (magTechDisplay.magic === undefined) {
+      displayStat = magTechDisplay.adept.stat
+    } else {
+      displayStat = magTechDisplay.magic.stat
+    }
+    let newSpecialStats = Object.assign({}, curStats.special, displayStat)
     stats = Object.assign({}, curStats, {special: newSpecialStats})
-    this.props.updateMagOrRes(magTechDisplay.magic)
+    this.props.updateMagOrRes(displayStat)
     this.props.updateAttributes(stats)
   }
 
@@ -110,12 +114,19 @@ class CharPriorities extends Component {
     let metaPoints, attPoints
     if (metatypePriority) {
       metaPoints = this.metatypePriorityEval(metatypePriority, trueParent, event)
+    } else {
+      this.props.updatePriorities('metatype', {})
     }
+    // add else statements here for if it's empty
     if (attributesPriority) {
       attPoints = this.attributesPriorityEval(attributesPriority)
+    } else {
+      this.props.updatePriorities('attributes', 0)
     }
     if (magResPriority) {
       this.magicResPriorityEval(magResPriority)
+    } else {
+      this.props.updatePriorities('magicRes', {})
     }
     let total = attPointsReset(metaPoints, attPoints)
     this.props.updateAttPoints(total)
@@ -233,7 +244,7 @@ class CharPriorities extends Component {
                 {this.magResGradeContainer()}
               </div>
               <Collapse 
-                in={curPriorities.magicRes.magic !== undefined || curPriorities.magicRes.techno !== undefined}
+                in={curPriorities.magicRes.magic !== undefined || curPriorities.magicRes.adept !== undefined}
               >
                 <CharMagTechno />
               </Collapse>

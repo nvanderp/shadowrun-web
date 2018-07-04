@@ -70,7 +70,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleClick(newMagResStat, curMetatype) {
-      curMetatype = curMetatype.split('-')[0]
+      if (curMetatype) curMetatype = curMetatype.split('-')[0]
+      else curMetatype = 'human'
       let newAttsObj = JSON.parse(JSON.stringify(baseMetatypeAttributes[curMetatype]))
       let statToAdd = newMagResStat.stat
       let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)

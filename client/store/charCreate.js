@@ -161,14 +161,14 @@ export const priorities = {
     magTech: {
       magic: {
         stat: { 'magic': {name: 'Magic', min: 6, max: 6, cur: 6} },
-        skills: {points: 2, rating: 5},
+        skills: {points: 2, rating: 5, type: 'magical'},
         spells: 10,
         title: 'Magician or Mystic Adept',
         text: 'Magic 6, two Rating 5 Magical skills, 10 spells'
       },
       techno: {
         stat: { 'resonance': {name: 'Resonance', min: 6, max: 6, cur: 6} },
-        skills: {points: 2, rating: 5},
+        skills: {points: 2, rating: 5, type: 'resonance'},
         compForms: 5,
         title: 'Technomancer',
         text: 'Resonance 6, two Rating 5 Resonance skills, 5 complex forms'
@@ -183,7 +183,35 @@ export const priorities = {
       'ork': {class: 'ork-4', title: 'Ork', points: 4},
       'troll': {class: 'troll-0', title: 'Troll', points: 0}
     },
-    attributes: 20
+    attributes: 20,
+    magTech: {
+      magic: {
+        stat: { 'magic': {name: 'Magic', min: 4, max: 4, cur: 4} },
+        skills: {points: 2, rating: 4, type: 'magical'},
+        spells: 7,
+        title: 'Magician or Mystic Adept',
+        text: 'Magic 4, two Rating 4 Magical skills, 7 spells'
+      },
+      techno: {
+        stat: { 'resonance': {name: 'Resonance', min: 4, max: 4, cur: 4} },
+        skills: {points: 2, rating: 4, type: 'resonance'},
+        compForms: 2,
+        title: 'Technomancer',
+        text: 'Resonance 4, two Rating 4 Resonance skills, 2 complex forms'
+      },
+      adept: {
+        stat: { 'magic': {name: 'Magic', min: 6, max: 6, cur: 6} },
+        skills: {points: 1, rating: 4, type: 'active'},
+        title: 'Adept',
+        text: 'Magic 6, one Rating 4 Active skill'
+      },
+      aspect: {
+        stat: { 'magic': {name: 'Magic', min: 5, max: 5, cur: 5} },
+        skills: {points: 1, rating: 4, type: 'magical'},
+        title: 'Aspected Magician',
+        text: 'Magic 5, one Rating 4 Magical skill'
+      }
+    }
   },
   'C': {
     metatype: {defaultChoice: 'human-5',
@@ -192,20 +220,63 @@ export const priorities = {
       'dwarf': {class: 'dwarf-1', title: 'Dwarf', points: 1},
       'ork': {class: 'ork-0', title: 'Ork', points: 0}
     },
-    attributes: 16
+    attributes: 16,
+    magTech: {
+      magic: {
+        stat: { 'magic': {name: 'Magic', min: 3, max: 3, cur: 3} },
+        skills: {},
+        spells: 5,
+        title: 'Magician or Mystic Adept',
+        text: 'Magic 3, 5 spells'
+      },
+      techno: {
+        stat: { 'resonance': {name: 'Resonance', min: 3, max: 3, cur: 3} },
+        skills: {},
+        compForms: 1,
+        title: 'Technomancer',
+        text: 'Resonance 3, 1 complex form'
+      },
+      adept: {
+        stat: { 'magic': {name: 'Magic', min: 4, max: 4, cur: 4} },
+        skills: {points: 1, rating: 2, type: 'active'},
+        title: 'Adept',
+        text: 'Magic 4, one Rating 2 Active skill'
+      },
+      aspect: {
+        stat: { 'magic': {name: 'Magic', min: 3, max: 3, cur: 3} },
+        skills: {points: 1, rating: 2, type: 'magical'},
+        title: 'Aspected Magician',
+        text: 'Magic 3, one Rating 2 Magical skill group'
+      }
+    }
   },
   'D': {
     metatype: {defaultChoice: 'human-3',
       'human': {class: 'human-3', title: 'Human', points: 3},
       'elf': {class: 'elf-0', title: 'Elf', points: 0}
     },
-    attributes: 14
+    attributes: 14,
+    magTech: {
+      adept: {
+        stat: { 'magic': {name: 'Magic', min: 2, max: 2, cur: 2} },
+        skills: {},
+        title: 'Adept',
+        text: 'Magic 2'
+      },
+      aspect: {
+        stat: { 'magic': {name: 'Magic', min: 3, max: 3, cur: 3} },
+        skills: {points: 1, rating: 2, type: 'magical'},
+        title: 'Aspected Magician',
+        text: 'Magic 2'
+      }
+    }
   },
   'E': {
     metatype: {defaultChoice: 'human-1',
       'human': {class: 'human-1', title: 'Human', points: 1}
     },
-    attributes: 12
+    attributes: 12,
+    magTech: {}
   }
 }
 
