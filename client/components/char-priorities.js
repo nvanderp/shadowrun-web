@@ -112,13 +112,15 @@ class CharPriorities extends Component {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
     const magResPriority = document.getElementById('magres-grade-container').children[0]
-    let metaPoints, attPoints
+    let curMetatype = this.props.curCharacter.metatype.class
+    if (curMetatype === undefined) curMetatype = 'human'
+    else curMetatype = curMetatype.split("-")[0]
+    let metaPoints, attPoints, resetStats
     if (metatypePriority) {
       metaPoints = this.metatypePriorityEval(metatypePriority, trueParent, event)
     } else {
       this.props.updatePriorities('metatype', {})
     }
-    // add else statements here for if it's empty
     if (attributesPriority) {
       attPoints = this.attributesPriorityEval(attributesPriority)
     } else {
@@ -127,7 +129,10 @@ class CharPriorities extends Component {
     if (magResPriority) {
       this.magicResPriorityEval(magResPriority)
     } else {
+      resetStats = baseMetatypeAttributes[curMetatype]
       this.props.updatePriorities('magicRes', {})
+      this.props.updateAttributes(resetStats)
+      this.props.updateMagOrRes({})
     }
     let total = attPointsReset(metaPoints, attPoints)
     this.props.updateAttPoints(total)
