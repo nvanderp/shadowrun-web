@@ -89,20 +89,21 @@ class CharPriorities extends Component {
 
   magicResPriorityEval = (magResPriority) => {
     let magTechDisplay, stats, displayStat
-    let curStats = this.props.curCharacter.attributes
-    if (curStats.special === undefined) {
-      curStats = baseMetatypeAttributes['human']
+    let curMetatype = this.props.curCharacter.metatype.class.split('-')[0]
+    let curBaseStats = baseMetatypeAttributes[curMetatype]
+    if (curBaseStats === undefined) {
+      curBaseStats = baseMetatypeAttributes['human']
     }
     let id = magResPriority.id.split('-')[1]
     magTechDisplay = priorities[id].magTech
     this.props.updatePriorities('magicRes', magTechDisplay)
     if (magTechDisplay.magic === undefined) {
-      displayStat = magTechDisplay.adept.stat
+      displayStat = magTechDisplay.adept
     } else {
-      displayStat = magTechDisplay.magic.stat
+      displayStat = magTechDisplay.magic
     }
-    let newSpecialStats = Object.assign({}, curStats.special, displayStat)
-    stats = Object.assign({}, curStats, {special: newSpecialStats})
+    let newSpecialStats = Object.assign({}, curBaseStats.special, displayStat.stat)
+    stats = Object.assign({}, curBaseStats, {special: newSpecialStats})
     this.props.updateMagOrRes(displayStat)
     this.props.updateAttributes(stats)
   }

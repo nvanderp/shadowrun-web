@@ -35,17 +35,19 @@ export const CharMagTechno = (props) => {
         {
           magResArray.map((key) => {
             return (
-              <div key={key[1].title}>
+              <div className="magRes-button-text-container" key={key[1].title}>
                 <RadioButton
-                  checked={curMagRes.text === key[1].text}
+                  checked={curMagRes.title === key[1].title}
                   onClick={() => {handleClick(key[1], curMetatype)}}
                   classes={{
                     root: classes.root,
                     checked: classes.checked
                   }}
                 />
-                <div className="magRes-header-text">{key[1].title}</div>
-                <div className="magRes-body-text">{key[1].text}</div>
+                <div className="magRes-text-container">
+                  <div className="magRes-header-text">{key[1].title}</div>
+                  <div className="magRes-body-text">{key[1].text}</div>
+                </div>
               </div>
             )
           })

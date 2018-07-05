@@ -152,7 +152,7 @@ form div {
 }
 
 #attPoints-title {
-  font-size: 24px;
+  font-size: 20px;
   color: white;
   background-color: grey;
   padding-top: 0px;
@@ -173,13 +173,13 @@ form div {
 
 #attPoints-total {
   margin-left: -65px;
-  font-size: 24px;
+  font-size: 20px;
   color: white;
 }
 
 .attpts-num-max {
   color: #E2AA38;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .att-num-max {
@@ -211,4 +211,21 @@ form div {
 .att-stat-controls {
   display: flex;
   justify-content: space-around;
+}
+
+.magRes-button-text-container {
+  display: flex;
+}
+
+.magRes-header-text {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  height: fit-content;
+  margin-right: 0.5em;
+  color: navajowhite;
+}
+
+.magRes-body-text {
+  color: white;
 }
