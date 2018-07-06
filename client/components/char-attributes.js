@@ -103,6 +103,7 @@ const mapDispatch = (dispatch) => {
     clickAdd(attObj, curAttributes, curAttPoints, attClass) {
       let attStat = attObj.name.toLowerCase().slice(0, 3)
       let newAttsObj = JSON.parse(JSON.stringify(curAttributes))
+      console.log(newAttsObj)
       newAttsObj[attClass][attStat].cur += 1
       let newPoints = curAttPoints.cur - 1
       if (newAttsObj[attClass][attStat].cur > attObj.max || newPoints < curAttPoints.min) return null
