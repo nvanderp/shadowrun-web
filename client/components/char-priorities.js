@@ -43,42 +43,43 @@ class CharPriorities extends Component {
   drop = (event) => {
     event.preventDefault()
     const data = event.dataTransfer.getData('priority') // 'priority-A'
-    let trueParent
+    let trueParent, newParent
     if (event.target.id.split('-')[0] === 'priority') {
       trueParent = document.getElementById(event.target.id).parentNode.id
     }
     this.moveGradeDiv(event, data)
-    this.evaluatePriorities(event, trueParent)
+    newParent = document.getElementById(event.target.id).parentNode.id
+    this.evaluatePriorities(event, trueParent, newParent)
   }
 
-  metatypePriorityEval = (metatypePriority, trueParent, event) => {
+  metatypePriorityEval = (metatypePriority, trueParent, newParent, event) => {
     let id, metaPoints, curMetatype
+    let newMetaObject = {}
     id = metatypePriority.id.split('-')[1]
-      this.props.updatePriorities('metatype', priorities[id].metatype)
-      if (event.target.id === 'metatype-grade-container' 
-        || trueParent !== undefined
-        )
-      {
-        this.props.updateMetatype(priorities[id].metatype['human'])
-        metaPoints = priorities[id].metatype['human'].points
-      } else {
-        curMetatype = this.props.curCharacter.metatype.class.split('-')[0]
-        metaPoints = priorities[id].metatype[curMetatype].points
-      }
-      return metaPoints
+    this.props.updatePriorities('metatype', priorities[id].metatype)
+    if (event.target.id === 'metatype-grade-container' 
+      || trueParent === 'metatype-grade-container'
+      || newParent === 'metatype-grade-container'
+      )
+    {
+      this.props.updateMetatype(priorities[id].metatype['human'])
+      metaPoints = priorities[id].metatype['human'].points
+      newMetaObject.metatype = 'human'
+    } else {
+      curMetatype = this.props.curCharacter.metatype.class.split('-')[0]
+      metaPoints = priorities[id].metatype[curMetatype].points
+      newMetaObject.metatype = curMetatype
+    }
+    newMetaObject.metaPoints = metaPoints
+    return newMetaObject
   }
 
-  attributesPriorityEval = (attributesPriority) => {
+  attributesPriorityEval = (attributesPriority, newMetaObject) => {
     let stats, id, attPoints
     id = attributesPriority.id.split('-')[1]
     attPoints = priorities[id].attributes
     this.props.updatePriorities('attributes', priorities[id].attributes)
-    if (this.props.curCharacter.metatype.class) {
-      stats = baseMetatypeAttributes[this.props.curCharacter.metatype.class.split('-')[0]]
-    }
-    else {
-      stats = baseMetatypeAttributes['human']
-    }
+    stats = baseMetatypeAttributes[newMetaObject.metatype]
     if (this.props.curCharacter.magOrResStat.stat) {
       let newSpecialStats = Object.assign({}, stats.special, this.props.curCharacter.magOrResStat.stat)
       stats = Object.assign({}, stats, {special: newSpecialStats})
@@ -87,9 +88,9 @@ class CharPriorities extends Component {
     return attPoints
   }
 
-  magicResPriorityEval = (magResPriority) => {
+  magicResPriorityEval = (magResPriority, newMetaObject) => {
     let magTechDisplay, stats, displayStat
-    let curMetatype = this.props.curCharacter.metatype.class.split('-')[0]
+    let curMetatype = newMetaObject.metatype
     let curBaseStats = baseMetatypeAttributes[curMetatype]
     if (curBaseStats === undefined) {
       curBaseStats = baseMetatypeAttributes['human']
@@ -108,33 +109,35 @@ class CharPriorities extends Component {
     this.props.updateAttributes(stats)
   }
 
-  evaluatePriorities = (event, trueParent) => {
+  evaluatePriorities = (event, trueParent, newParent) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
     const magResPriority = document.getElementById('magres-grade-container').children[0]
     let curMetatype = this.props.curCharacter.metatype.class
-    if (curMetatype === undefined) curMetatype = 'human'
-    else curMetatype = curMetatype.split("-")[0]
-    let metaPoints, attPoints, resetStats
+    let attPoints, resetStats
+    let newMetaObject = {}
     if (metatypePriority) {
-      metaPoints = this.metatypePriorityEval(metatypePriority, trueParent, event)
+      newMetaObject = this.metatypePriorityEval(metatypePriority, trueParent, newParent, event)
     } else {
       this.props.updatePriorities('metatype', {})
+      newMetaObject.metatype = 'human'
     }
     if (attributesPriority) {
-      attPoints = this.attributesPriorityEval(attributesPriority)
+      attPoints = this.attributesPriorityEval(attributesPriority, newMetaObject)
     } else {
       this.props.updatePriorities('attributes', 0)
     }
+    if (curMetatype === undefined) curMetatype = 'human'
+    else curMetatype = curMetatype.split("-")[0]
     if (magResPriority) {
-      this.magicResPriorityEval(magResPriority)
+      this.magicResPriorityEval(magResPriority, newMetaObject)
     } else {
       resetStats = baseMetatypeAttributes[curMetatype]
       this.props.updatePriorities('magicRes', {})
       this.props.updateAttributes(resetStats)
       this.props.updateMagOrRes({})
     }
-    let total = attPointsReset(metaPoints, attPoints)
+    let total = attPointsReset(newMetaObject.metaPoints, attPoints)
     this.props.updateAttPoints(total)
   }
 
