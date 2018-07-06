@@ -33,24 +33,26 @@ export const CharMagTechno = (props) => {
     <div>
       <div className="priority-form">
         {
-          magResArray.map((key) => {
-            return (
-              <div className="magRes-button-text-container" key={key[1].title}>
-                <RadioButton
-                  checked={curMagRes.title === key[1].title}
-                  onClick={() => {handleClick(key[1], curMetatype)}}
-                  classes={{
-                    root: classes.root,
-                    checked: classes.checked
-                  }}
-                />
-                <div className="magRes-text-container">
-                  <div className="magRes-header-text">{key[1].title}</div>
-                  <div className="magRes-body-text">{key[1].text}</div>
+          magResArray.length > 1 ?
+            magResArray.map((key) => {
+              return (
+                <div className="magRes-button-text-container" key={key[1].title}>
+                  <RadioButton
+                    checked={curMagRes.title === key[1].title}
+                    onClick={() => {handleClick(key[1], curMetatype)}}
+                    classes={{
+                      root: classes.root,
+                      checked: classes.checked
+                    }}
+                  />
+                  <div className="magRes-text-container">
+                    <div className="magRes-header-text">{key[1].title}</div>
+                    <div className="magRes-body-text">{key[1].text}</div>
+                  </div>
                 </div>
-              </div>
-            )
-          })
+              )
+            })
+          : <div className="priority-form-label">None</div>
         }
       </div>
     </div>

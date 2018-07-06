@@ -276,7 +276,7 @@ export const priorities = {
       'human': {class: 'human-1', title: 'Human', points: 1}
     },
     attributes: 12,
-    magTech: {}
+    magTech: {adept: {stat: null}}
   }
 }
 
