@@ -5,10 +5,10 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
-export {default as CharCreate} from './char-create.js'
+export {default as CharCreate} from './char-create'
 export {default as CharPriorities} from './char-priorities'
 export {default as CharMetatype} from './char-metatype'
 export {default as CharAttributes} from './char-attributes'
-export {default as CharMagTechno} from './char-mag-techno'
+export {default as CharMagRes} from './char-mag-res'
 
 export {Login, Signup} from './auth-form'

@@ -12,7 +12,8 @@ const styles = {
   },
   iconHover: {
     '&:hover': {
-      color: '#E2AA38'
+      color: '#E2AA38',
+      cursor: 'pointer'
     }
   }
 }

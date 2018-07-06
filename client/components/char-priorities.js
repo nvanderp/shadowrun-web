@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   CharMetatype,
   CharAttributes,
-  CharMagTechno
+  CharMagRes
 } from './index.js'
 import { 
   priorities, baseMetatypeAttributes, attPointsReset,
@@ -89,19 +89,19 @@ class CharPriorities extends Component {
   }
 
   magicResPriorityEval = (magResPriority, newMetaObject) => {
-    let magTechDisplay, stats, displayStat
+    let magResDisplay, stats, displayStat
     let curMetatype = newMetaObject.metatype
     let curBaseStats = baseMetatypeAttributes[curMetatype]
     if (curBaseStats === undefined) {
       curBaseStats = baseMetatypeAttributes['human']
     }
     let id = magResPriority.id.split('-')[1]
-    magTechDisplay = priorities[id].magTech
-    this.props.updatePriorities('magicRes', magTechDisplay)
-    if (magTechDisplay.magic === undefined) {
-      displayStat = magTechDisplay.adept
+    magResDisplay = priorities[id].magTech
+    this.props.updatePriorities('magicRes', magResDisplay)
+    if (magResDisplay.magic === undefined) {
+      displayStat = magResDisplay.adept
     } else {
-      displayStat = magTechDisplay.magic
+      displayStat = magResDisplay.magic
     }
     let newSpecialStats = Object.assign({}, curBaseStats.special, displayStat.stat)
     stats = Object.assign({}, curBaseStats, {special: newSpecialStats})
@@ -255,7 +255,7 @@ class CharPriorities extends Component {
               <Collapse 
                 in={curPriorities.magicRes.magic !== undefined || curPriorities.magicRes.adept !== undefined}
               >
-                <CharMagTechno />
+                <CharMagRes />
               </Collapse>
             </div>
           </div>

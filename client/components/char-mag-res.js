@@ -26,7 +26,7 @@ const styles = {
   }
 }
 
-export const CharMagTechno = (props) => {
+export const CharMagRes = (props) => {
   const { curOptions, curMagRes, curMetatype, handleClick, classes } = props
   let magResArray = Object.entries(curOptions)
   return (
@@ -86,4 +86,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(CharMagTechno))
+export default withStyles(styles)(connect(mapState, mapDispatch)(CharMagRes))

@@ -63,6 +63,10 @@ form div {
   cursor: pointer;
 }
 
+.grade:hover {
+  color: #E2AA38;
+}
+
 .priority-container {
   padding: 5px 10px 10px 10px;
   flex-grow: 1;
