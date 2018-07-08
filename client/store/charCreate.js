@@ -18,10 +18,17 @@ const defaultCharacter = {
   },
   metatype: {},
   attributes: {},
-  attPoints: {
-    max: 0,
-    cur: 0,
-    min: 0
+  allAttPoints: {
+    attPoints: {
+      max: 0,
+      cur: 0,
+      min: 0
+    },
+    specPoints: {
+      max: 0,
+      cur: 0,
+      min: 0
+    }
   },
   magOrResStat: {}
 }
@@ -32,7 +39,7 @@ const defaultCharacter = {
 const updatePriorities = (view, grade) => ({type: UPDATE_PRIORITIES, view, grade})
 const updateMetatype = metatype => ({type: UPDATE_METATYPE, metatype})
 const updateAttributes = attributes => ({type: UPDATE_ATTRIBUTES, attributes})
-const updateAttPoints = attPoints => ({type: UPDATE_ATTPOINTS, attPoints})
+const updateAttPoints = allAttPoints => ({type: UPDATE_ATTPOINTS, allAttPoints})
 const updateMagRes = magOrResStat => ({type: UPDATE_MAGRES, magOrResStat})
 
 export const changePriorities = (view, grade) =>
@@ -47,9 +54,9 @@ export const changeAttributes = (attributes) =>
   dispatch =>
     dispatch(updateAttributes(attributes))
 
-export const changeAttPoints = (attPoints) =>
+export const changeAttPoints = (allAttPoints) =>
   dispatch =>
-    dispatch(updateAttPoints(attPoints))
+    dispatch(updateAttPoints(allAttPoints))
 
 export const changeMagRes = (magOrResStat) =>
   dispatch =>
@@ -280,11 +287,14 @@ export const priorities = {
   }
 }
 
-export const attPointsReset = (metaValue, attValue) => {
-  if (!metaValue) metaValue = 0
+export const attPointsReset = (attValue) => {
   if (!attValue) attValue = 0
-  let total = metaValue + attValue
-  return {max: total, cur: total, min: 0}
+  return {max: attValue, cur: attValue, min: 0}
+}
+
+export const specPointsReset = (metaValue) => {
+  if (!metaValue) metaValue = 0
+  return {max: metaValue, cur: metaValue, min: 0}
 }
 
 /**
@@ -299,7 +309,7 @@ export default function (state = defaultCharacter, action) {
     case UPDATE_ATTRIBUTES:
       return Object.assign({}, state, {attributes: action.attributes})
     case UPDATE_ATTPOINTS:
-      return Object.assign({}, state, {attPoints: action.attPoints})
+      return Object.assign({}, state, {allAttPoints: action.allAttPoints})
     case UPDATE_MAGRES:
       return Object.assign({}, state, {magOrResStat: action.magOrResStat})
     default:

@@ -3,7 +3,8 @@ import RadioButton from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  baseMetatypeAttributes, changeMetatype, changeAttributes, attPointsReset, changeAttPoints
+  baseMetatypeAttributes, changeMetatype, changeAttributes, 
+  attPointsReset, specPointsReset, changeAttPoints
 } from '../store'
 
 const styles = {
@@ -71,6 +72,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleClick(newMetatype, curAttPriority, curMagRes) {
+      let newTotalObject = {}
       let stats = Object.assign({}, baseMetatypeAttributes[newMetatype.class.split('-')[0]])
       dispatch(changeMetatype(newMetatype))
       if (curMagRes.stat) {
@@ -78,8 +80,9 @@ const mapDispatch = (dispatch) => {
         stats = Object.assign({}, stats, {special: newSpecialStats})
       }
       dispatch(changeAttributes(stats))
-      let attPoints = attPointsReset(newMetatype.points, curAttPriority)
-      dispatch(changeAttPoints(attPoints))
+      newTotalObject.attPoints = attPointsReset(curAttPriority)
+      newTotalObject.specPoints = specPointsReset(newMetatype.points)
+      dispatch(changeAttPoints(newTotalObject))
     }
   }
 }

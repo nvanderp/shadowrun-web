@@ -150,12 +150,11 @@ form div {
   padding-top: .5em;
   padding-bottom: .5em;
 }
-#att-points-container {
+.att-points-container {
   display: flex;
-  flex-direction: row;
 }
 
-#attPoints-title {
+.attPoints-title {
   font-size: 20px;
   color: white;
   background-color: grey;
@@ -167,23 +166,23 @@ form div {
   height: 0;
 }
 
-#attPoints-container-total {
+.attPoints-container-total {
   display: flex;
 }
 
-#attPoints-container {
+.attPoints-container {
   width: 65px;
 }
 
-#attPoints-total {
-  margin-left: -65px;
+.attPoints-total {
+  /* margin-left: -6em; */
   font-size: 20px;
   color: white;
 }
 
 .attpts-num-max {
   color: #E2AA38;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .att-num-max {

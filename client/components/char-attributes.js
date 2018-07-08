@@ -23,15 +23,26 @@ const styles = {
 
 export const CharAttributes = (props) => {
   const { curAttributes, curAttPoints, clickAdd, clickSubtract, classes } = props
+  let attPoints, specPoints
+  if (curAttPoints !== undefined) {
+    attPoints = curAttPoints.attPoints
+    specPoints = curAttPoints.specPoints
+  } else {
+    attPoints = {min: 0, cur: 0, max: 0}
+    specPoints = {min: 0, cur: 0, max: 0}
+  }
   let attClassArray = Object.entries(curAttributes)
   return (
     <div>
-      <div id="att-points-container">
-        <div id="attPoints-title">Attribute Points</div>
-        <div id="attPoints-container-total">
-          <div id="attPoints-container" />
-          <div id="attPoints-total">{curAttPoints.cur}/</div><div className="attpts-num-max">{curAttPoints.max}</div>
+      <div className="att-points-container">
+        <div className="attPoints-container-total">
+          <div className="attPoints-total">{attPoints.cur}/</div><div className="attpts-num-max">{attPoints.max}</div>
         </div>
+        <div className="attPoints-title">Attribute Points</div>
+        <div className="attPoints-container-total">
+          <div className="attPoints-total">{specPoints.cur}/</div><div className="attpts-num-max">{specPoints.max}</div>
+        </div>
+        <div className="attPoints-title">Special Points</div>
       </div>
       <div id="attributes-stat-container">
       {
@@ -85,7 +96,7 @@ export const CharAttributes = (props) => {
 const mapState = (state) => {
   return {
     curMetatype: state.charCreate.metatype,
-    curAttPoints: state.charCreate.attPoints,
+    curAttPoints: state.charCreate.allAttPoints,
     curAttributes: state.charCreate.attributes
   }
 }

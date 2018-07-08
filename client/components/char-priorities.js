@@ -6,7 +6,7 @@ import {
   CharMagRes
 } from './index.js'
 import { 
-  priorities, baseMetatypeAttributes, attPointsReset,
+  priorities, baseMetatypeAttributes, attPointsReset, specPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints, changeMagRes
 } from '../store'
 import Collapse from '@material-ui/core/Collapse'
@@ -116,6 +116,7 @@ class CharPriorities extends Component {
     let curMetatype = this.props.curCharacter.metatype.class
     let attPoints, resetStats
     let newMetaObject = {}
+    let newTotalObject = {}
     if (metatypePriority) {
       newMetaObject = this.metatypePriorityEval(metatypePriority, trueParent, newParent, event)
     } else {
@@ -137,8 +138,9 @@ class CharPriorities extends Component {
       this.props.updateAttributes(resetStats)
       this.props.updateMagOrRes({})
     }
-    let total = attPointsReset(newMetaObject.metaPoints, attPoints)
-    this.props.updateAttPoints(total)
+    newTotalObject.attPoints = attPointsReset(attPoints)
+    newTotalObject.specPoints = specPointsReset(newMetaObject.metaPoints)
+    this.props.updateAttPoints(newTotalObject)
   }
 
   moveGradeDiv = (event, data) => {
@@ -288,8 +290,8 @@ const mapDispatch = (dispatch) => {
     updateAttributes(attributes) {
       dispatch(changeAttributes(attributes))
     },
-    updateAttPoints(attPoints) {
-      dispatch(changeAttPoints(attPoints))
+    updateAttPoints(allAttPoints) {
+      dispatch(changeAttPoints(allAttPoints))
     },
     updateMagOrRes(magOrResStat) {
       dispatch(changeMagRes(magOrResStat))
