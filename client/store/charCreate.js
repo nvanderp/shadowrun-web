@@ -6,6 +6,8 @@ const UPDATE_METATYPE = 'UPDATE_METATYPE'
 const UPDATE_ATTRIBUTES = 'UPDATE_ATTRIBUTES'
 const UPDATE_ATTPOINTS = 'UPDATE_ATTPOINTS'
 const UPDATE_MAGRES = 'UPDATE_MAGRES'
+const UPDATE_SKILLS = 'UPDATE_SKILLS'
+const UPDATE_SKILLPOINTS = 'UPDATE_SKILLPOINTS'
 
 /**
  * INITIAL STATE
@@ -14,7 +16,8 @@ const defaultCharacter = {
   priorities: {       // grades
     'metatype': {},
     'attributes': 0,
-    'magicRes': {}
+    'magicRes': {},
+    'skills': {}
   },
   metatype: {},
   attributes: {},
@@ -30,7 +33,9 @@ const defaultCharacter = {
       min: 0
     }
   },
-  magOrResStat: {}
+  magOrResStat: {},
+  skillPoints: {},
+  skills: {}
 }
 
 /**
@@ -41,6 +46,8 @@ const updateMetatype = metatype => ({type: UPDATE_METATYPE, metatype})
 const updateAttributes = attributes => ({type: UPDATE_ATTRIBUTES, attributes})
 const updateAttPoints = allAttPoints => ({type: UPDATE_ATTPOINTS, allAttPoints})
 const updateMagRes = magOrResStat => ({type: UPDATE_MAGRES, magOrResStat})
+const updateSkillPoints = skillPoints => ({type: UPDATE_SKILLPOINTS, skillPoints})
+const updateSkills = skills => ({type: UPDATE_SKILLS, skills})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -61,6 +68,14 @@ export const changeAttPoints = (allAttPoints) =>
 export const changeMagRes = (magOrResStat) =>
   dispatch =>
     dispatch(updateMagRes(magOrResStat))
+
+export const changeSkillPoints = (skillPoints) =>
+  dispatch =>
+    dispatch(updateSkillPoints(skillPoints))
+
+export const changeSkills = (skills) =>
+  dispatch =>
+    dispatch(updateSkills(skills))
 
 export const baseMetatypeAttributes = {
   'human': {
@@ -180,6 +195,10 @@ export const priorities = {
         title: 'Technomancer',
         text: 'Resonance 6, two Rating 5 Resonance skills, 5 complex forms'
       }
+    },
+    skills: {
+      skillPoints: {min: 0, cur: 46, max: 46},
+      groupPoints: {min: 0, cur: 10, max: 10}
     }
   },
   'B': {
@@ -218,6 +237,10 @@ export const priorities = {
         title: 'Aspected Magician',
         text: 'Magic 5, one Rating 4 Magical skill'
       }
+    },
+    skills: {
+      skillPoints: {min: 0, cur: 36, max: 36},
+      groupPoints: {min: 0, cur: 5, max: 5}
     }
   },
   'C': {
@@ -255,6 +278,10 @@ export const priorities = {
         title: 'Aspected Magician',
         text: 'Magic 3, one Rating 2 Magical skill group'
       }
+    },
+    skills: {
+      skillPoints: {min: 0, cur: 28, max: 28},
+      groupPoints: {min: 0, cur: 2, max: 2}
     }
   },
   'D': {
@@ -276,6 +303,10 @@ export const priorities = {
         title: 'Aspected Magician',
         text: 'Magic 2'
       }
+    },
+    skills: {
+      skillPoints: {min: 0, cur: 22, max: 22},
+      groupPoints: {min: 0, cur: 0, max: 0}
     }
   },
   'E': {
@@ -283,7 +314,11 @@ export const priorities = {
       'human': {class: 'human-1', title: 'Human', points: 1}
     },
     attributes: 12,
-    magTech: {adept: {stat: null}}
+    magTech: {adept: {stat: null}},
+    skills: {
+      skillPoints: {min: 0, cur: 18, max: 18},
+      groupPoints: {min: 0, cur: 0, max: 0}
+    }
   }
 }
 
@@ -307,14 +342,16 @@ export const skillsLibrary = {
         default: true,
         skillGroup: null,
         linkedAtt: 'agi',
-        specializations: ['Bow', 'Crossbow', 'Non-standard Ammunition', 'Slingshot']
+        specializations: [],
+        rating: 0
       },
       automatics: {
         title: 'Automatics',
         default: true,
         skillGroup: 'firearms',
         linkedAtt: 'agi',
-        specializations: ['Assault Rifles', 'Cyber-Implant', 'Machine Pistols', 'Submachine Guns']
+        specializations: [],
+        rating: 0
       }
     },
     physicalActive: {
@@ -324,18 +361,16 @@ export const skillsLibrary = {
         default: true,
         skillGroup: 'stealth',
         linkedAtt: 'int',
-        specializations: ['Camouflage', 'Cosmetic', 'Theatrical', 'Trideo & Video']
+        specializations: [],
+        rating: 0
       },
       diving: {
         title: 'Diving',
         default: true,
         skillGroup: null,
         linkedAtt: 'bod',
-        specializations: [
-          'Liquid Breathing Aparatus', 'Mixed Gas', 'Oxygen Extraction',
-          'SCUBA', 'Arctic', 'Cave', 'Commercial', 'Military',
-          'Controlled Hyperventilation'
-        ]
+        specializations: [],
+        rating: 0
       }
     },
     social: {
@@ -345,14 +380,16 @@ export const skillsLibrary = {
         default: true,
         skillGroup: 'acting',
         linkedAtt: 'cha',
-        specializations: ['Fast Talking', 'Seduction']
+        specializations: [],
+        rating: 0
       },
       etiquette: {
         title: 'Etiquette',
         default: true,
         skillGroup: 'influence',
         linkedAtt: 'cha',
-        specializations: ['Corporate', 'High Society', 'Media', 'Mercenary', 'Street', 'Yakuza']
+        specializations: [],
+        rating: 0
       }
     },
     magic: {
@@ -362,7 +399,8 @@ export const skillsLibrary = {
         default: false,
         skillGroup: 'enchanting',
         linkedAtt: 'mag',
-        specializations: ['Command', 'Contact', 'Time', 'Combat Spells', 'Detection Spells']
+        specializations: [],
+        rating: 0
       },
     },
     resonance: {
@@ -372,7 +410,8 @@ export const skillsLibrary = {
         default: false,
         skillGroup: 'tasking',
         linkedAtt: 'res',
-        specializations: ['Data Sprites', 'Machine Sprites']
+        specializations: [],
+        rating: 0
       }
     }
   }
@@ -393,6 +432,10 @@ export default function (state = defaultCharacter, action) {
       return Object.assign({}, state, {allAttPoints: action.allAttPoints})
     case UPDATE_MAGRES:
       return Object.assign({}, state, {magOrResStat: action.magOrResStat})
+    case UPDATE_SKILLPOINTS:
+      return Object.assign({}, state, {skillPoints: action.skillPoints})
+    case UPDATE_SKILLS:
+      return Object.assign({}, state, {skills: action.skills})
     default:
       return state
   }

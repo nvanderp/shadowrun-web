@@ -7,7 +7,8 @@ import {
 } from './index.js'
 import { 
   priorities, baseMetatypeAttributes, attPointsReset, specPointsReset,
-  changePriorities, changeMetatype, changeAttributes, changeAttPoints, changeMagRes
+  changePriorities, changeMetatype, changeAttributes, changeAttPoints, changeMagRes,
+  changeSkills, changeSkillPoints
 } from '../store'
 import Collapse from '@material-ui/core/Collapse'
 
@@ -24,12 +25,14 @@ class CharPriorities extends Component {
     this.metatypePriorityEval = this.metatypePriorityEval.bind(this)
     this.attributesPriorityEval = this.attributesPriorityEval.bind(this)
     this.magicResPriorityEval = this.magicResPriorityEval.bind(this)
+    this.skillsPriorityEval = this.skillsPriorityEval.bind(this)
     this.evaluatePriorities = this.evaluatePriorities.bind(this)
     this.moveGradeDiv = this.moveGradeDiv.bind(this)
     this.prioritiesGradesView = this.prioritiesGradesView.bind(this)
     this.metatypeGradeContainer = this.metatypeGradeContainer.bind(this)
     this.attributesGradeContainer = this.attributesGradeContainer.bind(this)
     this.magResGradeContainer = this.magResGradeContainer.bind(this)
+    this.skillsGradeContainer = this.skillsGradeContainer.bind(this)
   }
 
   allowDrop = (event) => {
@@ -109,10 +112,19 @@ class CharPriorities extends Component {
     this.props.updateAttributes(stats)
   }
 
+  skillsPriorityEval = (skillsPriority) => {
+    let id, skillPoints
+    id = skillsPriority.id.split('-')[1]
+    skillPoints = priorities[id].skills
+    this.props.updatePriorities('skills', skillPoints)
+    this.props.updateSkillPoints(skillPoints)
+  }
+
   evaluatePriorities = (event, trueParent, newParent) => {
     const metatypePriority = document.getElementById('metatype-grade-container').children[0]
     const attributesPriority = document.getElementById('attributes-grade-container').children[0]
     const magResPriority = document.getElementById('magres-grade-container').children[0]
+    const skillsPriority = document.getElementById('skills-grade-container').children[0]
     let curMetatype = this.props.curCharacter.metatype.class
     let attPoints, resetStats
     let newMetaObject = {}
@@ -137,6 +149,12 @@ class CharPriorities extends Component {
       this.props.updatePriorities('magicRes', {})
       this.props.updateAttributes(resetStats)
       this.props.updateMagOrRes({})
+    }
+    if (skillsPriority) {
+      this.skillsPriorityEval(skillsPriority, )
+    } else {
+      this.props.updatePriorities('skills', {})
+      this.props.updateSkillPoints({})
     }
     newTotalObject.attPoints = attPointsReset(attPoints)
     newTotalObject.specPoints = specPointsReset(newMetaObject.metaPoints)
@@ -217,6 +235,17 @@ class CharPriorities extends Component {
     )
   }
 
+  skillsGradeContainer = () => {
+    return (
+      <div
+        id="skills-grade-container"
+        className="priorities-grade-container"
+        onDrop={(event) => {this.drop(event)}}
+        onDragOver={(event) => {this.allowDrop(event)}}
+      />
+    )
+  }
+
   render () {
     const { curPriorities } = this.props
     return (
@@ -261,6 +290,19 @@ class CharPriorities extends Component {
               </Collapse>
             </div>
           </div>
+          <div id="skills-container" className="priority-container">
+            <div>
+              <div className="priority-header">
+                <h4 className="priority-title">Skills</h4>
+                {this.skillsGradeContainer()}
+              </div>
+              <Collapse 
+                in={curPriorities.skills.skillPoints !== undefined}
+              >
+                hi
+              </Collapse>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -295,6 +337,12 @@ const mapDispatch = (dispatch) => {
     },
     updateMagOrRes(magOrResStat) {
       dispatch(changeMagRes(magOrResStat))
+    },
+    updateSkillPoints(skillPoints) {
+      dispatch(changeSkillPoints(skillPoints))
+    },
+    updateSkills(skills) {
+      dispatch(changeSkills(skills))
     }
   }
 }
