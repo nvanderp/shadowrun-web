@@ -108,25 +108,41 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     clickSubtract(attObj, curAttributes, curAttPoints, attClass) {
+      let newPoints, newPointsObj
       let attStat = attObj.name.toLowerCase().slice(0, 3)
       let newAttsObj = JSON.parse(JSON.stringify(curAttributes))
       newAttsObj[attClass][attStat].cur -= 1
-      let newPoints = curAttPoints.cur + 1
-      if (newAttsObj[attClass][attStat].cur < attObj.min || newPoints > curAttPoints.max) return null
+      if (attObj.name !== 'Edge' && attObj.name !== 'Resonance' && attObj.name !== 'Magic') {
+        newPoints = curAttPoints.attPoints.cur + 1
+        newPointsObj = Object.assign({...curAttPoints, attPoints: {...curAttPoints.attPoints, cur: newPoints}})
+      } else {
+        newPoints = curAttPoints.specPoints.cur + 1
+        newPointsObj = Object.assign({...curAttPoints, specPoints: {...curAttPoints.specPoints, cur: newPoints}})
+      }
+      if (newAttsObj[attClass][attStat].cur < attObj.min 
+        || newPointsObj.attPoints.cur > curAttPoints.attPoints.max
+        || newPointsObj.specPoints.cur > curAttPoints.specPoints.max) return null
       else {
-        let newPointsObj = Object.assign({}, curAttPoints, {cur: newPoints})
         dispatch(changeAttributes(newAttsObj))
         dispatch(changeAttPoints(newPointsObj))
       }
     },
     clickAdd(attObj, curAttributes, curAttPoints, attClass) {
+      let newPoints, newPointsObj
       let attStat = attObj.name.toLowerCase().slice(0, 3)
       let newAttsObj = JSON.parse(JSON.stringify(curAttributes))
       newAttsObj[attClass][attStat].cur += 1
-      let newPoints = curAttPoints.cur - 1
-      if (newAttsObj[attClass][attStat].cur > attObj.max || newPoints < curAttPoints.min) return null
+      if (attObj.name !== 'Edge' && attObj.name !== 'Resonance' && attObj.name !== 'Magic') {
+        newPoints = curAttPoints.attPoints.cur - 1
+        newPointsObj = Object.assign({...curAttPoints, attPoints: {...curAttPoints.attPoints, cur: newPoints}})
+      } else {
+        newPoints = curAttPoints.specPoints.cur - 1
+        newPointsObj = Object.assign({...curAttPoints, specPoints: {...curAttPoints.specPoints, cur: newPoints}})
+      }
+      if (newAttsObj[attClass][attStat].cur > attObj.max 
+        || newPointsObj.attPoints.cur < curAttPoints.attPoints.min
+        || newPointsObj.specPoints.cur < curAttPoints.specPoints.min) return null
       else {
-        let newPointsObj = Object.assign({}, curAttPoints, {cur: newPoints})
         dispatch(changeAttributes(newAttsObj))
         dispatch(changeAttPoints(newPointsObj))
       }
