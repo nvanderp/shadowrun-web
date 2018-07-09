@@ -73,7 +73,7 @@ export const baseMetatypeAttributes = {
     'mental': {
       'wil': {name: 'Willpower', min: 1, max: 6, cur: 1},
       'log': {name: 'Logic', min: 1, max: 6, cur: 1},
-      'int': {name: 'Intelligence', min: 1, max: 6, cur: 1},
+      'int': {name: 'Intuition', min: 1, max: 6, cur: 1},
       'cha': {name: 'Charisma', min: 1, max: 6, cur: 1}
     },
     'special': {
@@ -91,7 +91,7 @@ export const baseMetatypeAttributes = {
     'mental': {
       'wil': {name: 'Willpower', min: 1, max: 6, cur: 1 },
       'log': {name: 'Logic', min: 1, max: 6, cur: 1 },
-      'int': {name: 'Intelligence', min: 1, max: 6, cur: 1 },
+      'int': {name: 'Intuition', min: 1, max: 6, cur: 1 },
       'cha': {name: 'Charisma', min: 3, max: 8, cur: 3 }
     },
     'special': {
@@ -109,7 +109,7 @@ export const baseMetatypeAttributes = {
     'mental': {
       'wil': {name: 'Willpower', min: 2, max: 7, cur: 2 },
       'log': {name: 'Logic', min: 1, max: 6, cur: 1 },
-      'int': {name: 'Intelligence', min: 1, max: 6, cur: 1 },
+      'int': {name: 'Intuition', min: 1, max: 6, cur: 1 },
       'cha': {name: 'Charisma', min: 1, max: 6, cur: 1 }
     },
     'special': {
@@ -127,7 +127,7 @@ export const baseMetatypeAttributes = {
     'mental': {
       'wil': {name: 'Willpower', min: 1, max: 6, cur: 1 },
       'log': {name: 'Logic', min: 1, max: 5, cur: 1 },
-      'int': {name: 'Intelligence', min: 1, max: 6, cur: 1 },
+      'int': {name: 'Intuition', min: 1, max: 6, cur: 1 },
       'cha': {name: 'Charisma', min: 1, max: 5, cur: 1 }
     },
     'special': {
@@ -145,7 +145,7 @@ export const baseMetatypeAttributes = {
     'mental': {
       'wil': {name: 'Willpower', min: 1, max: 6, cur: 1 },
       'log': {name: 'Logic', min: 1, max: 5, cur: 1 },
-      'int': {name: 'Intelligence', min: 1, max: 5, cur: 1 },
+      'int': {name: 'Intuition', min: 1, max: 5, cur: 1 },
       'cha': {name: 'Charisma', min: 1, max: 4, cur: 1 }
     },
     'special': {
@@ -295,6 +295,87 @@ export const attPointsReset = (attValue) => {
 export const specPointsReset = (metaValue) => {
   if (!metaValue) metaValue = 0
   return {max: metaValue, cur: metaValue, min: 0}
+}
+
+export const skillsLibrary = {
+  active: {
+    title: 'Active Skills',
+    combat: {
+      title: 'Combat Active Skills',
+      archery: {
+        title: 'Archery',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'agi',
+        specializations: ['Bow', 'Crossbow', 'Non-standard Ammunition', 'Slingshot']
+      },
+      automatics: {
+        title: 'Automatics',
+        default: true,
+        skillGroup: 'firearms',
+        linkedAtt: 'agi',
+        specializations: ['Assault Rifles', 'Cyber-Implant', 'Machine Pistols', 'Submachine Guns']
+      }
+    },
+    physicalActive: {
+      title: 'Physical Active Skills',
+      disguise: {
+        title: 'Disguise',
+        default: true,
+        skillGroup: 'stealth',
+        linkedAtt: 'int',
+        specializations: ['Camouflage', 'Cosmetic', 'Theatrical', 'Trideo & Video']
+      },
+      diving: {
+        title: 'Diving',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'bod',
+        specializations: [
+          'Liquid Breathing Aparatus', 'Mixed Gas', 'Oxygen Extraction',
+          'SCUBA', 'Arctic', 'Cave', 'Commercial', 'Military',
+          'Controlled Hyperventilation'
+        ]
+      }
+    },
+    social: {
+      title: 'Social Skills',
+      con: {
+        title: 'Con',
+        default: true,
+        skillGroup: 'acting',
+        linkedAtt: 'cha',
+        specializations: ['Fast Talking', 'Seduction']
+      },
+      etiquette: {
+        title: 'Etiquette',
+        default: true,
+        skillGroup: 'influence',
+        linkedAtt: 'cha',
+        specializations: ['Corporate', 'High Society', 'Media', 'Mercenary', 'Street', 'Yakuza']
+      }
+    },
+    magic: {
+      title: 'Magic',
+      alchemy: {
+        title: 'Alchemy',
+        default: false,
+        skillGroup: 'enchanting',
+        linkedAtt: 'mag',
+        specializations: ['Command', 'Contact', 'Time', 'Combat Spells', 'Detection Spells']
+      },
+    },
+    resonance: {
+      title: 'Resonance',
+      compiling: {
+        title: 'Compiling',
+        default: false,
+        skillGroup: 'tasking',
+        linkedAtt: 'res',
+        specializations: ['Data Sprites', 'Machine Sprites']
+      }
+    }
+  }
 }
 
 /**
