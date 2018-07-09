@@ -36,20 +36,24 @@ export const CharAttributes = (props) => {
     <div>
       <div className="att-points-container">
         <div className="attPoints-container-total">
-          <div className="attPoints-total">{attPoints.cur}/</div><div className="attpts-num-max">{attPoints.max}</div>
+          <div className="attPoints-title">Attribute Points</div>
+          <div className="attPoints-total">{attPoints.cur}</div>
+          <div className="attPoints-total-divider">/</div>
+          <div className="attpts-num-max">{attPoints.max}</div>
         </div>
-        <div className="attPoints-title">Attribute Points</div>
         <div className="attPoints-container-total">
-          <div className="attPoints-total">{specPoints.cur}/</div><div className="attpts-num-max">{specPoints.max}</div>
+          <div className="attPoints-title">Special Points</div>
+          <div className="attPoints-total">{specPoints.cur}</div>
+          <div className="attPoints-total-divider">/</div>
+          <div className="attpts-num-max">{specPoints.max}</div>
         </div>
-        <div className="attPoints-title">Special Points</div>
       </div>
       <div id="attributes-stat-container">
       {
         attClassArray.map((attClass) => {
           let attArray = Object.entries(attClass[1])
           return (
-            <div key={attClass[0]}>
+            <div className="att-column" key={attClass[0]}>
               <b className="att-header-text">{attClass[0].charAt(0).toUpperCase() + attClass[0].slice(1)}</b>
               <div className="att-stat-list">
                 {
