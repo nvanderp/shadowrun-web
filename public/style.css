@@ -289,9 +289,19 @@ form div {
   flex-direction: row;
   align-items: center;
   color: black;
-  padding-left: .5em;
+  margin-top: -.5em;
+}
+
+.skill-label-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.5em;
 }
 
 .skill-text-field {
   margin-top: .5em;
+}
+
+.spec-skill-label {
+  display: flex;
 }

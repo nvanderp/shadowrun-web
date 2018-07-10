@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { 
   // baseMetatypeAttributes, changeMetatype, changeAttributes, 
   // attPointsReset, specPointsReset, changeAttPoints
-  skillsLibrary, changeSkillsToShow
+  skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints
 } from '../store'
 import Icon from '@material-ui/core/Icon'
 import Collapse from '@material-ui/core/Collapse'
@@ -37,6 +37,10 @@ const styles = theme => ({
     '&:active': {
       color: '#E2AA38'
     }
+  },
+  specField: {
+    width: '75%',
+    paddingLeft: '1em'
   }
 })
 
@@ -58,8 +62,11 @@ const theme = createMuiTheme({
 })
 
 export const CharSkills = (props) => {
-  const { curSkillPoints, curGroupPoints, curSkillsToShow,
-    curSkills, curSkillPriority, handleSkillClick, classes } = props
+  const { curSkillPoints, curGroupPoints, curSkillsToShow, 
+    curTotalPoints, handleSpecAddClick,
+    curSkills, curSkillPriority, handleCheckBoxClick, 
+    handleSkillSubClick, classes 
+  } = props
   let skillObjArray = Object.entries(skillsLibrary)
   let skillType
   return (
@@ -105,7 +112,7 @@ export const CharSkills = (props) => {
                                     classes={{
                                       root: classes.iconHover
                                     }}
-                                    onClick={() => handleSkillClick(skillSub[1].title, curSkillsToShow)}
+                                    onClick={() => handleSkillSubClick(skillSub[1].title, curSkillsToShow)}
                                   > {
                                       curSkillsToShow === skillSub[1].title
                                       ? 'keyboard_arrow_down'
@@ -126,14 +133,32 @@ export const CharSkills = (props) => {
                                       key={skill[1].title}
                                       in={curSkillsToShow === skillSub[1].title}
                                     >
-                                      <div className="skill-label">
-                                        <Checkbox
-                                          classes={{
-                                            root: classes.root,
-                                            checked: classes.checked
-                                          }}
-                                        />
-                                        <div>{skill[1].title}</div>
+                                      <div id={skill[1].title} className="skill-label-container">
+                                        <div className="skill-label">
+                                          <Checkbox
+                                            classes={{
+                                              root: classes.root,
+                                              checked: classes.checked,
+                                            }}
+                                            onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
+                                          />
+                                          <div>{skill[1].title}</div>
+                                        </div>
+                                        <Collapse in={curSkills[skill[1].title] !== undefined}>
+                                          <MuiThemeProvider theme={theme} key={skill[1]}>
+                                            <div className="spec-skill-label">
+                                              <TextField className={classes.specField}/>
+                                              <Icon 
+                                                className="material-icons md-18"
+                                                classes={{
+                                                  root: classes.iconHover
+                                                }}
+                                                onClick={() => handleSpecAddClick(curSkills, curTotalPoints)}
+                                              >done
+                                              </Icon>
+                                            </div>
+                                          </MuiThemeProvider>
+                                        </Collapse>
                                       </div>
                                     </Collapse>
                                   )
@@ -170,6 +195,7 @@ export const CharSkills = (props) => {
 const mapState = (state) => {
   return {
     curAttributes: state.charCreate.attributes,
+    curTotalPoints: state.charCreate.skillPoints,
     curSkillPoints: state.charCreate.skillPoints.skillPoints,
     curGroupPoints: state.charCreate.skillPoints.groupPoints,
     curSkillsToShow: state.charCreate.skillsToShow,
@@ -180,9 +206,35 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSkillClick(skills, curSkillToShow) {
+    handleSkillSubClick(skills, curSkillToShow) {
       if (curSkillToShow === skills) skills = {}
       dispatch(changeSkillsToShow(skills))
+    },
+    handleCheckBoxClick(skill, curSkills, curTotalPoints) {
+      // console.log('skill', skill)
+      // console.log('curSkills', curSkills)
+      // console.log('curTotalPoints', curTotalPoints)
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
+        if (newSkillsObj[skill.title] !== undefined) {
+          newSkillsObj[skill.title] = undefined
+          if (skill.skillGroup !== undefined) {
+            newTotalPointsObj.skillPoints.cur += 1
+          }
+        } else {
+          newSkillsObj[skill.title] = skill
+          if (skill.skillGroup !== undefined) {
+            newTotalPointsObj.skillPoints.cur -= 1
+          }
+        }
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
+      }
+    },
+    handleSpecAddClick(curSkills, curTotalPoints) {
+      console.log('hi im in here now')
+      // let specialization = 
     }
   }
 }

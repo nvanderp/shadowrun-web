@@ -305,7 +305,7 @@ export const priorities = {
         text: 'Magic 2'
       },
       aspect: {
-        stat: { 'mag': {name: 'Magic', min: 3, max: 6, cur: 3} },
+        stat: { 'mag': {name: 'Magic', min: 2, max: 6, cur: 2} },
         skills: {points: 1, rating: 2, type: 'magical'},
         title: 'Aspected Magician',
         text: 'Magic 2'
