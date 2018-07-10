@@ -276,6 +276,10 @@ form div {
   padding-right: 2em;
 }
 
+.skill-icon-header {
+  display: flex;
+}
+
 .skill-sub-header {
   color: white;
 }
@@ -285,6 +289,7 @@ form div {
   flex-direction: row;
   align-items: center;
   color: black;
+  padding-left: .5em;
 }
 
 .skill-text-field {

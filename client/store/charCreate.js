@@ -8,6 +8,7 @@ const UPDATE_ATTPOINTS = 'UPDATE_ATTPOINTS'
 const UPDATE_MAGRES = 'UPDATE_MAGRES'
 const UPDATE_SKILLS = 'UPDATE_SKILLS'
 const UPDATE_SKILLPOINTS = 'UPDATE_SKILLPOINTS'
+const UPDATE_SKILLSTOSHOW = 'UPDATE_SKILLSTOSHOW'
 
 /**
  * INITIAL STATE
@@ -35,7 +36,8 @@ const defaultCharacter = {
   },
   magOrResStat: {},
   skillPoints: {},
-  skills: {}
+  skills: {},
+  skillsToShow: {}
 }
 
 /**
@@ -48,6 +50,7 @@ const updateAttPoints = allAttPoints => ({type: UPDATE_ATTPOINTS, allAttPoints})
 const updateMagRes = magOrResStat => ({type: UPDATE_MAGRES, magOrResStat})
 const updateSkillPoints = skillPoints => ({type: UPDATE_SKILLPOINTS, skillPoints})
 const updateSkills = skills => ({type: UPDATE_SKILLS, skills})
+const updateSkillsToShow = skills => ({type: UPDATE_SKILLSTOSHOW, skills})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -76,6 +79,10 @@ export const changeSkillPoints = (skillPoints) =>
 export const changeSkills = (skills) =>
   dispatch =>
     dispatch(updateSkills(skills))
+
+export const changeSkillsToShow = (skills) =>
+  dispatch =>
+    dispatch(updateSkillsToShow(skills))
 
 export const baseMetatypeAttributes = {
   'human': {
@@ -451,6 +458,8 @@ export default function (state = defaultCharacter, action) {
       return Object.assign({}, state, {skillPoints: action.skillPoints})
     case UPDATE_SKILLS:
       return Object.assign({}, state, {skills: action.skills})
+    case UPDATE_SKILLSTOSHOW:
+      return Object.assign({}, state, {skillsToShow: action.skills})
     default:
       return state
   }

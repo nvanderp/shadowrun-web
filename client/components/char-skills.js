@@ -6,8 +6,10 @@ import { connect } from 'react-redux'
 import { 
   // baseMetatypeAttributes, changeMetatype, changeAttributes, 
   // attPointsReset, specPointsReset, changeAttPoints
-  skillsLibrary
+  skillsLibrary, changeSkillsToShow
 } from '../store'
+import Icon from '@material-ui/core/Icon'
+import Collapse from '@material-ui/core/Collapse'
 
 const styles = theme => ({
   root: {
@@ -27,9 +29,15 @@ const styles = theme => ({
   sizeIcon: {
     fontSize: 20,
   },
-  // textField: {
-    
-  // }
+  iconHover: {
+    '&:hover': {
+      color: 'navajowhite',
+      cursor: 'pointer'
+    },
+    '&:active': {
+      color: '#E2AA38'
+    }
+  }
 })
 
 const theme = createMuiTheme({
@@ -50,7 +58,8 @@ const theme = createMuiTheme({
 })
 
 export const CharSkills = (props) => {
-  const { curAttributes, curSkillPoints, curGroupPoints, curSkills, curSkillPriority, classes } = props
+  const { curSkillPoints, curGroupPoints, curSkillsToShow,
+    curSkills, curSkillPriority, handleSkillClick, classes } = props
   let skillObjArray = Object.entries(skillsLibrary)
   let skillType
   return (
@@ -86,29 +95,53 @@ export const CharSkills = (props) => {
                       let skillsArray = Object.entries(skillSub[1])
                       if (skillSub[0] !== 'title') {
                         return (
-                          <div className="skill-sub-header" key={skillSub[1].title}>
-                            <b>
-                              {skillSub[1].title}
-                            </b>
+                          <div key={skillSub[1].title}>
+                            <div className="skill-icon-header">
+                              {
+                                skillType === 'active'
+                                ?
+                                  <Icon
+                                    className="material-icons md-18"
+                                    classes={{
+                                      root: classes.iconHover
+                                    }}
+                                    onClick={() => handleSkillClick(skillSub[1].title, curSkillsToShow)}
+                                  > {
+                                      curSkillsToShow === skillSub[1].title
+                                      ? 'keyboard_arrow_down'
+                                      : 'keyboard_arrow_right'
+                                    }
+                                  </Icon>
+                                : null
+                              }
+                              <b className="skill-sub-header">
+                                {skillSub[1].title}
+                              </b>
+                            </div>
                             {
                               skillsArray.map((skill) => {
                                 if (skill[0] !== 'title' && skillType === 'active') {
                                   return (
-                                    <div className="skill-label" key={skill[1].title}>
-                                      <Checkbox
-                                        classes={{
-                                          root: classes.root,
-                                          checked: classes.checked
-                                        }}
-                                      />
-                                      <div>{skill[1].title}</div>
-                                    </div>
+                                    <Collapse 
+                                      key={skill[1].title}
+                                      in={curSkillsToShow === skillSub[1].title}
+                                    >
+                                      <div className="skill-label">
+                                        <Checkbox
+                                          classes={{
+                                            root: classes.root,
+                                            checked: classes.checked
+                                          }}
+                                        />
+                                        <div>{skill[1].title}</div>
+                                      </div>
+                                    </Collapse>
                                   )
                                 }
                                 else if (skillType === 'knowledge') {
                                   return (
                                     <MuiThemeProvider theme={theme} key={skill[1]}>
-                                      <div className="skill-label">
+                                      <div className="skill-label-knowledge">
                                         <TextField className={classes.textField}/>
                                       </div>
                                     </MuiThemeProvider>
@@ -139,6 +172,7 @@ const mapState = (state) => {
     curAttributes: state.charCreate.attributes,
     curSkillPoints: state.charCreate.skillPoints.skillPoints,
     curGroupPoints: state.charCreate.skillPoints.groupPoints,
+    curSkillsToShow: state.charCreate.skillsToShow,
     curSkills: state.charCreate.skills,
     curSkillPriority: state.charCreate.priorities.skills
   }
@@ -146,7 +180,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-
+    handleSkillClick(skills, curSkillToShow) {
+      if (curSkillToShow === skills) skills = {}
+      dispatch(changeSkillsToShow(skills))
+    }
   }
 }
 
