@@ -250,3 +250,43 @@ form div {
 .magRes-body-text {
   color: white;
 }
+
+#skills-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: grey;
+  justify-content: space-around;
+  border-right-style: inset;
+  border-bottom-style: inset;
+  padding: .5em;
+}
+
+.skill-column {
+  display: flex;
+  flex-direction: column;
+  padding: .5em;
+}
+
+.skill-header-text {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  height: fit-content;
+  color: navajowhite;
+  padding-right: 2em;
+}
+
+.skill-sub-header {
+  color: white;
+}
+
+.skill-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: black;
+}
+
+.skill-text-field {
+  margin-top: .5em;
+}

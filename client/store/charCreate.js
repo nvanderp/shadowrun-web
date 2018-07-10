@@ -414,6 +414,21 @@ export const skillsLibrary = {
         rating: 0
       }
     }
+  },
+  knowledge: {
+    title: 'Knowledge Skills',
+    street: {
+      title: 'Street Knowledge'
+    },
+    academic: {
+      title: 'Academic Knowledge'
+    },
+    professional: {
+      title: 'Professional Knowledge'
+    },
+    interests: {
+      title: 'Interests'
+    }
   }
 }
 

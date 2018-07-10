@@ -1,13 +1,15 @@
 import React from 'react'
-import RadioButton from '@material-ui/core/Radio'
-import { withStyles } from '@material-ui/core/styles'
+import Checkbox from '@material-ui/core/Checkbox'
+import TextField from '@material-ui/core/TextField'
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
   // baseMetatypeAttributes, changeMetatype, changeAttributes, 
   // attPointsReset, specPointsReset, changeAttPoints
+  skillsLibrary
 } from '../store'
 
-const styles = {
+const styles = theme => ({
   root: {
     color: '#FFFFFF',
     '&$checked': {
@@ -24,11 +26,33 @@ const styles = {
   },
   sizeIcon: {
     fontSize: 20,
-  }
-}
+  },
+  // textField: {
+    
+  // }
+})
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#E2AA38',
+      main: '#E2AA38',
+      dark: '#E2AA38',
+      contrastText: '#E2AA38',
+    },
+    secondary: {
+      light: '#E2AA38',
+      main: '#E2AA38',
+      dark: '#E2AA38',
+      contrastText: '#E2AA38',
+    },
+  },
+})
 
 export const CharSkills = (props) => {
-  const { curAttributes, curSkillPoints, curGroupPoints, curSkills, curSkillPriority } = props
+  const { curAttributes, curSkillPoints, curGroupPoints, curSkills, curSkillPriority, classes } = props
+  let skillObjArray = Object.entries(skillsLibrary)
+  let skillType
   return (
     <div>
       {curSkillPoints && curGroupPoints
@@ -47,6 +71,62 @@ export const CharSkills = (props) => {
             </div>
           </div>
         : null}
+      <div id="skills-list-container">
+        {
+          skillObjArray.map((skillClass) => {
+            let skillsClassArray = Object.entries(skillClass[1])
+            if (skillClass[1].title === 'Knowledge Skills') skillType = 'knowledge'
+            else skillType = 'active'
+            return (
+              <div className="skill-column" key={skillClass[0]}>
+                <b className="skill-header-text">{skillClass[1].title}</b>
+                <div className="ind-skill-list">
+                  {
+                    skillsClassArray.map((skillSub) => {
+                      let skillsArray = Object.entries(skillSub[1])
+                      if (skillSub[0] !== 'title') {
+                        return (
+                          <div className="skill-sub-header" key={skillSub[1].title}>
+                            <b>
+                              {skillSub[1].title}
+                            </b>
+                            {
+                              skillsArray.map((skill) => {
+                                if (skill[0] !== 'title' && skillType === 'active') {
+                                  return (
+                                    <div className="skill-label" key={skill[1].title}>
+                                      <Checkbox
+                                        classes={{
+                                          root: classes.root,
+                                          checked: classes.checked
+                                        }}
+                                      />
+                                      <div>{skill[1].title}</div>
+                                    </div>
+                                  )
+                                }
+                                else if (skillType === 'knowledge') {
+                                  return (
+                                    <MuiThemeProvider theme={theme} key={skill[1]}>
+                                      <div className="skill-label">
+                                        <TextField className={classes.textField}/>
+                                      </div>
+                                    </MuiThemeProvider>
+                                  )
+                                }
+                              })
+                            }
+                          </div>
+                        )
+                      }
+                    })
+                  }
+                </div>
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }
