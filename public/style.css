@@ -156,47 +156,50 @@ form div {
   text-align: center;
 }
 
-.att-points-container {
+.points-container {
   display: flex;
   flex-direction: column;
   background-color: grey;
   border-right-style: inset;
+  border-bottom-style: inset;
+  margin-bottom: .5em;
 }
 
-.attPoints-title {
+.points-title {
   font-size: 20px;
   color: white;
   border-bottom-style: solid;
   border-bottom-color: black;
   padding-right: 1em;
   border-bottom-width: 2px;
-  margin-left: .5em;
+  padding-left: .5em;
 }
 
-.attPoints-container-total {
+.points-container-total {
   display: flex;
-  padding-right: 1em;
+  padding: 8px 0px;
+  justify-content: center;
 }
 
 .attPoints-container {
   width: 65px;
 }
 
-.attPoints-total {
+.points-total {
   font-size: 20px;
-  border-bottom-style: solid;
   color: white;
-  border-bottom-color: black;
-  border-bottom-width: 2px;
 }
 
-.attPoints-total-divider {
+.points-total-divider {
   font-size: 20px;
 }
 
-.attpts-num-max {
+.points-num-max {
   color: #E2AA38;
   font-size: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
 }
 
 .att-num-max {

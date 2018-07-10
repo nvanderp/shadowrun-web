@@ -34,18 +34,18 @@ export const CharAttributes = (props) => {
   let attClassArray = Object.entries(curAttributes)
   return (
     <div>
-      <div className="att-points-container">
-        <div className="attPoints-container-total">
-          <div className="attPoints-title">Attribute Points</div>
-          <div className="attPoints-total">{attPoints.cur}</div>
-          <div className="attPoints-total-divider">/</div>
-          <div className="attpts-num-max">{attPoints.max}</div>
+      <div className="points-container">
+        <div className="points-container-total">
+          <div className="points-total">{attPoints.cur}</div>
+          <div className="points-total-divider">/</div>
+          <div className="points-num-max">{attPoints.max}</div>
+          <div className="points-title">Attribute Points</div>
         </div>
-        <div className="attPoints-container-total">
-          <div className="attPoints-title">Special Points</div>
-          <div className="attPoints-total">{specPoints.cur}</div>
-          <div className="attPoints-total-divider">/</div>
-          <div className="attpts-num-max">{specPoints.max}</div>
+        <div className="points-container-total">
+          <div className="points-total">{specPoints.cur}</div>
+          <div className="points-total-divider">/</div>
+          <div className="points-num-max">{specPoints.max}</div>
+          <div className="points-title">Special Points</div>
         </div>
       </div>
       <div id="attributes-stat-container">

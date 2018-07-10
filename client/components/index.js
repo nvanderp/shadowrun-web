@@ -10,5 +10,6 @@ export {default as CharPriorities} from './char-priorities'
 export {default as CharMetatype} from './char-metatype'
 export {default as CharAttributes} from './char-attributes'
 export {default as CharMagRes} from './char-mag-res'
+export {default as CharSkills} from './char-skills'
 
 export {Login, Signup} from './auth-form'

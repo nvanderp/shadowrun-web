@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import {
   CharMetatype,
   CharAttributes,
-  CharMagRes
+  CharMagRes,
+  CharSkills
 } from './index.js'
 import { 
   priorities, baseMetatypeAttributes, attPointsReset, specPointsReset,
@@ -299,7 +300,7 @@ class CharPriorities extends Component {
               <Collapse 
                 in={curPriorities.skills.skillPoints !== undefined}
               >
-                hi
+                <CharSkills />
               </Collapse>
             </div>
           </div>
