@@ -168,6 +168,7 @@ export const CharSkills = (props) => {
                                           <MuiThemeProvider theme={theme} key={skill[1]}>
                                             <div className="spec-skill-label">
                                               <TextField
+                                                value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
                                                 className={classes.specField}
                                                 onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
                                               />
@@ -262,13 +263,16 @@ const mapDispatch = (dispatch) => {
       let newSpec = curTempSpecials[skill.title]
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      let newTempSpecObj = JSON.parse(JSON.stringify(curTempSpecials))
       if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
         if (curSkills[skill.title].specializations.length < 1) {
           newSkillsObj[skill.title].specializations.push(newSpec)
           newTotalPointsObj.skillPoints.cur -= 1
+          newTempSpecObj[skill.title] = ""
+          dispatch(changeSkills(newSkillsObj))
+          dispatch(changeSkillPoints(newTotalPointsObj))
+          dispatch(changeTempSpecials(newTempSpecObj))
         }
-        dispatch(changeSkills(newSkillsObj))
-        dispatch(changeSkillPoints(newTotalPointsObj))
       }
     },
     handleSpecBoxClick(skill, curSkills, curTotalPoints) {
