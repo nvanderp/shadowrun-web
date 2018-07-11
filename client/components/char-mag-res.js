@@ -3,7 +3,8 @@ import RadioButton from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  changeMagRes, changeAttributes, baseMetatypeAttributes
+  changeMagRes, changeAttributes, baseMetatypeAttributes, 
+  changeSkillsToShow, changeSkills, changeSkillPoints
 } from '../store'
 
 const styles = {
@@ -27,7 +28,7 @@ const styles = {
 }
 
 export const CharMagRes = (props) => {
-  const { curOptions, curMagRes, curMetatype, handleClick, classes } = props
+  const { curOptions, curMagRes, curMetatype, handleClick, curPriorities, classes } = props
   let magResArray = Object.entries(curOptions)
   return (
     <div>
@@ -39,7 +40,7 @@ export const CharMagRes = (props) => {
                 <div className="magRes-button-text-container" key={key[1].title}>
                   <RadioButton
                     checked={curMagRes.title === key[1].title}
-                    onClick={() => {handleClick(key[1], curMetatype)}}
+                    onClick={() => {handleClick(key[1], curMetatype, curPriorities)}}
                     classes={{
                       root: classes.root,
                       checked: classes.checked
@@ -67,21 +68,26 @@ const mapState = (state) => {
     curOptions: state.charCreate.priorities.magicRes,
     curMagRes: state.charCreate.magOrResStat,
     curAttributes: state.charCreate.attributes,
-    curMetatype: state.charCreate.metatype.class
+    curMetatype: state.charCreate.metatype.class,
+    curPriorities: state.charCreate.priorities
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick(newMagResStat, curMetatype) {
+    handleClick(newMagResStat, curMetatype, curPriorities) {
       if (curMetatype) curMetatype = curMetatype.split('-')[0]
       else curMetatype = 'human'
       let newAttsObj = JSON.parse(JSON.stringify(baseMetatypeAttributes[curMetatype]))
       let statToAdd = newMagResStat.stat
       let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)
       let newAttStats = Object.assign({}, newAttsObj, {special: newSpecialStats})
+      let skillPoints = curPriorities.skills
       dispatch(changeAttributes(newAttStats))
       dispatch(changeMagRes(newMagResStat))
+      dispatch(changeSkillPoints(skillPoints))
+      dispatch(changeSkills({}))
+      dispatch(changeSkillsToShow({}))
     }
   }
 }

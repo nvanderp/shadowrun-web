@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
   baseMetatypeAttributes, changeMetatype, changeAttributes, 
-  attPointsReset, specPointsReset, changeAttPoints
+  attPointsReset, specPointsReset, changeAttPoints, priorities
 } from '../store'
 
 const styles = {
