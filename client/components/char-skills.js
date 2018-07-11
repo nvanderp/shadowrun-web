@@ -44,6 +44,16 @@ const styles = () => ({
     width: '75%',
     marginLeft: '3em',
     paddingBottom: '.5em'
+  },
+  checkIcon: {
+    marginTop: '.7em',
+    '&:hover': {
+      color: 'navajowhite',
+      cursor: 'pointer'
+    },
+    '&:active': {
+      color: '#E2AA38'
+    }
   }
 })
 
@@ -105,7 +115,7 @@ const newSpecializationContainer = (skill, props) => {
           <Icon 
             className="material-icons md-18"
             classes={{
-              root: classes.iconHover
+              root: classes.checkIcon
             }}
             onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
           >done
