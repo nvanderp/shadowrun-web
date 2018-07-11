@@ -66,7 +66,7 @@ const theme = createMuiTheme({
 export const CharSkills = (props) => {
   const { curSkillPoints, curGroupPoints, curSkillsToShow, 
     curTotalPoints, handleSpecAddClick, handleTempSpecial,
-    curSkills, curSkillPriority, handleCheckBoxClick, 
+    curSkills, curAttributes, handleCheckBoxClick, 
     handleSkillSubClick, curTempSpecials, handleSpecBoxClick,
     classes 
   } = props
@@ -108,7 +108,7 @@ export const CharSkills = (props) => {
                           <div key={skillSub[1].title}>
                             <div className="skill-icon-header">
                               {
-                                skillType === 'active'
+                                skillType === 'active' || curAttributes.special.magic
                                 ?
                                   <Icon
                                     className="material-icons md-18"
@@ -143,6 +143,7 @@ export const CharSkills = (props) => {
                                               root: classes.root,
                                               checked: classes.checked,
                                             }}
+                                            checked={curSkills[skill[1].title] !== undefined}
                                             onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
                                           />
                                           <div>{skill[1].title}</div>
@@ -265,7 +266,9 @@ const mapDispatch = (dispatch) => {
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
       let newTempSpecObj = JSON.parse(JSON.stringify(curTempSpecials))
-      if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
+      if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min 
+        && newSpec !== undefined && newSpec.length !== 0
+      ) {
         if (curSkills[skill.title].specializations.length < 1) {
           newSkillsObj[skill.title].specializations.push(newSpec)
           newTotalPointsObj.skillPoints.cur -= 1

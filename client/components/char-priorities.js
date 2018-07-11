@@ -9,7 +9,7 @@ import {
 import { 
   priorities, baseMetatypeAttributes, attPointsReset, specPointsReset,
   changePriorities, changeMetatype, changeAttributes, changeAttPoints, changeMagRes,
-  changeSkills, changeSkillPoints
+  changeSkills, changeSkillPoints, changeSkillsToShow
 } from '../store'
 import Collapse from '@material-ui/core/Collapse'
 
@@ -118,7 +118,9 @@ class CharPriorities extends Component {
     id = skillsPriority.id.split('-')[1]
     skillPoints = priorities[id].skills
     this.props.updatePriorities('skills', skillPoints)
+    this.props.updateSkills({})
     this.props.updateSkillPoints(skillPoints)
+    this.props.updateSkillsToShow({})
   }
 
   evaluatePriorities = (event, trueParent, newParent) => {
@@ -152,10 +154,12 @@ class CharPriorities extends Component {
       this.props.updateMagOrRes({})
     }
     if (skillsPriority) {
-      this.skillsPriorityEval(skillsPriority, )
+      this.skillsPriorityEval(skillsPriority)
     } else {
       this.props.updatePriorities('skills', {})
       this.props.updateSkillPoints({})
+      this.props.updateSkills({})
+      this.props.updateSkillsToShow({})
     }
     newTotalObject.attPoints = attPointsReset(attPoints)
     newTotalObject.specPoints = specPointsReset(newMetaObject.metaPoints)
@@ -344,6 +348,9 @@ const mapDispatch = (dispatch) => {
     },
     updateSkills(skills) {
       dispatch(changeSkills(skills))
+    },
+    updateSkillsToShow(skills) {
+      dispatch(changeSkillsToShow(skills))
     }
   }
 }
