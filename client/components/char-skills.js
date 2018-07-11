@@ -84,10 +84,61 @@ const pointsContainer = (curSkillPoints, curGroupPoints) => {
   )
 }
 
-const skillClassContainer = (skillsClassArray, skillClass, props) => {
-  const { curSkillsToShow, curTotalPoints, handleSpecAddClick, 
-    handleTempSpecial, curSkills, handleCheckBoxClick, curTempSpecials, 
+const newSpecializationContainer = (skill, props) => {
+  const {curTotalPoints, handleSpecAddClick, 
+    handleTempSpecial, curTempSpecials, curSkills, 
+    classes 
+  } = props
+  if (curSkills[skill[1].title] !== undefined ) {
+    return (
+      <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
+        <div className="spec-skill-label">
+          <TextField
+            value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
+            className={classes.specField}
+            onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
+          />
+          <Icon 
+            className="material-icons md-18"
+            classes={{
+              root: classes.iconHover
+            }}
+            onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
+          >done
+          </Icon>
+        </div>
+      </Collapse>
+    )
+  }
+}
+
+const curSpecializationContainer = (skill, props) => {
+  const { curTotalPoints, curSkills,
     handleSpecBoxClick, classes 
+  } = props
+  if (curSkills[skill[1].title] !== undefined ) {
+    return (
+      <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
+        <div className="skill-label spec-label">
+          <Checkbox
+            classes={{
+              root: classes.root,
+              checked: classes.checked,
+            }}
+            checked='true'
+            onClick={() => handleSpecBoxClick(skill[1], curSkills, curTotalPoints)}
+          />
+          <div>{curSkills[skill[1].title].specializations[0]}</div>
+        </div>
+      </Collapse>
+    )
+  }
+}
+
+const skillClassContainer = (skillsClassArray, skillClass, props) => {
+  const { curSkillsToShow, curTotalPoints, curSkills, 
+    handleCheckBoxClick, 
+    classes 
   } = props
   return (
     skillsClassArray.map((skill) => {
@@ -109,43 +160,8 @@ const skillClassContainer = (skillsClassArray, skillClass, props) => {
                 />
                 <div>{skill[1].title}</div>
               </div>
-              {
-                curSkills[skill[1].title] !== undefined 
-                ?
-                <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
-                  <div className="skill-label spec-label">
-                    <Checkbox
-                      classes={{
-                        root: classes.root,
-                        checked: classes.checked,
-                      }}
-                      checked='true'
-                      onClick={() => handleSpecBoxClick(skill[1], curSkills, curTotalPoints)}
-                    />
-                    <div>{curSkills[skill[1].title].specializations[0]}</div>
-                  </div>
-                </Collapse>
-                : null
-              }
-              <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
-                <MuiThemeProvider theme={theme} key={skill[1]}>
-                  <div className="spec-skill-label">
-                    <TextField
-                      value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
-                      className={classes.specField}
-                      onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
-                    />
-                    <Icon 
-                      className="material-icons md-18"
-                      classes={{
-                        root: classes.iconHover
-                      }}
-                      onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
-                    >done
-                    </Icon>
-                  </div>
-                </MuiThemeProvider>
-              </Collapse>
+              {curSpecializationContainer(skill, props)}
+              {newSpecializationContainer(skill, props)}
             </div>
           </Collapse>
         )
