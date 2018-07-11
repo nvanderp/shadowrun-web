@@ -4,15 +4,13 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  // baseMetatypeAttributes, changeMetatype, changeAttributes, 
-  // attPointsReset, specPointsReset, changeAttPoints
   skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints,
   changeTempSpecials
 } from '../store'
 import Icon from '@material-ui/core/Icon'
 import Collapse from '@material-ui/core/Collapse'
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     color: '#FFFFFF',
     '&$checked': {
@@ -63,6 +61,29 @@ const theme = createMuiTheme({
   },
 })
 
+const pointsContainer = (curSkillPoints, curGroupPoints) => {
+  if (!curSkillPoints || !curGroupPoints) {
+    curSkillPoints = {min: 0, max: 0, cur: 0}
+    curGroupPoints = curSkillPoints
+  }
+  return (
+    <div className="points-container">
+      <div className="points-container-total">
+        <div className="points-total">{curSkillPoints.cur}</div>
+        <div className="points-total-divider">/</div>
+        <div className="points-num-max">{curSkillPoints.max}</div>
+        <div className="points-title">Individual Skill Points</div>
+      </div>
+      <div className="points-container-total">
+        <div className="points-total">{curGroupPoints.cur}</div>
+        <div className="points-total-divider">/</div>
+        <div className="points-num-max">{curGroupPoints.max}</div>
+        <div className="points-title">Skill Group Points</div>
+      </div>
+    </div>
+  )
+}
+
 export const CharSkills = (props) => {
   const { curSkillPoints, curGroupPoints, curSkillsToShow, 
     curTotalPoints, handleSpecAddClick, handleTempSpecial,
@@ -74,22 +95,7 @@ export const CharSkills = (props) => {
   let skillType
   return (
     <div>
-      {curSkillPoints && curGroupPoints
-        ? <div className="points-container">
-            <div className="points-container-total">
-              <div className="points-total">{curSkillPoints.cur}</div>
-              <div className="points-total-divider">/</div>
-              <div className="points-num-max">{curSkillPoints.max}</div>
-              <div className="points-title">Individual Skill Points</div>
-            </div>
-            <div className="points-container-total">
-              <div className="points-total">{curGroupPoints.cur}</div>
-              <div className="points-total-divider">/</div>
-              <div className="points-num-max">{curGroupPoints.max}</div>
-              <div className="points-title">Skill Group Points</div>
-            </div>
-          </div>
-        : null}
+      {pointsContainer(curSkillPoints, curGroupPoints)}
       <div id="skills-list-container">
         {
           skillObjArray.map((skillClass) => {
@@ -108,7 +114,7 @@ export const CharSkills = (props) => {
                           <div key={skillSub[1].title}>
                             <div className="skill-icon-header">
                               {
-                                skillType === 'active' || curAttributes.special.magic
+                                skillType === 'active'
                                 ?
                                   <Icon
                                     className="material-icons md-18"
