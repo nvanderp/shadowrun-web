@@ -41,7 +41,8 @@ const styles = theme => ({
   },
   specField: {
     width: '75%',
-    paddingLeft: '1em'
+    paddingLeft: '2em',
+    paddingBottom: '.5em'
   }
 })
 
