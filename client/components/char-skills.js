@@ -20,6 +20,9 @@ const styles = () => ({
       color: '#E2AA38'
     }
   },
+  subArrow: {
+    color: '#E2AA38'
+  },
   checked: {},
   size: {
     width: 40,
@@ -39,7 +42,7 @@ const styles = () => ({
   },
   specField: {
     width: '75%',
-    paddingLeft: '2em',
+    marginLeft: '3em',
     paddingBottom: '.5em'
   }
 })
@@ -97,6 +100,7 @@ const newSpecializationContainer = (skill, props) => {
             value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
             className={classes.specField}
             onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
+            label="Specialization"
           />
           <Icon 
             className="material-icons md-18"
@@ -120,6 +124,13 @@ const curSpecializationContainer = (skill, props) => {
     return (
       <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
         <div className="skill-label spec-label">
+          <Icon 
+            className="material-icons md-18"
+            classes={{
+              root: classes.subArrow
+            }}
+          >subdirectory_arrow_right
+          </Icon>
           <Checkbox
             classes={{
               root: classes.root,
@@ -278,7 +289,13 @@ const mapDispatch = (dispatch) => {
         if (newSkillsObj[skill.title] !== undefined) {
           newSkillsObj[skill.title] = undefined
           if (skill.skillGroup !== undefined) {
-            newTotalPointsObj.skillPoints.cur += 1
+            console.log('skill', skill)
+            if (curSkills[skill.title].specializations.length === 0) {
+              newTotalPointsObj.skillPoints.cur += 1
+            }
+            else {
+              newTotalPointsObj.skillPoints.cur += 2
+            }
           }
         } else {
           newSkillsObj[skill.title] = skill

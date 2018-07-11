@@ -106,8 +106,7 @@ export const baseMetatypeAttributes = {
       'cha': {name: 'Charisma', min: 1, max: 6, cur: 1}
     },
     'special': {
-      'edg': {name: 'Edge',  min: 2, max: 7, cur: 2},
-      'ess': {name: 'Essence', min: 1, max: 6, cur: 6}
+      'edg': {name: 'Edge',  min: 2, max: 7, cur: 2}
     }
   },
   'elf': {
@@ -124,8 +123,7 @@ export const baseMetatypeAttributes = {
       'cha': {name: 'Charisma', min: 3, max: 8, cur: 3 }
     },
     'special': {
-      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 },
-      'ess': {name: 'Essence', min: 1, max: 6, cur: 6 }
+      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 }
     }
   },
   'dwarf': {
@@ -142,8 +140,7 @@ export const baseMetatypeAttributes = {
       'cha': {name: 'Charisma', min: 1, max: 6, cur: 1 }
     },
     'special': {
-      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 },
-      'ess': {name: 'Essence', min: 1, max: 6, cur: 6 }
+      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 }
     }
   },
   'ork': {
@@ -160,8 +157,7 @@ export const baseMetatypeAttributes = {
       'cha': {name: 'Charisma', min: 1, max: 5, cur: 1 }
     },
     'special': {
-      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 },
-      'ess': {name: 'Essence', min: 1, max: 6, cur: 6 }
+      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 }
     }
   },
   'troll': {
@@ -178,8 +174,7 @@ export const baseMetatypeAttributes = {
       'cha': {name: 'Charisma', min: 1, max: 4, cur: 1 }
     },
     'special': {
-      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 },
-      'ess': {name: 'Essence', min: 1, max: 6, cur: 6 }
+      'edg': {name: 'Edge', min: 1, max: 6, cur: 1 }
     }
   }
 }
