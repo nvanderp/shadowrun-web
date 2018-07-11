@@ -171,11 +171,11 @@ const skillContainer = (skillsClassArray, skillClass, props) => {
 }
 
 const activeSkillsContainer = (activeSkillObjArray, props) => {
-  const { curSkillsToShow, handleSkillSubClick, classes } = props
+  const { curSkillsToShow, handleSkillSubClick, curAttributes, classes } = props
   return (
     activeSkillObjArray.map((skillClass) => {
       let skillsClassArray = Object.entries(skillClass[1])
-      if (skillClass[1].title !== 'Magic') { /// HEREREREREREREREREREREREREEREREREEREREREREREREERERERERERERER
+      if (skillClass[1].title !== 'Magic' && skillClass[1].title !== 'Resonance') {
         return (
           <div key={skillClass[1].title}>
             <div className="skill-icon-header">
@@ -198,7 +198,33 @@ const activeSkillsContainer = (activeSkillObjArray, props) => {
             {skillContainer(skillsClassArray, skillClass, props)}
           </div>
         )
-      }
+      } else if (skillClass[1].title === 'Magic' || skillClass[1].title === 'Resonance') {
+        let skillType = skillClass[1].title.slice(0, 3).toLowerCase()
+        return (
+          <Collapse in={curAttributes.special !== undefined && curAttributes.special[skillType] !== undefined} key={skillClass[1].title}>
+            <div>
+              <div className="skill-icon-header">
+                <Icon
+                  className="material-icons md-18"
+                  classes={{
+                    root: classes.iconHover
+                  }}
+                  onClick={() => handleSkillSubClick(skillClass[1].title, curSkillsToShow)}
+                > {
+                    curSkillsToShow === skillClass[1].title
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                  }
+                </Icon>
+                <b className="skill-sub-header">
+                  {skillClass[1].title}
+                </b>
+              </div>
+              {skillContainer(skillsClassArray, skillClass, props)}
+            </div>
+          </Collapse>
+        )
+      } 
     })
   )
 }
