@@ -348,7 +348,6 @@ export const specPointsReset = (metaValue) => {
 
 export const skillsLibrary = {
   active: {
-    title: 'Active Skills',
     combat: {
       title: 'Combat Active Skills',
       archery: {
@@ -430,7 +429,6 @@ export const skillsLibrary = {
     }
   },
   knowledge: {
-    title: 'Knowledge Skills',
     street: {
       title: 'Street Knowledge'
     },

@@ -84,140 +84,124 @@ const pointsContainer = (curSkillPoints, curGroupPoints) => {
   )
 }
 
-export const CharSkills = (props) => {
-  const { curSkillPoints, curGroupPoints, curSkillsToShow, 
-    curTotalPoints, handleSpecAddClick, handleTempSpecial,
-    curSkills, curAttributes, handleCheckBoxClick, 
-    handleSkillSubClick, curTempSpecials, handleSpecBoxClick,
-    classes 
+const skillClassContainer = (skillsClassArray, skillClass, props) => {
+  const { curSkillsToShow, curTotalPoints, handleSpecAddClick, 
+    handleTempSpecial, curSkills, handleCheckBoxClick, curTempSpecials, 
+    handleSpecBoxClick, classes 
   } = props
-  let skillObjArray = Object.entries(skillsLibrary)
-  let skillType
   return (
-    <div>
-      {pointsContainer(curSkillPoints, curGroupPoints)}
-      <div id="skills-list-container">
-        {
-          skillObjArray.map((skillClass) => {
-            let skillsClassArray = Object.entries(skillClass[1])
-            if (skillClass[1].title === 'Knowledge Skills') skillType = 'knowledge'
-            else skillType = 'active'
-            return (
-              <div className="skill-column" key={skillClass[0]}>
-                <b className="skill-header-text">{skillClass[1].title}</b>
-                <div className="ind-skill-list">
-                  {
-                    skillsClassArray.map((skillSub) => {
-                      let skillsArray = Object.entries(skillSub[1])
-                      if (skillSub[0] !== 'title') {
-                        return (
-                          <div key={skillSub[1].title}>
-                            <div className="skill-icon-header">
-                              {
-                                skillType === 'active'
-                                ?
-                                  <Icon
-                                    className="material-icons md-18"
-                                    classes={{
-                                      root: classes.iconHover
-                                    }}
-                                    onClick={() => handleSkillSubClick(skillSub[1].title, curSkillsToShow)}
-                                  > {
-                                      curSkillsToShow === skillSub[1].title
-                                      ? 'keyboard_arrow_down'
-                                      : 'keyboard_arrow_right'
-                                    }
-                                  </Icon>
-                                : null
-                              }
-                              <b className="skill-sub-header">
-                                {skillSub[1].title}
-                              </b>
-                            </div>
-                            {
-                              skillsArray.map((skill) => {
-                                if (skill[0] !== 'title' && skillType === 'active') {
-                                  return (
-                                    <Collapse 
-                                      key={skill[1].title}
-                                      in={curSkillsToShow === skillSub[1].title}
-                                    >
-                                      <div id={skill[1].title} className="skill-label-container">
-                                        <div className="skill-label">
-                                          <Checkbox
-                                            classes={{
-                                              root: classes.root,
-                                              checked: classes.checked,
-                                            }}
-                                            checked={curSkills[skill[1].title] !== undefined}
-                                            onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
-                                          />
-                                          <div>{skill[1].title}</div>
-                                        </div>
-                                        {
-                                          curSkills[skill[1].title] !== undefined 
-                                          ?
-                                          <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
-                                            <div className="skill-label spec-label">
-                                              <Checkbox
-                                                classes={{
-                                                  root: classes.root,
-                                                  checked: classes.checked,
-                                                }}
-                                                checked='true'
-                                                onClick={() => handleSpecBoxClick(skill[1], curSkills, curTotalPoints)}
-                                              />
-                                              <div>{curSkills[skill[1].title].specializations[0]}</div>
-                                            </div>
-                                          </Collapse>
-                                          : null
-                                        }
-                                        <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
-                                          <MuiThemeProvider theme={theme} key={skill[1]}>
-                                            <div className="spec-skill-label">
-                                              <TextField
-                                                value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
-                                                className={classes.specField}
-                                                onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
-                                              />
-                                              <Icon 
-                                                className="material-icons md-18"
-                                                classes={{
-                                                  root: classes.iconHover
-                                                }}
-                                                onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
-                                              >done
-                                              </Icon>
-                                            </div>
-                                          </MuiThemeProvider>
-                                        </Collapse>
-                                      </div>
-                                    </Collapse>
-                                  )
-                                }
-                                else if (skillType === 'knowledge') {
-                                  return (
-                                    <MuiThemeProvider theme={theme} key={skill[1]}>
-                                      <div className="skill-label-knowledge">
-                                        <TextField className={classes.textField}/>
-                                      </div>
-                                    </MuiThemeProvider>
-                                  )
-                                }
-                              })
-                            }
-                          </div>
-                        )
-                      }
-                    })
-                  }
-                </div>
+    skillsClassArray.map((skill) => {
+      if (skill[0] !== 'title') {
+        return (
+          <Collapse 
+            key={skill[1].title}
+            in={curSkillsToShow === skillClass[1].title}
+          >
+            <div id={skill[1].title} className="skill-label-container">
+              <div className="skill-label">
+                <Checkbox
+                  classes={{
+                    root: classes.root,
+                    checked: classes.checked,
+                  }}
+                  checked={curSkills[skill[1].title] !== undefined}
+                  onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
+                />
+                <div>{skill[1].title}</div>
               </div>
-            )
-          })
-        }
+              {
+                curSkills[skill[1].title] !== undefined 
+                ?
+                <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
+                  <div className="skill-label spec-label">
+                    <Checkbox
+                      classes={{
+                        root: classes.root,
+                        checked: classes.checked,
+                      }}
+                      checked='true'
+                      onClick={() => handleSpecBoxClick(skill[1], curSkills, curTotalPoints)}
+                    />
+                    <div>{curSkills[skill[1].title].specializations[0]}</div>
+                  </div>
+                </Collapse>
+                : null
+              }
+              <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
+                <MuiThemeProvider theme={theme} key={skill[1]}>
+                  <div className="spec-skill-label">
+                    <TextField
+                      value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
+                      className={classes.specField}
+                      onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
+                    />
+                    <Icon 
+                      className="material-icons md-18"
+                      classes={{
+                        root: classes.iconHover
+                      }}
+                      onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
+                    >done
+                    </Icon>
+                  </div>
+                </MuiThemeProvider>
+              </Collapse>
+            </div>
+          </Collapse>
+        )
+      }
+    })
+  )
+}
+
+const activeSkillsContainer = (activeSkillObjArray, props) => {
+  const { curSkillsToShow, handleSkillSubClick, classes } = props
+  return (
+    activeSkillObjArray.map((skillClass) => {
+      let skillsClassArray = Object.entries(skillClass[1])
+      return (
+        <div key={skillClass[1].title}>
+          <div className="skill-icon-header">
+            <Icon
+              className="material-icons md-18"
+              classes={{
+                root: classes.iconHover
+              }}
+              onClick={() => handleSkillSubClick(skillClass[1].title, curSkillsToShow)}
+            > {
+                curSkillsToShow === skillClass[1].title
+                ? 'keyboard_arrow_down'
+                : 'keyboard_arrow_right'
+              }
+            </Icon>
+            <b className="skill-sub-header">
+              {skillClass[1].title}
+            </b>
+          </div>
+          {skillClassContainer(skillsClassArray, skillClass, props)}
+        </div>
+      )
+    })
+  )
+}
+
+export const CharSkills = (props) => {
+  const { curSkillPoints, curGroupPoints } = props
+  let activeSkillObjArray = Object.entries(skillsLibrary.active)
+  return (
+    <MuiThemeProvider theme={theme}>
+      <div>
+        {pointsContainer(curSkillPoints, curGroupPoints)}
+        <div id="skills-list-container">
+          <div className="skill-column">
+            <b className="skill-header-text">Active Skills</b>
+            <div className="ind-skill-list">
+              {activeSkillsContainer(activeSkillObjArray, props)}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </MuiThemeProvider>
   )
 }
 
