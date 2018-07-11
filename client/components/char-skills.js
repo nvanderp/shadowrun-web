@@ -135,7 +135,7 @@ const curSpecializationContainer = (skill, props) => {
   }
 }
 
-const skillClassContainer = (skillsClassArray, skillClass, props) => {
+const skillContainer = (skillsClassArray, skillClass, props) => {
   const { curSkillsToShow, curTotalPoints, curSkills, 
     handleCheckBoxClick, 
     classes 
@@ -175,28 +175,30 @@ const activeSkillsContainer = (activeSkillObjArray, props) => {
   return (
     activeSkillObjArray.map((skillClass) => {
       let skillsClassArray = Object.entries(skillClass[1])
-      return (
-        <div key={skillClass[1].title}>
-          <div className="skill-icon-header">
-            <Icon
-              className="material-icons md-18"
-              classes={{
-                root: classes.iconHover
-              }}
-              onClick={() => handleSkillSubClick(skillClass[1].title, curSkillsToShow)}
-            > {
-                curSkillsToShow === skillClass[1].title
-                ? 'keyboard_arrow_down'
-                : 'keyboard_arrow_right'
-              }
-            </Icon>
-            <b className="skill-sub-header">
-              {skillClass[1].title}
-            </b>
+      if (skillClass[1].title !== 'Magic') { /// HEREREREREREREREREREREREREEREREREEREREREREREREERERERERERERER
+        return (
+          <div key={skillClass[1].title}>
+            <div className="skill-icon-header">
+              <Icon
+                className="material-icons md-18"
+                classes={{
+                  root: classes.iconHover
+                }}
+                onClick={() => handleSkillSubClick(skillClass[1].title, curSkillsToShow)}
+              > {
+                  curSkillsToShow === skillClass[1].title
+                  ? 'keyboard_arrow_down'
+                  : 'keyboard_arrow_right'
+                }
+              </Icon>
+              <b className="skill-sub-header">
+                {skillClass[1].title}
+              </b>
+            </div>
+            {skillContainer(skillsClassArray, skillClass, props)}
           </div>
-          {skillClassContainer(skillsClassArray, skillClass, props)}
-        </div>
-      )
+        )
+      }
     })
   )
 }
