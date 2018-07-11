@@ -305,3 +305,11 @@ form div {
 .spec-skill-label {
   display: flex;
 }
+
+.spec-label {
+  margin-left: 2em;
+}
+
+.selected-specialization {
+  margin-left: 3em;
+}

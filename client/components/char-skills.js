@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import { 
   // baseMetatypeAttributes, changeMetatype, changeAttributes, 
   // attPointsReset, specPointsReset, changeAttPoints
-  skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints
+  skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints,
+  changeTempSpecials
 } from '../store'
 import Icon from '@material-ui/core/Icon'
 import Collapse from '@material-ui/core/Collapse'
@@ -63,9 +64,10 @@ const theme = createMuiTheme({
 
 export const CharSkills = (props) => {
   const { curSkillPoints, curGroupPoints, curSkillsToShow, 
-    curTotalPoints, handleSpecAddClick,
+    curTotalPoints, handleSpecAddClick, handleTempSpecial,
     curSkills, curSkillPriority, handleCheckBoxClick, 
-    handleSkillSubClick, classes 
+    handleSkillSubClick, curTempSpecials, handleSpecBoxClick,
+    classes 
   } = props
   let skillObjArray = Object.entries(skillsLibrary)
   let skillType
@@ -144,16 +146,37 @@ export const CharSkills = (props) => {
                                           />
                                           <div>{skill[1].title}</div>
                                         </div>
-                                        <Collapse in={curSkills[skill[1].title] !== undefined}>
+                                        {
+                                          curSkills[skill[1].title] !== undefined 
+                                          ?
+                                          <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
+                                            <div className="skill-label spec-label">
+                                              <Checkbox
+                                                classes={{
+                                                  root: classes.root,
+                                                  checked: classes.checked,
+                                                }}
+                                                checked='true'
+                                                onClick={() => handleSpecBoxClick(skill[1], curSkills, curTotalPoints)}
+                                              />
+                                              <div>{curSkills[skill[1].title].specializations[0]}</div>
+                                            </div>
+                                          </Collapse>
+                                          : null
+                                        }
+                                        <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
                                           <MuiThemeProvider theme={theme} key={skill[1]}>
                                             <div className="spec-skill-label">
-                                              <TextField className={classes.specField}/>
+                                              <TextField
+                                                className={classes.specField}
+                                                onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
+                                              />
                                               <Icon 
                                                 className="material-icons md-18"
                                                 classes={{
                                                   root: classes.iconHover
                                                 }}
-                                                onClick={() => handleSpecAddClick(curSkills, curTotalPoints)}
+                                                onClick={() => handleSpecAddClick(curTempSpecials, skill[1], curSkills, curTotalPoints)}
                                               >done
                                               </Icon>
                                             </div>
@@ -200,7 +223,8 @@ const mapState = (state) => {
     curGroupPoints: state.charCreate.skillPoints.groupPoints,
     curSkillsToShow: state.charCreate.skillsToShow,
     curSkills: state.charCreate.skills,
-    curSkillPriority: state.charCreate.priorities.skills
+    curSkillPriority: state.charCreate.priorities.skills,
+    curTempSpecials: state.charCreate.tempSpecials
   }
 }
 
@@ -211,9 +235,6 @@ const mapDispatch = (dispatch) => {
       dispatch(changeSkillsToShow(skills))
     },
     handleCheckBoxClick(skill, curSkills, curTotalPoints) {
-      // console.log('skill', skill)
-      // console.log('curSkills', curSkills)
-      // console.log('curTotalPoints', curTotalPoints)
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
       if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
@@ -232,9 +253,31 @@ const mapDispatch = (dispatch) => {
         dispatch(changeSkillPoints(newTotalPointsObj))
       }
     },
-    handleSpecAddClick(curSkills, curTotalPoints) {
-      console.log('hi im in here now')
-      // let specialization = 
+    handleTempSpecial(event, skillTitle, curTempSpecials) {
+      let newTempSpecObj = JSON.parse(JSON.stringify(curTempSpecials))
+      newTempSpecObj[skillTitle] = event.target.value
+      dispatch(changeTempSpecials(newTempSpecObj))
+    },
+    handleSpecAddClick(curTempSpecials, skill, curSkills, curTotalPoints) {
+      let newSpec = curTempSpecials[skill.title]
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
+        if (curSkills[skill.title].specializations.length < 1) {
+          newSkillsObj[skill.title].specializations.push(newSpec)
+          newTotalPointsObj.skillPoints.cur -= 1
+        }
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
+      }
+    },
+    handleSpecBoxClick(skill, curSkills, curTotalPoints) {
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      newSkillsObj[skill.title].specializations = []
+      newTotalPointsObj.skillPoints.cur += 1
+      dispatch(changeSkills(newSkillsObj))
+      dispatch(changeSkillPoints(newTotalPointsObj))
     }
   }
 }

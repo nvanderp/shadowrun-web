@@ -9,6 +9,7 @@ const UPDATE_MAGRES = 'UPDATE_MAGRES'
 const UPDATE_SKILLS = 'UPDATE_SKILLS'
 const UPDATE_SKILLPOINTS = 'UPDATE_SKILLPOINTS'
 const UPDATE_SKILLSTOSHOW = 'UPDATE_SKILLSTOSHOW'
+const UPDATE_TEMPSPECIALS = 'UPDATE_TEMPSPECIALS'
 
 /**
  * INITIAL STATE
@@ -37,7 +38,8 @@ const defaultCharacter = {
   magOrResStat: {},
   skillPoints: {},
   skills: {},
-  skillsToShow: {}
+  skillsToShow: {},
+  tempSpecials: {}
 }
 
 /**
@@ -51,6 +53,7 @@ const updateMagRes = magOrResStat => ({type: UPDATE_MAGRES, magOrResStat})
 const updateSkillPoints = skillPoints => ({type: UPDATE_SKILLPOINTS, skillPoints})
 const updateSkills = skills => ({type: UPDATE_SKILLS, skills})
 const updateSkillsToShow = skills => ({type: UPDATE_SKILLSTOSHOW, skills})
+const updateTempSpecials = tempSpecials => ({type: UPDATE_TEMPSPECIALS, tempSpecials})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -83,6 +86,10 @@ export const changeSkills = (skills) =>
 export const changeSkillsToShow = (skills) =>
   dispatch =>
     dispatch(updateSkillsToShow(skills))
+
+export const changeTempSpecials = (tempSpecials) =>
+  dispatch =>
+    dispatch(updateTempSpecials(tempSpecials))
 
 export const baseMetatypeAttributes = {
   'human': {
@@ -460,6 +467,8 @@ export default function (state = defaultCharacter, action) {
       return Object.assign({}, state, {skills: action.skills})
     case UPDATE_SKILLSTOSHOW:
       return Object.assign({}, state, {skillsToShow: action.skills})
+    case UPDATE_TEMPSPECIALS:
+      return Object.assign({}, state, {tempSpecials: action.tempSpecials})
     default:
       return state
   }
