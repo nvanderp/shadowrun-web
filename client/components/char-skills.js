@@ -75,8 +75,9 @@ const theme = createMuiTheme({
   },
 })
 
-const specialPointsCalc = (newSkillsObj, curSkills, skill, curMagRes, newMagResObj) => {
+const specialPointsCalc = (newSkillsObj, curSkills, skill, curMagRes, newMagResObj, newTotalPointsObj) => {
   if (curSkills[skill.title] !== undefined) {
+    newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur - curSkills[skill.title].rating.min
     newSkillsObj[skill.title] = undefined
     newMagResObj.skills.points += 1
   } 
@@ -374,9 +375,10 @@ const mapDispatch = (dispatch) => {
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
       let newMagResObj = JSON.parse(JSON.stringify(curMagRes))
       if (curMagRes.skills !== undefined && skill.skillType === curMagRes.skills.type) {
-        specialPointsCalc(newSkillsObj, curSkills, skill, curMagRes , newMagResObj)
+        specialPointsCalc(newSkillsObj, curSkills, skill, curMagRes , newMagResObj, newTotalPointsObj)
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeMagRes(newMagResObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
       }
       else if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
         skillPointsCalc(newSkillsObj, skill, curSkills, newTotalPointsObj)
