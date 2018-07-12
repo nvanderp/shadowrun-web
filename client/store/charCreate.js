@@ -351,7 +351,8 @@ export const skillsLibrary = {
         skillGroup: null,
         linkedAtt: 'agi',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       },
       automatics: {
         title: 'Automatics',
@@ -359,7 +360,8 @@ export const skillsLibrary = {
         skillGroup: 'firearms',
         linkedAtt: 'agi',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       }
     },
     physicalActive: {
@@ -370,7 +372,8 @@ export const skillsLibrary = {
         skillGroup: 'stealth',
         linkedAtt: 'int',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       },
       diving: {
         title: 'Diving',
@@ -378,7 +381,8 @@ export const skillsLibrary = {
         skillGroup: null,
         linkedAtt: 'bod',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       }
     },
     social: {
@@ -389,7 +393,8 @@ export const skillsLibrary = {
         skillGroup: 'acting',
         linkedAtt: 'cha',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       },
       etiquette: {
         title: 'Etiquette',
@@ -397,7 +402,8 @@ export const skillsLibrary = {
         skillGroup: 'influence',
         linkedAtt: 'cha',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active'
       }
     },
     magic: {
@@ -408,7 +414,8 @@ export const skillsLibrary = {
         skillGroup: 'enchanting',
         linkedAtt: 'mag',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic'
       },
     },
     resonance: {
@@ -419,7 +426,8 @@ export const skillsLibrary = {
         skillGroup: 'tasking',
         linkedAtt: 'res',
         specializations: [],
-        rating: {min: 0, cur: 0, max: 6}
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'resonance'
       }
     }
   },

@@ -5,7 +5,8 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/
 import { connect } from 'react-redux'
 import { 
   skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints,
-  changeTempSpecials
+  changeTempSpecials,
+  changeMagRes
 } from '../store'
 import Icon from '@material-ui/core/Icon'
 import Collapse from '@material-ui/core/Collapse'
@@ -73,6 +74,39 @@ const theme = createMuiTheme({
     },
   },
 })
+
+const specialPointsCalc = (newSkillsObj, curSkills, skill, curMagRes, newMagResObj) => {
+  if (curSkills[skill.title] !== undefined) {
+    newSkillsObj[skill.title] = undefined
+    newMagResObj.skills.points += 1
+  } 
+  else if (curMagRes.skills.points !== 0) {
+    newSkillsObj[skill.title] = skill
+    newSkillsObj[skill.title].rating.cur = curMagRes.skills.rating
+    newSkillsObj[skill.title].rating.min = curMagRes.skills.rating
+    newMagResObj.skills.points -= 1
+  }
+}
+
+const skillPointsCalc = (newSkillsObj, skill, curSkills, newTotalPointsObj) => {
+  if (newSkillsObj[skill.title] !== undefined) {
+    newSkillsObj[skill.title] = undefined
+    if (skill.skillGroup !== undefined) {
+      if (curSkills[skill.title].specializations.length === 0) {
+        newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur
+      }
+      else {
+        newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur + 1
+      }
+    }
+  } else {
+    newSkillsObj[skill.title] = skill
+    newSkillsObj[skill.title].rating.cur = 1
+    if (skill.skillGroup !== undefined) {
+      newTotalPointsObj.skillPoints.cur -= 1
+    }
+  }
+}
 
 const pointsContainer = (curSkillPoints, curGroupPoints, curMagRes) => {
   if (!curSkillPoints || !curGroupPoints) {
@@ -197,7 +231,7 @@ const skillRatingControls = (skill, props) => {
 
 const skillContainer = (skillsClassArray, skillClass, props) => {
   const { curSkillsToShow, curTotalPoints, curSkills, 
-    handleCheckBoxClick,
+    handleCheckBoxClick, curMagRes,
     classes 
   } = props
   return (
@@ -216,7 +250,7 @@ const skillContainer = (skillsClassArray, skillClass, props) => {
                     checked: classes.checked,
                   }}
                   checked={curSkills[skill[1].title] !== undefined}
-                  onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
+                  onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints, curMagRes)}
                 />
                 <div className="skill-title">{skill[1].title}</div>
                 {skillRatingControls(skill, props)}
@@ -333,27 +367,19 @@ const mapDispatch = (dispatch) => {
       if (curSkillToShow === skills) skills = {}
       dispatch(changeSkillsToShow(skills))
     },
-    handleCheckBoxClick(skill, curSkills, curTotalPoints) {
+    handleCheckBoxClick(skill, curSkills, curTotalPoints, curMagRes) {
+      console.log('curMagRes.skills', curMagRes.skills)
+      console.log('skill', skill)
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
-      if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
-        if (newSkillsObj[skill.title] !== undefined) {
-          newSkillsObj[skill.title] = undefined
-          if (skill.skillGroup !== undefined) {
-            if (curSkills[skill.title].specializations.length === 0) {
-              newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur
-            }
-            else {
-              newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur + 1
-            }
-          }
-        } else {
-          newSkillsObj[skill.title] = skill
-          newSkillsObj[skill.title].rating.cur = 1
-          if (skill.skillGroup !== undefined) {
-            newTotalPointsObj.skillPoints.cur -= 1
-          }
-        }
+      let newMagResObj = JSON.parse(JSON.stringify(curMagRes))
+      if (curMagRes.skills !== undefined && skill.skillType === curMagRes.skills.type) {
+        specialPointsCalc(newSkillsObj, curSkills, skill, curMagRes , newMagResObj)
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeMagRes(newMagResObj))
+      }
+      else if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
+        skillPointsCalc(newSkillsObj, skill, curSkills, newTotalPointsObj)
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeSkillPoints(newTotalPointsObj))
       }
@@ -398,7 +424,6 @@ const mapDispatch = (dispatch) => {
         || newTotalPointsObj.skillPoints.cur < 0
       ) return null
       else {
-
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeSkillPoints(newTotalPointsObj))
       }
