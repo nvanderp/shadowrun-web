@@ -351,7 +351,7 @@ export const skillsLibrary = {
         skillGroup: null,
         linkedAtt: 'agi',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       },
       automatics: {
         title: 'Automatics',
@@ -359,7 +359,7 @@ export const skillsLibrary = {
         skillGroup: 'firearms',
         linkedAtt: 'agi',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       }
     },
     physicalActive: {
@@ -370,7 +370,7 @@ export const skillsLibrary = {
         skillGroup: 'stealth',
         linkedAtt: 'int',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       },
       diving: {
         title: 'Diving',
@@ -378,7 +378,7 @@ export const skillsLibrary = {
         skillGroup: null,
         linkedAtt: 'bod',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       }
     },
     social: {
@@ -389,7 +389,7 @@ export const skillsLibrary = {
         skillGroup: 'acting',
         linkedAtt: 'cha',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       },
       etiquette: {
         title: 'Etiquette',
@@ -397,7 +397,7 @@ export const skillsLibrary = {
         skillGroup: 'influence',
         linkedAtt: 'cha',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       }
     },
     magic: {
@@ -408,7 +408,7 @@ export const skillsLibrary = {
         skillGroup: 'enchanting',
         linkedAtt: 'mag',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       },
     },
     resonance: {
@@ -419,7 +419,7 @@ export const skillsLibrary = {
         skillGroup: 'tasking',
         linkedAtt: 'res',
         specializations: [],
-        rating: 0
+        rating: {min: 0, cur: 0, max: 6}
       }
     }
   },

@@ -231,6 +231,7 @@ form div {
 .att-stat-controls {
   display: flex;
   justify-content: space-around;
+  color: white;
 }
 
 .magRes-button-text-container {
@@ -312,4 +313,8 @@ form div {
 
 .selected-specialization {
   margin-left: 3em;
+}
+
+.skill-title {
+  margin-right: .5em;
 }

@@ -79,7 +79,7 @@ export const CharAttributes = (props) => {
                             }}
                           >add_circle
                           </Icon>
-                          </div>
+                        </div>
                       </div>
                     )
                   })

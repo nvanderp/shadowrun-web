@@ -156,6 +156,35 @@ const curSpecializationContainer = (skill, props) => {
   }
 }
 
+const skillRatingControls = (skill, props) => {
+  const { classes, curSkills, handleRatingAdd, handleRatingSubtract, curTotalPoints } = props
+  return (
+    <Collapse in={curSkills[skill[1].title] !== undefined}>
+      <div className="att-stat-controls">
+        <Icon 
+          className="material-icons md-18"
+          onClick={() => handleRatingSubtract(skill[1], curSkills, curTotalPoints)}
+          classes={{
+            root: classes.iconHover
+          }}
+        >remove_circle
+        </Icon>
+        {curSkills[skill[1].title] !== undefined ? curSkills[skill[1].title].rating.cur : null}
+        /
+        <div className="att-num-max">{skill[1].rating.max}</div>
+        <Icon
+          className="material-icons md-18"
+          onClick={() => handleRatingAdd(skill[1], curSkills, curTotalPoints)}
+          classes={{
+            root: classes.iconHover
+          }}
+        >add_circle
+        </Icon>
+      </div>
+    </Collapse>
+  )  
+}
+
 const skillContainer = (skillsClassArray, skillClass, props) => {
   const { curSkillsToShow, curTotalPoints, curSkills, 
     handleCheckBoxClick, 
@@ -179,7 +208,8 @@ const skillContainer = (skillsClassArray, skillClass, props) => {
                   checked={curSkills[skill[1].title] !== undefined}
                   onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints)}
                 />
-                <div>{skill[1].title}</div>
+                <div className="skill-title">{skill[1].title}</div>
+                {skillRatingControls(skill, props)}
               </div>
               {curSpecializationContainer(skill, props)}
               {newSpecializationContainer(skill, props)}
@@ -299,7 +329,6 @@ const mapDispatch = (dispatch) => {
         if (newSkillsObj[skill.title] !== undefined) {
           newSkillsObj[skill.title] = undefined
           if (skill.skillGroup !== undefined) {
-            console.log('skill', skill)
             if (curSkills[skill.title].specializations.length === 0) {
               newTotalPointsObj.skillPoints.cur += 1
             }
@@ -309,6 +338,7 @@ const mapDispatch = (dispatch) => {
           }
         } else {
           newSkillsObj[skill.title] = skill
+          newSkillsObj[skill.title].rating.cur = 1
           if (skill.skillGroup !== undefined) {
             newTotalPointsObj.skillPoints.cur -= 1
           }
@@ -347,6 +377,40 @@ const mapDispatch = (dispatch) => {
       newTotalPointsObj.skillPoints.cur += 1
       dispatch(changeSkills(newSkillsObj))
       dispatch(changeSkillPoints(newTotalPointsObj))
+    },
+    handleRatingAdd(skill, curSkills, curTotalPoints) {
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      newSkillsObj[skill.title].rating.cur += 1
+      newTotalPointsObj.skillPoints.cur -= 1
+      if (newSkillsObj[skill.title].rating.cur > newSkillsObj[skill.title].rating.max
+        || newTotalPointsObj.skillPoints.cur < 0
+      ) return null
+      else {
+
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
+      }
+    },
+    handleRatingSubtract(skill, curSkills, curTotalPoints) {
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
+      newSkillsObj[skill.title].rating.cur -= 1
+      newTotalPointsObj.skillPoints.cur += 1
+      if (newSkillsObj[skill.title].rating.cur < newSkillsObj[skill.title].rating.min
+        || newTotalPointsObj.skillPoints.cur > curTotalPoints.skillPoints.max
+      ) {
+        return null
+      }
+      else if (newSkillsObj[skill.title].rating.cur === 0) {
+        newSkillsObj[skill.title] = undefined
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
+      }
+      else {
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeSkillPoints(newTotalPointsObj))
+      }
     }
   }
 }
