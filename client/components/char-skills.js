@@ -330,10 +330,10 @@ const mapDispatch = (dispatch) => {
           newSkillsObj[skill.title] = undefined
           if (skill.skillGroup !== undefined) {
             if (curSkills[skill.title].specializations.length === 0) {
-              newTotalPointsObj.skillPoints.cur += 1
+              newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur
             }
             else {
-              newTotalPointsObj.skillPoints.cur += 2
+              newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur + 1
             }
           }
         } else {
