@@ -74,7 +74,7 @@ const theme = createMuiTheme({
   },
 })
 
-const pointsContainer = (curSkillPoints, curGroupPoints) => {
+const pointsContainer = (curSkillPoints, curGroupPoints, curMagRes) => {
   if (!curSkillPoints || !curGroupPoints) {
     curSkillPoints = {min: 0, max: 0, cur: 0}
     curGroupPoints = curSkillPoints
@@ -87,6 +87,16 @@ const pointsContainer = (curSkillPoints, curGroupPoints) => {
         <div className="points-num-max">{curSkillPoints.max}</div>
         <div className="points-title">Individual Skill Points</div>
       </div>
+      {
+          curMagRes.skills !== undefined 
+            ? <Collapse in={curMagRes.skills !== undefined}>
+                <div className="special-skill-points">
+                  <div className="special-points-total">{curMagRes.skills.points}</div>
+                  <div>{curMagRes.skills.text}</div>
+                </div>
+              </Collapse>
+            : <div />
+        }
       <div className="points-container-total">
         <div className="points-total">{curGroupPoints.cur}</div>
         <div className="points-total-divider">/</div>
@@ -187,7 +197,7 @@ const skillRatingControls = (skill, props) => {
 
 const skillContainer = (skillsClassArray, skillClass, props) => {
   const { curSkillsToShow, curTotalPoints, curSkills, 
-    handleCheckBoxClick, 
+    handleCheckBoxClick,
     classes 
   } = props
   return (
@@ -281,12 +291,12 @@ const activeSkillsContainer = (activeSkillObjArray, props) => {
 }
 
 export const CharSkills = (props) => {
-  const { curSkillPoints, curGroupPoints } = props
+  const { curSkillPoints, curGroupPoints, curMagRes } = props
   let activeSkillObjArray = Object.entries(skillsLibrary.active)
   return (
     <MuiThemeProvider theme={theme}>
       <div>
-        {pointsContainer(curSkillPoints, curGroupPoints)}
+        {pointsContainer(curSkillPoints, curGroupPoints, curMagRes)}
         <div id="skills-list-container">
           <div className="skill-column">
             <b className="skill-header-text">Active Skills</b>
@@ -312,7 +322,8 @@ const mapState = (state) => {
     curSkillsToShow: state.charCreate.skillsToShow,
     curSkills: state.charCreate.skills,
     curSkillPriority: state.charCreate.priorities.skills,
-    curTempSpecials: state.charCreate.tempSpecials
+    curTempSpecials: state.charCreate.tempSpecials,
+    curMagRes: state.charCreate.magOrResStat
   }
 }
 

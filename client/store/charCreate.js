@@ -192,14 +192,14 @@ export const priorities = {
     magTech: {
       magic: {
         stat: { 'mag': {name: 'Magic', min: 6, max: 6, cur: 6} },
-        skills: {points: 2, rating: 5, type: 'magical'},
+        skills: {points: 2, rating: 5, type: 'magic', text: ' Rating 5 Magical skills'},
         spells: 10,
         title: 'Magician or Mystic Adept',
         text: 'Magic 6, two Rating 5 Magical skills, 10 spells'
       },
       techno: {
         stat: { 'res': {name: 'Resonance', min: 6, max: 6, cur: 6} },
-        skills: {points: 2, rating: 5, type: 'resonance'},
+        skills: {points: 2, rating: 5, type: 'resonance', text: ' Rating 5 Resonance skills'},
         compForms: 5,
         title: 'Technomancer',
         text: 'Resonance 6, two Rating 5 Resonance skills, 5 complex forms'
@@ -222,27 +222,27 @@ export const priorities = {
     magTech: {
       magic: {
         stat: { 'mag': {name: 'Magic', min: 4, max: 6, cur: 4} },
-        skills: {points: 2, rating: 4, type: 'magical'},
+        skills: {points: 2, rating: 4, type: 'magic', text: ' Rating 4 Magical skills'},
         spells: 7,
         title: 'Magician or Mystic Adept',
         text: 'Magic 4, two Rating 4 Magical skills, 7 spells'
       },
       techno: {
         stat: { 'res': {name: 'Resonance', min: 4, max: 6, cur: 4} },
-        skills: {points: 2, rating: 4, type: 'resonance'},
+        skills: {points: 2, rating: 4, type: 'resonance', text: ' Rating 4 Resonance skills'},
         compForms: 2,
         title: 'Technomancer',
         text: 'Resonance 4, two Rating 4 Resonance skills, 2 complex forms'
       },
       adept: {
         stat: { 'mag': {name: 'Magic', min: 6, max: 6, cur: 6} },
-        skills: {points: 1, rating: 4, type: 'active'},
+        skills: {points: 1, rating: 4, type: 'active', text: ' Rating 4 Active skill'},
         title: 'Adept',
         text: 'Magic 6, one Rating 4 Active skill'
       },
       aspect: {
         stat: { 'mag': {name: 'Magic', min: 5, max: 6, cur: 5} },
-        skills: {points: 1, rating: 4, type: 'magical'},
+        skills: {points: 1, rating: 4, type: 'magic', text: ' Rating 4 Magical skill'},
         title: 'Aspected Magician',
         text: 'Magic 5, one Rating 4 Magical skill'
       }
@@ -277,13 +277,13 @@ export const priorities = {
       },
       adept: {
         stat: { 'mag': {name: 'Magic', min: 4, max: 6, cur: 4} },
-        skills: {points: 1, rating: 2, type: 'active'},
+        skills: {points: 1, rating: 2, type: 'active', text: ' Rating 2 Active Skill'},
         title: 'Adept',
         text: 'Magic 4, one Rating 2 Active skill'
       },
       aspect: {
         stat: { 'mag': {name: 'Magic', min: 3, max: 6, cur: 3} },
-        skills: {points: 1, rating: 2, type: 'magical'},
+        skills: {points: 1, rating: 2, type: 'magical', text: ' Rating 2 Magical skill'},
         title: 'Aspected Magician',
         text: 'Magic 3, one Rating 2 Magical skill group'
       }
@@ -308,7 +308,7 @@ export const priorities = {
       },
       aspect: {
         stat: { 'mag': {name: 'Magic', min: 2, max: 6, cur: 2} },
-        skills: {points: 1, rating: 2, type: 'magical'},
+        skills: {points: 1, rating: 2, type: 'magical', text: ' Rating 2 Magical skill'},
         title: 'Aspected Magician',
         text: 'Magic 2'
       }
