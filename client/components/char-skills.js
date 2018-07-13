@@ -266,6 +266,7 @@ const skillContainer = (skillsClassArray, skillClass, props) => {
                   onClick={() => handleCheckBoxClick(skill[1], props)}
                 />
                 <div className="skill-title">{skill[1].title}</div>
+                <div className="skill-linkedAtt">({skill[1].linkedAtt})</div>
                 {skillRatingControls(skill, props)}
               </div>
               {curSpecializationContainer(skill, props)}

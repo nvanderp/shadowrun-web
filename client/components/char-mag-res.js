@@ -4,7 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
   changeMagRes, changeAttributes, baseMetatypeAttributes, 
-  changeSkillsToShow, changeSkills, changeSkillPoints
+  changeSkillsToShow, changeSkills, changeSkillPoints,
+  changeAttPoints, attPointsReset, specPointsReset
 } from '../store'
 
 const styles = {
@@ -28,7 +29,7 @@ const styles = {
 }
 
 export const CharMagRes = (props) => {
-  const { curOptions, curMagRes, curMetatype, handleClick, curPriorities, classes } = props
+  const { curOptions, curMagRes, handleClick, classes } = props
   let magResArray = Object.entries(curOptions)
   return (
     <div>
@@ -40,7 +41,7 @@ export const CharMagRes = (props) => {
                 <div className="magRes-button-text-container" key={key[1].title}>
                   <RadioButton
                     checked={curMagRes.title === key[1].title}
-                    onClick={() => {handleClick(key[1], curMetatype, curPriorities)}}
+                    onClick={() => {handleClick(key[1], props)}}
                     classes={{
                       root: classes.root,
                       checked: classes.checked
@@ -68,26 +69,39 @@ const mapState = (state) => {
     curOptions: state.charCreate.priorities.magicRes,
     curMagRes: state.charCreate.magOrResStat,
     curAttributes: state.charCreate.attributes,
-    curMetatype: state.charCreate.metatype.class,
-    curPriorities: state.charCreate.priorities
+    curMetatype: state.charCreate.metatype,
+    curPriorities: state.charCreate.priorities,
+    curAttPriority: state.charCreate.priorities.attributes
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick(newMagResStat, curMetatype, curPriorities) {
-      if (curMetatype) curMetatype = curMetatype.split('-')[0]
-      else curMetatype = 'human'
-      let newAttsObj = JSON.parse(JSON.stringify(baseMetatypeAttributes[curMetatype]))
+    handleClick(newMagResStat, props) {
+      let { curMetatype, curPriorities, curAttPriority } = props
+      let metatypeClass = {}
+      if (curMetatype) {
+        metatypeClass.title = curMetatype.class.split('-')[0]
+        metatypeClass.points = curMetatype.points
+      } else {
+        metatypeClass.title = 'human'
+        metatypeClass.points = '0'
+      }
+      let newAttsObj = JSON.parse(JSON.stringify(baseMetatypeAttributes[metatypeClass.title]))
       let statToAdd = newMagResStat.stat
       let newSpecialStats = Object.assign({}, newAttsObj.special, statToAdd)
       let newAttStats = Object.assign({}, newAttsObj, {special: newSpecialStats})
       let skillPoints = curPriorities.skills
+      let newTotalObject = {}
+      newTotalObject.attPoints = attPointsReset(curAttPriority)
+      newTotalObject.specPoints = specPointsReset(metatypeClass.points)
+      dispatch(changeAttPoints(newTotalObject))
       dispatch(changeAttributes(newAttStats))
       dispatch(changeMagRes(newMagResStat))
       dispatch(changeSkillPoints(skillPoints))
       dispatch(changeSkills({}))
       dispatch(changeSkillsToShow({}))
+      dispatch(changeAttPoints(newTotalObject))
     }
   }
 }
