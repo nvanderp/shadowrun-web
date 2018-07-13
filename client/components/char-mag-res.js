@@ -80,7 +80,7 @@ const mapDispatch = (dispatch) => {
     handleClick(newMagResStat, props) {
       let { curMetatype, curPriorities, curAttPriority } = props
       let metatypeClass = {}
-      if (curMetatype) {
+      if (curMetatype.class !== undefined) {
         metatypeClass.title = curMetatype.class.split('-')[0]
         metatypeClass.points = curMetatype.points
       } else {

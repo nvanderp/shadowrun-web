@@ -424,6 +424,116 @@ export const skillsLibrary = {
         skillType: 'magic',
         special: false
       },
+      arcana: {
+        title: 'Arcana',
+        default: false,
+        skillGroup: null,
+        linkedAtt: 'log',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      artificing: {
+        title: 'Artificing',
+        default: false,
+        skillGroup: 'enchanting',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      assensing: {
+        title: 'Assensing',
+        default: false,
+        skillGroup: null,
+        linkedAtt: 'int',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      astral: {
+        title: 'Astral Combat',
+        default: false,
+        skillGroup: null,
+        linkedAtt: 'wil',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      banishing: {
+        title: 'Banishing',
+        default: false,
+        skillGroup: 'conjuring',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      binding: {
+        title: 'Binding',
+        default: false,
+        skillGroup: 'conjuring',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      counterspelling: {
+        title: 'Counterspelling',
+        default: false,
+        skillGroup: 'sorcery',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      disenchanting: {
+        title: 'Disenchanting',
+        default: false,
+        skillGroup: 'enchanting',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      ritual: {
+        title: 'Ritual Spellcasting',
+        default: false,
+        skillGroup: 'sorcery',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      spellcasting: {
+        title: 'Spellcasting',
+        default: false,
+        skillGroup: 'sorcery',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      },
+      summoning: {
+        title: 'Summoning',
+        default: false,
+        skillGroup: 'conjuring',
+        linkedAtt: 'mag',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'magic',
+        special: false
+      }
     },
     resonance: {
       title: 'Resonance',
