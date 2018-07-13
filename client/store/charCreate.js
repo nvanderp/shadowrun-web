@@ -352,7 +352,8 @@ export const skillsLibrary = {
         linkedAtt: 'agi',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       },
       automatics: {
         title: 'Automatics',
@@ -361,7 +362,8 @@ export const skillsLibrary = {
         linkedAtt: 'agi',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       }
     },
     physicalActive: {
@@ -373,7 +375,8 @@ export const skillsLibrary = {
         linkedAtt: 'int',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       },
       diving: {
         title: 'Diving',
@@ -382,7 +385,8 @@ export const skillsLibrary = {
         linkedAtt: 'bod',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       }
     },
     social: {
@@ -394,7 +398,8 @@ export const skillsLibrary = {
         linkedAtt: 'cha',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       },
       etiquette: {
         title: 'Etiquette',
@@ -403,7 +408,8 @@ export const skillsLibrary = {
         linkedAtt: 'cha',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'active'
+        skillType: 'active',
+        special: false
       }
     },
     magic: {
@@ -415,7 +421,8 @@ export const skillsLibrary = {
         linkedAtt: 'mag',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'magic'
+        skillType: 'magic',
+        special: false
       },
     },
     resonance: {
@@ -427,7 +434,8 @@ export const skillsLibrary = {
         linkedAtt: 'res',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
-        skillType: 'resonance'
+        skillType: 'resonance',
+        special: false
       }
     }
   },

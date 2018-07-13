@@ -75,20 +75,6 @@ const theme = createMuiTheme({
   },
 })
 
-const specialPointsCalc = (newSkillsObj, curSkills, skill, curMagRes, newMagResObj, newTotalPointsObj) => {
-  if (curSkills[skill.title] !== undefined) {
-    newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur - curSkills[skill.title].rating.min
-    newSkillsObj[skill.title] = undefined
-    newMagResObj.skills.points += 1
-  } 
-  else if (curMagRes.skills.points !== 0) {
-    newSkillsObj[skill.title] = skill
-    newSkillsObj[skill.title].rating.cur = curMagRes.skills.rating
-    newSkillsObj[skill.title].rating.min = curMagRes.skills.rating
-    newMagResObj.skills.points -= 1
-  }
-}
-
 const skillPointsCalc = (newSkillsObj, skill, curSkills, newTotalPointsObj) => {
   if (newSkillsObj[skill.title] !== undefined) {
     newSkillsObj[skill.title] = undefined
@@ -103,9 +89,35 @@ const skillPointsCalc = (newSkillsObj, skill, curSkills, newTotalPointsObj) => {
   } else {
     newSkillsObj[skill.title] = skill
     newSkillsObj[skill.title].rating.cur = 1
+    newSkillsObj[skill.title].special = false
     if (skill.skillGroup !== undefined) {
       newTotalPointsObj.skillPoints.cur -= 1
     }
+  }
+}
+
+const specialPointsCalc = (newSkillsObj, skill, newMagResObj, newTotalPointsObj, props) => {
+  const { curSkills, curTotalPoints, curMagRes } = props
+  if (newSkillsObj[skill.title] !== undefined && newSkillsObj[skill.title].special !== false) {
+    if (curSkills[skill.title].specializations.length === 0) {
+      newTotalPointsObj.skillPoints.cur += newSkillsObj[skill.title].rating.cur - newSkillsObj[skill.title].rating.min
+    }
+    else {
+      newTotalPointsObj.skillPoints.cur += newSkillsObj[skill.title].rating.cur - newSkillsObj[skill.title].rating.min + 1
+    }
+    newSkillsObj[skill.title].special = false
+    newSkillsObj[skill.title] = undefined
+    newMagResObj.skills.points += 1
+  } 
+  else if (curMagRes.skills.points !== 0 && curSkills[skill.title] === undefined) {
+    newSkillsObj[skill.title] = skill
+    newSkillsObj[skill.title].special = true
+    newSkillsObj[skill.title].rating.cur = curMagRes.skills.rating
+    newSkillsObj[skill.title].rating.min = curMagRes.skills.rating
+    newMagResObj.skills.points -= 1
+  }
+  else if (curTotalPoints.skillPoints.cur > curTotalPoints.skillPoints.min) {
+    skillPointsCalc(newSkillsObj, skill, curSkills, newTotalPointsObj)
   }
 }
 
@@ -251,7 +263,7 @@ const skillContainer = (skillsClassArray, skillClass, props) => {
                     checked: classes.checked,
                   }}
                   checked={curSkills[skill[1].title] !== undefined}
-                  onClick={() => handleCheckBoxClick(skill[1], curSkills, curTotalPoints, curMagRes)}
+                  onClick={() => handleCheckBoxClick(skill[1], props)}
                 />
                 <div className="skill-title">{skill[1].title}</div>
                 {skillRatingControls(skill, props)}
@@ -368,14 +380,13 @@ const mapDispatch = (dispatch) => {
       if (curSkillToShow === skills) skills = {}
       dispatch(changeSkillsToShow(skills))
     },
-    handleCheckBoxClick(skill, curSkills, curTotalPoints, curMagRes) {
-      console.log('curMagRes.skills', curMagRes.skills)
-      console.log('skill', skill)
+    handleCheckBoxClick(skill, props) {
+      const { curSkills, curTotalPoints, curMagRes } = props
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTotalPointsObj = JSON.parse(JSON.stringify(curTotalPoints))
       let newMagResObj = JSON.parse(JSON.stringify(curMagRes))
       if (curMagRes.skills !== undefined && skill.skillType === curMagRes.skills.type) {
-        specialPointsCalc(newSkillsObj, curSkills, skill, curMagRes , newMagResObj, newTotalPointsObj)
+        specialPointsCalc(newSkillsObj, skill, newMagResObj, newTotalPointsObj, props)
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeMagRes(newMagResObj))
         dispatch(changeSkillPoints(newTotalPointsObj))
