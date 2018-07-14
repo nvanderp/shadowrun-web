@@ -395,6 +395,56 @@ export const skillsLibrary = {
         skillType: 'active',
         special: false,
         specific: ''
+      },
+      heavyWeapons: {
+        title: 'Heavy Weapons',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      longarms: {
+        title: 'Longarms',
+        default: true,
+        skillGroup: 'firearms',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      pistols: {
+        title: 'Pistols',
+        default: true,
+        skillGroup: 'firearms',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      throwingWeapons: {
+        title: 'Throwing Weapons',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      unarmed: {
+        title: 'Unarmed Combat',
+        default: true,
+        skillGroup: 'close combat',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
       }
     },
     physicalActive: {
@@ -414,6 +464,16 @@ export const skillsLibrary = {
         default: true,
         skillGroup: null,
         linkedAtt: 'bod',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      escapeArtist: {
+        title: 'Escape Artist',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'agi',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
         skillType: 'active',

@@ -189,7 +189,7 @@ const newSpecializationContainer = (skill, props) => {
     && curSkills[skill[1].title].specializations === null
   ) {
     return (
-      <Collapse in={curSkills[skill[1].title] !== undefined}>
+      <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specific.length === 0}>
         <div className="spec-skill-label">
           <TextField
             value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
@@ -212,12 +212,12 @@ const newSpecializationContainer = (skill, props) => {
 }
 
 const curSpecializationContainer = (skill, props) => {
-  const { curTotalPoints, curSkills,
+  const { curTotalPoints, curSkills, handleExoticBoxClick,
     handleSpecBoxClick, classes 
   } = props
   if (curSkills[skill[1].title] !== undefined 
     && curSkills[skill[1].title].specializations !== null  
-    && curSkills[skill[1].title].specific === null
+    && curSkills[skill[1].title].specific === undefined
   ) {
     return (
       <Collapse in={ curSkills[skill[1].title].specializations.length !== 0}>
@@ -243,6 +243,7 @@ const curSpecializationContainer = (skill, props) => {
     )
   } else if (curSkills[skill[1].title] !== undefined 
     && curSkills[skill[1].title].specific !== null
+    && curSkills[skill[1].title].specific !== undefined
     && curSkills[skill[1].title].specific.length > 0
   ) {
     return (
@@ -255,14 +256,14 @@ const curSpecializationContainer = (skill, props) => {
             }}
           >subdirectory_arrow_right
           </Icon>
-          {/* <Checkbox
+          <Checkbox
             classes={{
               root: classes.root,
               checked: classes.checked,
             }}
             checked='true'
-            onClick={() => handleExoticBoxClick(skill[1], curSkills, curTotalPoints)}
-          /> */}
+            onClick={() => handleExoticBoxClick(curSkills, skill[1])}
+          />
           <div>{curSkills[skill[1].title].specific}</div>
         </div>
       </Collapse>
@@ -528,6 +529,11 @@ const mapDispatch = (dispatch) => {
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeTempSpecials(newTempSpecObj))
       }
+    },
+    handleExoticBoxClick(curSkills, skill) {
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      newSkillsObj[skill.title].specific = ''
+      dispatch(changeSkills(newSkillsObj))
     }
   }
 }
