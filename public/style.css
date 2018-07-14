@@ -321,8 +321,8 @@ form div {
 
 .special-skill-points {
   color: white;
-  margin-left: 2.8em;
   display: flex;
+  justify-content: center;
 }
 
 .special-points-total {

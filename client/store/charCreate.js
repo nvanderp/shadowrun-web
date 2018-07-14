@@ -364,6 +364,37 @@ export const skillsLibrary = {
         rating: {min: 0, cur: 0, max: 6},
         skillType: 'active',
         special: false
+      },
+      blades: {
+        title: 'Blades',
+        default: true,
+        skillGroup: 'close combat',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      clubs: {
+        title: 'Clubs',
+        default: true,
+        skillGroup: 'close combat',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      exoticRanged: {
+        title: 'Exotic Ranged Weapon (Specific)',
+        default: false,
+        skillGroup: null,
+        linkedAtt: 'agi',
+        specializations: null,
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false,
+        specific: ''
       }
     },
     physicalActive: {
@@ -539,6 +570,26 @@ export const skillsLibrary = {
       title: 'Resonance',
       compiling: {
         title: 'Compiling',
+        default: false,
+        skillGroup: 'tasking',
+        linkedAtt: 'res',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'resonance',
+        special: false
+      },
+      decompiling: {
+        title: 'Decompiling',
+        default: false,
+        skillGroup: 'tasking',
+        linkedAtt: 'res',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'resonance',
+        special: false
+      },
+      registering: {
+        title: 'Registering',
         default: false,
         skillGroup: 'tasking',
         linkedAtt: 'res',

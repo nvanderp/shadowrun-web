@@ -155,11 +155,14 @@ const pointsContainer = (curSkillPoints, curGroupPoints, curMagRes) => {
 }
 
 const newSpecializationContainer = (skill, props) => {
-  const {curTotalPoints, handleSpecAddClick, 
+  const {curTotalPoints, handleSpecAddClick,
+    handleExoticAddClick,
     handleTempSpecial, curTempSpecials, curSkills, 
     classes 
   } = props
-  if (curSkills[skill[1].title] !== undefined ) {
+  if (curSkills[skill[1].title] !== undefined 
+    && curSkills[skill[1].title].specializations !== null
+  ) {
     return (
       <Collapse in={curSkills[skill[1].title] !== undefined && curSkills[skill[1].title].specializations.length === 0}>
         <div className="spec-skill-label">
@@ -180,6 +183,29 @@ const newSpecializationContainer = (skill, props) => {
         </div>
       </Collapse>
     )
+  } else if (curSkills[skill[1].title] !== undefined 
+    && curSkills[skill[1].title].specializations === null
+  ) {
+    return (
+      <Collapse in={curSkills[skill[1].title] !== undefined}>
+        <div className="spec-skill-label">
+          <TextField
+            value={curTempSpecials[skill[1].title] ? curTempSpecials[skill[1].title] : ""}
+            className={classes.specField}
+            onChange={(event) => handleTempSpecial(event, skill[1].title, curTempSpecials)}
+            label="Specific Weapon"
+          />
+          <Icon 
+            className="material-icons md-18"
+            classes={{
+              root: classes.checkIcon
+            }}
+            onClick={() => handleExoticAddClick(curTempSpecials, skill[1], curSkills)}
+          >done
+          </Icon>
+        </div>
+      </Collapse>
+    )
   }
 }
 
@@ -187,9 +213,12 @@ const curSpecializationContainer = (skill, props) => {
   const { curTotalPoints, curSkills,
     handleSpecBoxClick, classes 
   } = props
-  if (curSkills[skill[1].title] !== undefined ) {
+  if (curSkills[skill[1].title] !== undefined 
+    && curSkills[skill[1].title].specializations !== null  
+    && curSkills[skill[1].title].specific === null
+  ) {
     return (
-      <Collapse in={curSkills[skill[1].title].specializations.length !== 0}>
+      <Collapse in={ curSkills[skill[1].title].specializations.length !== 0}>
         <div className="skill-label spec-label">
           <Icon 
             className="material-icons md-18"
@@ -210,6 +239,11 @@ const curSpecializationContainer = (skill, props) => {
         </div>
       </Collapse>
     )
+  } else if (curSkills[skill[1].title] !== undefined 
+    && curSkills[skill[1].title].specific !== null
+  ) {
+    console.log('GOT HEREEEEEEEEEE')
+    // adding sep form in here that has diff click handlers
   }
 }
 
@@ -243,8 +277,7 @@ const skillRatingControls = (skill, props) => {
 }
 
 const skillContainer = (skillsClassArray, skillClass, props) => {
-  const { curSkillsToShow, curTotalPoints, curSkills, 
-    handleCheckBoxClick, curMagRes,
+  const { curSkillsToShow, curSkills, handleCheckBoxClick, 
     classes 
   } = props
   return (
@@ -460,6 +493,18 @@ const mapDispatch = (dispatch) => {
       else {
         dispatch(changeSkills(newSkillsObj))
         dispatch(changeSkillPoints(newTotalPointsObj))
+      }
+    },
+    handleExoticAddClick(curTempSpecials, skill, curSkills) {
+      let newSpec = curTempSpecials[skill.title]
+      let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
+      let newTempSpecObj = JSON.parse(JSON.stringify(curTempSpecials))
+      newSkillsObj[skill.title].specializations = []
+      newSkillsObj[skill.title].specializations.push(newSpec)
+      newTempSpecObj[skill.title] = ""
+      if (newSpec !== undefined && newSpec.length !== 0) {
+        dispatch(changeSkills(newSkillsObj))
+        dispatch(changeTempSpecials(newTempSpecObj))
       }
     }
   }
