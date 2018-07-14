@@ -293,6 +293,13 @@ form div {
   margin-top: -.5em;
 }
 
+.specific-skill-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: black;
+}
+
 .skill-label-container {
   display: flex;
   flex-direction: column;

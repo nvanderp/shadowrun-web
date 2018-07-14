@@ -79,7 +79,9 @@ const skillPointsCalc = (newSkillsObj, skill, curSkills, newTotalPointsObj) => {
   if (newSkillsObj[skill.title] !== undefined) {
     newSkillsObj[skill.title] = undefined
     if (skill.skillGroup !== undefined) {
-      if (curSkills[skill.title].specializations.length === 0) {
+      if (curSkills[skill.title].specializations !== undefined 
+        || curSkills[skill.title].specializations.length === 0
+      ) {
         newTotalPointsObj.skillPoints.cur += curSkills[skill.title].rating.cur
       }
       else {
@@ -241,9 +243,30 @@ const curSpecializationContainer = (skill, props) => {
     )
   } else if (curSkills[skill[1].title] !== undefined 
     && curSkills[skill[1].title].specific !== null
+    && curSkills[skill[1].title].specific.length > 0
   ) {
-    console.log('GOT HEREEEEEEEEEE')
-    // adding sep form in here that has diff click handlers
+    return (
+      <Collapse in={curSkills[skill[1].title] !== undefined}>
+        <div className="specific-skill-label spec-label">
+          <Icon 
+            className="material-icons md-18"
+            classes={{
+              root: classes.subArrow
+            }}
+          >subdirectory_arrow_right
+          </Icon>
+          {/* <Checkbox
+            classes={{
+              root: classes.root,
+              checked: classes.checked,
+            }}
+            checked='true'
+            onClick={() => handleExoticBoxClick(skill[1], curSkills, curTotalPoints)}
+          /> */}
+          <div>{curSkills[skill[1].title].specific}</div>
+        </div>
+      </Collapse>
+    )
   }
 }
 
@@ -499,8 +522,7 @@ const mapDispatch = (dispatch) => {
       let newSpec = curTempSpecials[skill.title]
       let newSkillsObj = JSON.parse(JSON.stringify(curSkills))
       let newTempSpecObj = JSON.parse(JSON.stringify(curTempSpecials))
-      newSkillsObj[skill.title].specializations = []
-      newSkillsObj[skill.title].specializations.push(newSpec)
+      newSkillsObj[skill.title].specific = newSpec
       newTempSpecObj[skill.title] = ""
       if (newSpec !== undefined && newSpec.length !== 0) {
         dispatch(changeSkills(newSkillsObj))
