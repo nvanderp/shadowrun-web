@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { 
-  skillsLibrary, changeSkillsToShow, changeSkills, changeSkillPoints,
+  skillsLibrary, skillGroupsLibrary , changeSkillsToShow, changeSkills, changeSkillPoints,
   changeTempSpecials,
   changeMagRes
 } from '../store'
@@ -395,14 +395,50 @@ const activeSkillsContainer = (activeSkillObjArray, props) => {
   )
 }
 
+const groupSkillsContainer = (skillGroupsObjArray, props) => {
+  console.log('skillGroupsObjArray', skillGroupsObjArray)
+  const { curSkillsToShow, handleSkillSubClick, curAttributes, classes } = props
+  return (
+    skillGroupsObjArray.map((skillGroup) => {
+      return (
+        <div key={skillGroup[1].title}>
+          <div className="skill-icon-header">
+            <Icon
+              className="material-icons md-18"
+              classes={{
+                root: classes.iconHover
+              }}
+              // onClick={() => handleSkillSubClick(skillClass[1].title, curSkillsToShow)}
+            > {
+                curSkillsToShow === skillGroup[1].title
+                ? 'keyboard_arrow_down'
+                : 'keyboard_arrow_right'
+              }
+            </Icon>
+            <b className="skill-sub-header">
+              {skillGroup[1].title}
+            </b>
+          </div>
+        </div>
+    )}
+  ))
+}
+
 export const CharSkills = (props) => {
   const { curSkillPoints, curGroupPoints, curMagRes } = props
+  let skillGroupsObjArray = Object.entries(skillGroupsLibrary)
   let activeSkillObjArray = Object.entries(skillsLibrary.active)
   return (
     <MuiThemeProvider theme={theme}>
       <div>
         {pointsContainer(curSkillPoints, curGroupPoints, curMagRes)}
         <div id="skills-list-container">
+          <div className="skill-column">
+            <b className="skill-header-text">Group Skills</b>
+            <div className="ind-skill-list">
+              {groupSkillsContainer(skillGroupsObjArray, props)}
+            </div>
+          </div>
           <div className="skill-column">
             <b className="skill-header-text">Active Skills</b>
             <div className="ind-skill-list">

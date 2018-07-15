@@ -10,6 +10,7 @@ const UPDATE_SKILLS = 'UPDATE_SKILLS'
 const UPDATE_SKILLPOINTS = 'UPDATE_SKILLPOINTS'
 const UPDATE_SKILLSTOSHOW = 'UPDATE_SKILLSTOSHOW'
 const UPDATE_TEMPSPECIALS = 'UPDATE_TEMPSPECIALS'
+const UPDATE_SKILLGROUPS = 'UPDATE_SKILLGROUPS'
 
 /**
  * INITIAL STATE
@@ -39,6 +40,7 @@ const defaultCharacter = {
   skillPoints: {},
   skills: {},
   skillsToShow: {},
+  skillGroups: {},
   tempSpecials: {}
 }
 
@@ -54,6 +56,7 @@ const updateSkillPoints = skillPoints => ({type: UPDATE_SKILLPOINTS, skillPoints
 const updateSkills = skills => ({type: UPDATE_SKILLS, skills})
 const updateSkillsToShow = skills => ({type: UPDATE_SKILLSTOSHOW, skills})
 const updateTempSpecials = tempSpecials => ({type: UPDATE_TEMPSPECIALS, tempSpecials})
+const updateSkillGroups = skillGroups => ({type: UPDATE_SKILLGROUPS, skillGroups})
 
 export const changePriorities = (view, grade) =>
   dispatch =>
@@ -90,6 +93,10 @@ export const changeSkillsToShow = (skills) =>
 export const changeTempSpecials = (tempSpecials) =>
   dispatch =>
     dispatch(updateTempSpecials(tempSpecials))
+
+export const changeSkillGruops = (skillGroups) =>
+  dispatch =>
+    dispatch(updateSkillGroups(skillGroups))
 
 export const baseMetatypeAttributes = {
   'human': {
@@ -478,6 +485,26 @@ export const skillsLibrary = {
         rating: {min: 0, cur: 0, max: 6},
         skillType: 'active',
         special: false
+      },
+      freeFall: {
+        title: 'Free-Fall',
+        default: true,
+        skillGroup: null,
+        linkedAtt: 'bod',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      gymnastics: {
+        title: 'Gymnastics',
+        default: true,
+        skillGroup: 'athletics',
+        linkedAtt: 'agi',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
       }
     },
     social: {
@@ -496,6 +523,26 @@ export const skillsLibrary = {
         title: 'Etiquette',
         default: true,
         skillGroup: 'influence',
+        linkedAtt: 'cha',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      impersonation: {
+        title: 'Impersonation',
+        default: true,
+        skillGroup: 'acting',
+        linkedAtt: 'cha',
+        specializations: [],
+        rating: {min: 0, cur: 0, max: 6},
+        skillType: 'active',
+        special: false
+      },
+      performance: {
+        title: 'performance',
+        default: true,
+        skillGroup: 'acting',
         linkedAtt: 'cha',
         specializations: [],
         rating: {min: 0, cur: 0, max: 6},
@@ -676,6 +723,25 @@ export const skillsLibrary = {
   }
 }
 
+export const skillGroupsLibrary = { // just be an array of objects, the ones above
+  acting: {
+    title: 'Acting',
+    skills: [
+      skillsLibrary.active.social.con, 
+      skillsLibrary.active.social.impersonation,
+      skillsLibrary.active.social.performance
+    ]
+  },
+  enchanting: {
+    title: 'Enchanting',
+    skills: [
+      skillsLibrary.active.magic.alchemy,
+      skillsLibrary.active.magic.artificing,
+      skillsLibrary.active.magic.disenchanting
+    ]
+  }
+}
+
 /**
  * REDUCER
  */
@@ -699,6 +765,8 @@ export default function (state = defaultCharacter, action) {
       return Object.assign({}, state, {skillsToShow: action.skills})
     case UPDATE_TEMPSPECIALS:
       return Object.assign({}, state, {tempSpecials: action.tempSpecials})
+    case UPDATE_SKILLGROUPS:
+      return Object.assign({}, state, {skillGroups: action.skillGroups})
     default:
       return state
   }
